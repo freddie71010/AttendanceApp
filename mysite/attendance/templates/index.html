@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Index View</title>
+</head>
+<body>
+<h1> This will list all the cohorts</h1>
+{% if context %}
+	{% for cohort in cohorts %}
+		<ul>
+			<li><a href="attendace/{{ cohort.name }}">{{ cohort.name }}</a></li>
+		</ul>
+
+	{% endfor %}
+{% endif %}
+{% if students %}
+	{% for student in students %}
+		<li>{{ student.first_name }} {{ student.last_name }}</li>
+	{% endfor %}
+{% endif %}
+</body>
+</html>
