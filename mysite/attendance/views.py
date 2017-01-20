@@ -31,10 +31,40 @@ class Index(View):
 		# result = Cohorts.Objects.filter(cohort_name=cohort_name)
 		# return render(request,'templates/results.html', {"result": result} )
 
-class Register(View):
-	def get(self, request):
-		template = "templates/registration/register.html"
-		return render(request, template)
+class RegisterStudent(View):
+	form = StudentRegistrationForm(auto_id=True)
+
+	def get(self, request):	
+		template = "templates/registration/register_student.html"
+		print(request.user.id, request.user)
+		return render(request, template, { "form":form })
 
 	def post(self, request):
-		pass
+		form = StudentRegistrationForm(request.POST)
+		if form.is_valid():
+			data = form.cleaned_data
+			new_user = User.objects.create_user(
+				first_name = data["first_name"],
+				last_name = data["last_name"],
+				username  = data["fist_name"] + "." + data["last_name"]
+				)
+			associated_profile = Profile.objects.create_profile(
+				user = new_user["pk"],
+				position = "Student",
+				created_by = request.user,
+				created_at = timezone.now
+				)
+			print("user and profile created by" + str(request.user))
+			return HttpResponse(request, {"first_name":new_user["first_name"], "last_name": new_user["last_name"], "pk": new_user["pk"]})
+
+
+class RegisterCohort(View):
+	form = CohortRegistrationForm(auto_id=True)
+	def get(self, request):
+		template = "template/registration/register_cohort"
+		return(request, template,{"form":form})
+
+	def post(self, request):
+		form = CohortRegistrationForm(request.POST)
+		if form.is_valid():
+			pass

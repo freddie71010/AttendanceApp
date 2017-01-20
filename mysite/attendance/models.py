@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-	student_name = models.CharField(default=None,max_length=150)
+	user = models.OneToOneField(User, default=None)
+	position = models.CharField(default=None,max_length=100)
 	is_active = models.BooleanField(default=True)
 	created_by = models.ForeignKey(User, related_name="+", default=0)
 	created_at = models.DateField(auto_now=True)
@@ -19,7 +20,7 @@ class Profile(models.Model):
 
 class Cohort(models.Model):
 	cohort_name = models.CharField("Name", max_length=100, unique=True)
-	members = models.ManyToManyField(Profile)
+	members = models.ManyToManyField(User)
 	teacher = models.ForeignKey(User, related_name="+", default=0)
 	created_at = models.DateField(default=None)
 	start_date = models.DateField(default=None)
@@ -46,6 +47,6 @@ ATTENDANCE_TYPES =  (
 )
 
 class AttendanceRecord(models.Model):
-	user = models.ForeignKey(Profile)
+	user = models.ForeignKey(User)
 	status = models.CharField("", max_length=10, choices=ATTENDANCE_TYPES)
 	date =models.DateField(default=None)
