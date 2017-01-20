@@ -1,7 +1,11 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from attendance.views import *
 
+
 urlpatterns = [
-	url(r'^index', Index.as_view(), name='index'),	
+	url(r'^login$', login),
+	url(r'^register$',Register.as_view, name='register'),
+	url(r'^logout$', logout),
+	url(r'^index', Index.as_view(), name='index')
 ]
 	
