@@ -3,10 +3,17 @@
 {% block title %}Cohort Registration{% endblock %}
 {% block head %}Cohort Registration{% endblock %}
 {% block content %}
-    <form method="post" action="/RegisterCohort">{% csrf_token %}
+    <form method="post" action="/register_cohort">{% csrf_token %}
         <table border="0">
             {{ form.as_table }}
         </table>
-        <button type="submit" value="Register">Register</button>
+        <button type="submit" value="Register" id="register-cohort">Register</button>
     </form>
+    <button id="add-another-cohort">Add Another Cohort</button>
+	<label>Close Registation Form</label>
+    <button>x</button>
+{% endblock %}
+
+{% block javascript %}
+<script src="/static/main.js"></script>
 {% endblock %}

@@ -6,12 +6,10 @@
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
 
-    <form class="form" method="post" action="." >{% csrf_token %}
+    <form class="form" method="post" action='/login' >{% csrf_token %}
         <input type="text" placeholder="Username" name="username">
         <input type="password" placeholder="Password" name="password">
         <button type="submit"  value="Login" id="login-button">Login</button>
-        <!-- <button type="button" onclick="window.location.href='/registration/register.html' ">Register</button> -->
-        <input type="hidden" name="next" value="/" />
     </form>
 
 {% endblock %}

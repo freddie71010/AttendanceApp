@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Index View</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %} Index View {% endblock %}
+{% block head %} Index {% endblock %}
+
+{% block content %}
 <h1> This will list all the cohorts</h1>
+<button type="submit"  value="new-cohort" id="new-cohort-button">Add Cohort</button>
 {% if context %}
 	{% for cohort in cohorts %}
 		<ul>
@@ -19,5 +18,7 @@
 		<li>{{ student.first_name }} {{ student.last_name }}</li>
 	{% endfor %}
 {% endif %}
-</body>
-</html>
+{% endblock %}
+{% block javascript %}
+ <script src='static/js/base.js'></script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} Cohort Detail {% endblock %}
+{% block head %} Cohort Detail {% endblock %}
+
+{% block content %}
+<div class="sub-heading">
+<h1> This will list all the students in the cohort</h1>
+	<h2>Teacher: {{cohort.teacher}}</h2>
+	<h2>Cohort Name {{cohort.name}}</h2>
+	<h3>Start Date {{cohort.start_date}}</h3>
+	<h3>Graduation Date {{cohort.graduation_date}}</h3>
+
+</div>
+<ul class="student-list">
+{% for member in members %}
+	<li class="individual-student"><a href="/cohort/studnt/{}".format(pk=member.pk)>{{member.first_name}} {{member.last_name}}</a></li>
+{% endfor %}	
+</ul>
+{% endblock %}
+{% block javascript %}
+ <script src='static/js/base.js'></script>
+{% endblock %}
