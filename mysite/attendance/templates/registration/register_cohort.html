@@ -3,7 +3,7 @@
 {% block title %}Cohort Registration{% endblock %}
 {% block head %}Cohort Registration{% endblock %}
 {% block content %}
-    <form method="post" action="/register_cohort">{% csrf_token %}
+    <form method="post" >{% csrf_token %}
         <table border="0">
             {{ form.as_table }}
         </table>
@@ -17,3 +17,7 @@
 {% block javascript %}
 <script src="/static/main.js"></script>
 {% endblock %}
+
+
+
+

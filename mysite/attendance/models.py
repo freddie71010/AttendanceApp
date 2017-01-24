@@ -42,7 +42,6 @@ class Cohort(models.Model):
 	def as_json( self, *args, **kwargs):
 		return self.__dict__
 
-
 # class Lesson(models.Model):
 # 	cohort = models.ForeignKey(Cohort)
 # 	lesson_name = models.CharField("Lesson Name", default=None, max_length=100)

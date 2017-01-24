@@ -8,6 +8,6 @@ urlpatterns = [
 	url(r'^register_cohort$', RegisterCohort.as_view(), name='register_cohort'),	
 	url(r'^logout$', logout),
 	url(r'^index$', Index.as_view(), name='index'),
-	url(r'^cohort/(?P<slug>[\w\-]+$)', CohortDetailView.as_view(), name='cohort_detail')
+	url(r'^cohort/(?P<cohort>[\w\-]+$)', CohortDetailView.as_view(), name='cohort_detail'),
 ]
 	

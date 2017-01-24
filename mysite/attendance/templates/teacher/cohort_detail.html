@@ -11,12 +11,17 @@
 	<h3>Graduation Date {{cohort.graduation_date}}</h3>
 
 </div>
+<div class="add-student-form">
+	<h3>Register Student</h3>
+	<form method="post" action="/register_student">{% csrf_token %}
+	{{ form.as_table }}
+	<button type="submit" value="Register">Register</button>
+	</form>
+</div>
+
 <ul class="student-list">
 {% for member in members %}
 	<li class="individual-student"><a href="/cohort/studnt/{}".format(pk=member.pk)>{{member.first_name}} {{member.last_name}}</a></li>
 {% endfor %}	
 </ul>
-{% endblock %}
-{% block javascript %}
- <script src='static/js/base.js'></script>
 {% endblock %}
