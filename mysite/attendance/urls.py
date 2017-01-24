@@ -3,6 +3,7 @@ from attendance.views import *
 
 
 urlpatterns = [
+	url(r'^$', login, name='login'),
 	url(r'^login$', login, name='login'),
 	url(r'^register_student$',RegisterStudent.as_view(), name='register_student'),
 	url(r'^register_cohort$', RegisterCohort.as_view(), name='register_cohort'),	
