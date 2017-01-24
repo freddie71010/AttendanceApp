@@ -27,12 +27,6 @@ class Index(View):
 		context = {"cohorts": cohorts, "form":self.form()}
 		return render( request, self.template, context)
 
-	def post(self, request, cohort_name):
-		cohorts = Cohort.objects.all()
-		context = {"cohorts": cohorts }
-		return render( request, self.template, context)
-		# result = Cohorts.Objects.filter(cohort_name=cohort_name)
-		# return render(request,'templates/results.html', {"result": result} )
 
 
 class RegisterStudent(View):
@@ -75,16 +69,8 @@ class RegisterCohort(View):
 
 
 	def post(self, request):
-		form = self.form(request.POST)
-		print("!!!!THAT WAS THE FORM!!!!!")
-		print(form)
-		if form.is_valid():
-			print("form is valid")
-			return HttpResponse("nothing")
-		print("form is not valid")
-		return HttpResponse(form)
-
-
+		print(request)
+		return HttpResponse(request)
 		# template = "registration/register_cohort.html"
 		# form = CohortRegistrationForm(request.POST)
 		# if form.is_valid():

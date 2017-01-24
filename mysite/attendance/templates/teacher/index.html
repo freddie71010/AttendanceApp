@@ -9,8 +9,8 @@
 <div id="cohort-register-div" class="hidden">
 	<form method="post" id="add-cohort-form">{% csrf_token %}
             {{ form.as_p }}
-        <button type="submit" value="Register" id="register-cohort">Register</button>
     </form>
+    <button type="submit" value="Register" id="register-cohort">Register</button>
 </div>
 <div class="cohort-list">
 	{% for cohort in cohorts %}
