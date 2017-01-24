@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block title %} Index View {% endblock %}
-{% block head %} Index {% endblock %}
+{% block title %} Index View {% endblock title %}
+{% block head %} Index {% endblock head %}
 
 {% block content %}
 <h1> This will list all the cohorts</h1>
@@ -25,5 +25,5 @@
 		<li>{{ student.first_name }} {{ student.last_name }}</li>
 	{% endfor %}
 </div>
-{% endblock %}
+{% endblock content %}
 
