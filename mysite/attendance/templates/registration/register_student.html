@@ -1,7 +1,7 @@
 <!-- register.html -->
 {% extends "base.html" %}
-{% block title %}Student Registration{% endblock %}
-{% block head %}Student Registration{% endblock %}
+{% block title %}Student Registration{% endblock title %}
+{% block head %}Student Registration{% endblock head %}
 {% block content %}
     <form method="post" action="/RegisterStudent">{% csrf_token %}
         <table border="0">
@@ -9,4 +9,4 @@
         </table>
         <button type="submit" value="Register">Register</button>
     </form>
-{% endblock %}
+{% endblock content %}

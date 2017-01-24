@@ -1,7 +1,7 @@
 <!-- register.html -->
 {% extends "base.html" %}
-{% block title %}Cohort Registration{% endblock %}
-{% block head %}Cohort Registration{% endblock %}
+{% block title %}Cohort Registration{% endblock title %}
+{% block head %}Cohort Registration{% endblock head %}
 {% block content %}
     <form method="post" >{% csrf_token %}
         <table border="0">
@@ -12,11 +12,11 @@
     <button id="add-another-cohort">Add Another Cohort</button>
 	<label>Close Registation Form</label>
     <button>x</button>
-{% endblock %}
+{% endblock content %}
 
 {% block javascript %}
 <script src="/static/main.js"></script>
-{% endblock %}
+{% endblock javascript %}
 
 
 
