@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
-import simplejson as json
+# import simplejson as json
 from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.csrf import csrf_protect
