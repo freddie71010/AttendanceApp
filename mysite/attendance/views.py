@@ -71,24 +71,35 @@ class RegisterCohort(View):
 
 
 	def post(self, request):
-		print(request)
-		data=dict(request.POST)
-		print(data)
+		print("request:", request)
+		
+		data = dict(request.POST)
+		print("data:", data)
+		
 		start_date = data["start_date"][0]
-		print(start_date)
+		print("start_date:", start_date)
+		
+		graduation_date = data["graduation_date"][0]
+		print("graduation_date:", graduation_date)
+		
 		teacher = User.objects.get(username = data["teacher"][0])
-		print(teacher)
-		start_date_from_timestamp = datetime.fromtimestamp(float(start_date))
-		print(start_date_from_timestamp)
+		print("teacher:", teacher, teacher.id)
+
+		start_date_from_timestamp = datetime.fromtimestamp(float(start_date[:-3]+'.000'))
+		print("start_date_from_timestamp:", start_date_from_timestamp)
+		
+		grad_date_from_timestamp = datetime.fromtimestamp(float(graduation_date[:-3]+'.000'))
+		print("grad_date_from_timestamp:", grad_date_from_timestamp)
 		new_cohort = Cohort(
 			cohort_name = data["cohort_name"][0],
 			teacher = teacher,
 			created_at = timezone.now(),
-			start_date = data["start_date"][0],
-			created_by = request.user,
+			start_date = start_date_from_timestamp,
+			# created_by = request.user,
 			is_active = False,
-			graduation_date = data['graduation_date'][0],
+			graduation_date = grad_date_from_timestamp,
 			)
+		new_cohort.save()
 		return HttpResponse("success")
 
 		# template = "registration/register_cohort.html"
