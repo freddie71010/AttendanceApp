@@ -25,7 +25,3 @@ class CohortRegistrationForm(ModelForm):
     class Meta:
         model = Cohort
         fields = ["cohort_name", "teacher", "start_date", "graduation_date"]
-        widget = {
-            "start_date": forms.DateInput(),
-            "graduation_date": forms.DateInput(),
-        }

@@ -19,11 +19,12 @@ console.log("js loaded")
 	$('#register-cohort').on('click', function(event){
 		event.preventDefault();
 		console.log("register form submitted")
+		console.log(+new Date($('input[name="start_date"]').val()))
 		 kwargs={
             	"cohort_name": $('input[name="cohort_name"]').val(),
             	"teacher": $('#id_teacher option:selected').text(),
-            	"start_date": $('input[name="start_date"]').val(),
-            	"graduation_date": $('input[name="graduation_date"]').val(),
+            	"start_date": +new Date($('input[name="start_date"]').val()),
+            	"graduation_date": +new Date($('input[name="graduation_date"]').val()),
             	"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
             },
            console.log(typeof(kwargs["graduation_date"]))

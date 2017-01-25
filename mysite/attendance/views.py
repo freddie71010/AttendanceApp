@@ -14,6 +14,8 @@ from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.csrf import csrf_protect
 # Create your views here.
+from datetime import datetime
+
 
 
 class Index(View):
@@ -72,11 +74,12 @@ class RegisterCohort(View):
 		print(request)
 		data=dict(request.POST)
 		print(data)
-		print(data["cohort_name"][0])
+		start_date = data["start_date"][0]
+		print(start_date)
 		teacher = User.objects.get(username = data["teacher"][0])
-		created_at = data["start_date"][0]
-		# if timezone.now() > :
-		# 	is_active = True
+		print(teacher)
+		start_date_from_timestamp = datetime.fromtimestamp(float(start_date))
+		print(start_date_from_timestamp)
 		new_cohort = Cohort(
 			cohort_name = data["cohort_name"][0],
 			teacher = teacher,
