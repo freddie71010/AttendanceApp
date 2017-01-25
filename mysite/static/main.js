@@ -1,5 +1,5 @@
 $(document).ready(function(){
-console.log("stuff")
+console.log("js loaded")
 // js for the Index.html page
 	$('.new-cohort-button').on('click', function(event){
 		var item = document.getElementById('cohort-register-div')
@@ -19,16 +19,19 @@ console.log("stuff")
 	$('#register-cohort').on('click', function(event){
 		event.preventDefault();
 		console.log("register form submitted")
-        $.ajax({
-            url: "/register_cohort",
-            type: "post",
-            data:{
+		 kwargs={
             	"cohort_name": $('input[name="cohort_name"]').val(),
-            	"teacher": $('input[name="teacher"]').val(),
+            	"teacher": $('#id_teacher option:selected').text(),
             	"start_date": $('input[name="start_date"]').val(),
             	"graduation_date": $('input[name="graduation_date"]').val(),
             	"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
             },
+           console.log(typeof(kwargs["graduation_date"]))
+        $.ajax({
+            url: "/register_cohort",
+            type: "post",
+            data: kwargs,
+ 
             
             success: function(data){
             	// console.log("success", json );

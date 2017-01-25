@@ -70,7 +70,24 @@ class RegisterCohort(View):
 
 	def post(self, request):
 		print(request)
-		return HttpResponse(request)
+		data=dict(request.POST)
+		print(data)
+		print(data["cohort_name"][0])
+		teacher = User.objects.get(username = data["teacher"][0])
+		created_at = data["start_date"][0]
+		# if timezone.now() > :
+		# 	is_active = True
+		new_cohort = Cohort(
+			cohort_name = data["cohort_name"][0],
+			teacher = teacher,
+			created_at = timezone.now(),
+			start_date = data["start_date"][0],
+			created_by = request.user,
+			is_active = False,
+			graduation_date = data['graduation_date'][0],
+			)
+		return HttpResponse("success")
+
 		# template = "registration/register_cohort.html"
 		# form = CohortRegistrationForm(request.POST)
 		# if form.is_valid():
