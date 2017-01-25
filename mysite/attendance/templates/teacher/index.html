@@ -7,7 +7,7 @@
 <button type="submit"  value="new-cohort" class="new-cohort-button">Add Cohort</button>
 
 <div id="cohort-register-div" class="hidden">
-	<form method="post" id="add-cohort-form">{% csrf_token %}
+	<form method="post" id="add-cohort-form" action="/register_cohort">{% csrf_token %}
             {{ form.as_p }}
         <button type="submit" value="Register" id="register-cohort">Register</button>
     </form>

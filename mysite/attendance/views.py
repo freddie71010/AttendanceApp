@@ -13,8 +13,6 @@ from django.core import serializers
 from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.csrf import csrf_protect
-# Create your views here.
-
 
 class Index(View):
 	model = Cohort
@@ -75,14 +73,19 @@ class RegisterCohort(View):
 
 
 	def post(self, request):
-		form = self.form(request.POST)
-		print("!!!!THAT WAS THE FORM!!!!!")
-		print(form)
+		form = CohortRegistrationForm(request.POST)
+		print("FORM=============================")
+		print("form:", form)
+		print("END FORM=============================")
+		form = form.serialize()
+		print("serialize form:", form)
 		if form.is_valid():
-			print("form is valid")
-			return HttpResponse("nothing")
+			print("----form is valid----")
+			cohort_name = form['cohort_name']
+			new_cohort = Cohort(cohort_name)
+			return HttpResponse({'new_cohort': new_cohort.cohort_name}, content_type='application/json')
 		print("form is not valid")
-		return HttpResponse(form)
+		return redirect('/index')
 
 
 		# template = "registration/register_cohort.html"
@@ -138,9 +141,6 @@ class StudentDetail(View):
 		user = User.objects.get(pk=id)
 		profile = Profile.objects.get(pk=id)
 		return render(request, self.template, {"user":user,"profile":profile})
-
-	def post(self, request):
-		pass
 
 		# post will add information about the student
 	def post(self, request, id):
