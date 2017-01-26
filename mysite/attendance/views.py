@@ -16,12 +16,12 @@ from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
 
 class Index(View):
+	
 	model = Cohort
 	template = "teacher/index.html"
 	form = CohortRegistrationForm
 
 	def get(self, request):
-		
 		cohorts = Cohort.objects.all()
 		context = {"cohorts": cohorts, "form":self.form()}
 		return render( request, self.template, context)
@@ -29,12 +29,9 @@ class Index(View):
 
 
 class RegisterStudent(View):
-	form = StudentRegistrationForm
-
-	# def get(self, request):	
-	# 	template = "registration/register_cohort.html"
-	# 	print(request.user.id, request.user)
-	# 	return render(request, template, { "form": self.form() })
+	
+	def get(self, request):	
+		pass
 
 	def post(self, request):
 		data = dict(request.POST)
@@ -47,7 +44,6 @@ class RegisterStudent(View):
 		print("new user:", new_user)
 		new_user.save()
 		
-		# need to figure out what needs to be put in user field
 		associated_profile = Profile.objects.create(
 			user = new_user,
 			position = "Student",
@@ -60,17 +56,13 @@ class RegisterStudent(View):
 		associated_cohort.members.add(new_user)
 		associated_cohort.save()
 
-		print("user and profile created by: " + str(request.user))
-		blank_form = StudentRegistrationForm()
-		return JsonResponse({"form": blank_form, "members": associated_cohort}, safe=False)
+		print("==========user and profile created by: " + str(request.user))
+		return JsonResponse({"first_name": new_user.first_name, "last_name": new_user.last_name}, safe=False)
 
 class RegisterCohort(View):
-	form = CohortRegistrationForm
-	template = "registration/register_cohort.html"
 	
 	def get(self, request):
-		template = "registration/register_cohort.html"
-		return render(request, template, {"form":self.form()})
+		pass
 
 	def post(self, request):
 		data = dict(request.POST)
@@ -89,6 +81,7 @@ class RegisterCohort(View):
 			graduation_date = grad_date_from_timestamp,
 			)
 		new_cohort.save()
+		print("==========New Cohort has been registered")
 		return JsonResponse({"cohort_name": new_cohort.cohort_name}, safe=False)
 
 		# template = "registration/register_cohort.html"
@@ -120,6 +113,7 @@ class RegisterCohort(View):
 class CohortDetailView(View):
 	template = "teacher/cohort_detail.html"
 	form = StudentRegistrationForm()
+	
 	def get(self, request, cohort):
 		print("cohort:", cohort)
 		cohort = Cohort.objects.get(cohort_name=cohort)
@@ -141,6 +135,7 @@ class CohortDetailView(View):
 
 class ProfileDetailView(View):
 	template = "profile/detail.html"
+	
 	def get(self, request, id):
 		user = User.objects.get(pk=id)
 		profile = Profile.objects.get(pk=id)

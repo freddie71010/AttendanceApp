@@ -73,8 +73,8 @@ console.log("js loaded!")
 			data: kwargs,
 
 			success: function(response){
-				console.log("Success entry:", response.student_name)
-				$('.student-list').prepend("<ul><li><a href = 'profile/" + response.student_name + "'>" + response.student_name + "</a></li></ul>");
+				console.log("Success entry:", response.first_name)
+				$('.student-list').prepend("<ul><li><a href = 'profile/" + response.first_name + "'>" + response.student_name + "</a></li></ul>");
 			},
 			error: function(){
 				console.log("Error");
