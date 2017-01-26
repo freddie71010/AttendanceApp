@@ -13,6 +13,7 @@ import simplejson as json
 from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.csrf import csrf_protect
+from datetime import datetime
 
 class Index(View):
 	model = Cohort
@@ -25,12 +26,6 @@ class Index(View):
 		context = {"cohorts": cohorts, "form":self.form()}
 		return render( request, self.template, context)
 
-	def post(self, request, cohort_name):
-		cohorts = Cohort.objects.all()
-		context = {"cohorts": cohorts }
-		return render( request, self.template, context)
-		# result = Cohorts.Objects.filter(cohort_name=cohort_name)
-		# return render(request,'templates/results.html', {"result": result} )
 
 
 class RegisterStudent(View):
@@ -73,20 +68,36 @@ class RegisterCohort(View):
 
 
 	def post(self, request):
-		form = CohortRegistrationForm(request.POST)
-		print("FORM=============================")
-		print("form:", form)
-		print("END FORM=============================")
-		form = form.serialize()
-		print("serialize form:", form)
-		if form.is_valid():
-			print("----form is valid----")
-			cohort_name = form['cohort_name']
-			new_cohort = Cohort(cohort_name)
-			return HttpResponse({'new_cohort': new_cohort.cohort_name}, content_type='application/json')
-		print("form is not valid")
-		return redirect('/index')
+		print("request:", request)
+		
+		data = dict(request.POST)
+		print("data:", data)
+		
+		start_date = data["start_date"][0]
+		print("start_date:", start_date)
+		
+		graduation_date = data["graduation_date"][0]
+		print("graduation_date:", graduation_date)
+		
+		teacher = User.objects.get(username = data["teacher"][0])
+		print("teacher:", teacher, teacher.id)
 
+		start_date_from_timestamp = datetime.fromtimestamp(float(start_date[:-3]+'.000'))
+		print("start_date_from_timestamp:", start_date_from_timestamp)
+		
+		grad_date_from_timestamp = datetime.fromtimestamp(float(graduation_date[:-3]+'.000'))
+		print("grad_date_from_timestamp:", grad_date_from_timestamp)
+		new_cohort = Cohort(
+			cohort_name = data["cohort_name"][0],
+			teacher = teacher,
+			created_at = timezone.now(),
+			start_date = start_date_from_timestamp,
+			# created_by = request.user,
+			is_active = False,
+			graduation_date = grad_date_from_timestamp,
+			)
+		new_cohort.save()
+		return JsonResponse({"cohort_name": new_cohort.cohort_name}, safe=False)
 
 		# template = "registration/register_cohort.html"
 		# form = CohortRegistrationForm(request.POST)
@@ -118,11 +129,11 @@ class CohortDetailView(View):
 	template = "teacher/cohort_detail.html"
 	form = StudentRegistrationForm()
 	def get(self, request, cohort):
-		print(cohort)
+		print("cohort:", cohort)
 		cohort = Cohort.objects.get(cohort_name=cohort)
 		members = User.objects.all().filter(cohort=cohort)
-		print (members, len(members))
-		context ={
+		print ("members:", members, len(members))
+		context = {
 			"cohort_name": cohort.cohort_name,
 			"graduation_date": cohort.graduation_date,
 			"start_date" : cohort.start_date,
@@ -135,18 +146,13 @@ class CohortDetailView(View):
 	def post(self, request, cohort):
 		pass
 
-class StudentDetail(View):
-	template = "student/detail.html"
+
+class ProfileDetailView(View):
+	template = "profile/detail.html"
 	def get(self, request, id):
 		user = User.objects.get(pk=id)
 		profile = Profile.objects.get(pk=id)
 		return render(request, self.template, {"user":user,"profile":profile})
 
-		# post will add information about the student
-	def post(self, request, id):
+	def post(self, request):
 		pass
-
-
-
-
-

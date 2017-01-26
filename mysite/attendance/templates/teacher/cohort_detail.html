@@ -21,7 +21,7 @@
 
 <ul class="student-list">
 {% for member in members %}
-	<li class="individual-student"><a href="/cohort/student/{}".format(pk=member.pk)>{{member.first_name}} {{member.last_name}}</a></li>
+	<li class="individual-student"><a href="/profile/{{member.username}}">{{member.first_name}} {{member.last_name}}</a></li>
 {% endfor %}	
 </ul>
 {% endblock content %}
