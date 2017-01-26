@@ -8,8 +8,8 @@ from django.utils.translation import ugettext_lazy as _
  
 
 class StudentRegistrationForm(forms.Form):
-    first_name = forms.RegexField( regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=40)), label=_("First Name"), error_messages={'invalid' :_("This value must contain only letters")})
-    last_name = forms.RegexField( regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=40)), label=_("Last Name"), error_messages={'invalid' :_("This value must contain only letters")})
+    first_name = forms.RegexField( regex=r'^[-a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=40)), label=_("First Name"), error_messages={'invalid' :_("This value must contain only letters")})
+    last_name = forms.RegexField( regex=r'^[-a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=40)), label=_("Last Name"), error_messages={'invalid' :_("This value must contain only letters")})
 
 
     def clean_username(self):
