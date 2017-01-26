@@ -58,7 +58,29 @@ console.log("js loaded!")
 		}
 	})
 
+//ajax for "New Student" form
+	$('#register-student').on('click', function(event){
+		event.preventDefault();
+		console.log("register student form submitted!")
+		kwargs = {
+				"first_name": $('input[name="first_name"]').val(),
+				"last_name": $('input[name="last_name"]').val(),
+				"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
+			},
+		$.ajax({
+			url: "/register_student",
+			type: "post",
+			data: kwargs,
 
+			success: function(response){
+				console.log("Success entry:", response.student_name)
+				$('.student-list').prepend("<ul><li><a href = 'profile/" + response.student_name + "'>" + response.student_name + "</a></li></ul>");
+			},
+			error: function(){
+				console.log("Error");
+			}	
+		}) //end ajax
+	});
 
 
  // // this code makes sure the django ajax works and we dont have to deal with a bunch of csrf bs

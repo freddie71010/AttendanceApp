@@ -32,31 +32,37 @@ class RegisterStudent(View):
 	form = StudentRegistrationForm
 
 	def get(self, request):	
-		template = "registration/register_student.html"
+		template = "registration/register_cohort.html"
 		print(request.user.id, request.user)
 		return render(request, template, { "form": self.form() })
 
 	def post(self, request):
-		form = StudentRegistrationForm(request.POST)
-		if form.is_valid():
-			data = form.cleaned_data
-			new_user = User.objects.create(
-				first_name = data["first_name"],
-				last_name = data["last_name"],
-				username  = data["first_name"] + "." + data["last_name"]
-				)
-			new_user.save()
-			# need to figure out what needs to be put in user field
-			associated_profile = Profile.objects.create(
-				user = new_user,
-				position = "Student",
-				created_by = request.user,
-				final_project = "None"
-				)
-			associated_profile.save()
-			print("user and profile created by" + str(request.user))
-			form_1 = StudentRegistrationForm()
-			return render(request, "teacher/cohort_detail.html",{"form":form_1})
+		data = dict(request.POST)
+		# print("Register Student view - cohort:", request.POST.cohort)
+		new_user = User.objects.create(
+			first_name = data["first_name"][0],
+			last_name = data["last_name"][0],
+			username  = data["first_name"][0] + "." + data["last_name"][0]
+			)
+		print("new user:", new_user)
+		new_user.save()
+		
+		# need to figure out what needs to be put in user field
+		associated_profile = Profile.objects.create(
+			user = new_user,
+			position = "Student",
+			created_by = request.user,
+			final_project = "None"
+			)
+		associated_profile.save()
+
+		associated_cohort = Cohort.objects.get(cohort_name="Snuggles")
+		associated_cohort.add(members = new_user) ## WIP get user to add to Associate_cohort 'User' data column
+		associated_cohort.save()
+
+		print("user and profile created by: " + str(request.user))
+		blank_form = StudentRegistrationForm()
+		return JsonResponse({"form": blank_form, "members": new_user}, safe=False)
 
 class RegisterCohort(View):
 	form = CohortRegistrationForm
@@ -66,27 +72,13 @@ class RegisterCohort(View):
 		template = "registration/register_cohort.html"
 		return render(request, template, {"form":self.form()})
 
-
 	def post(self, request):
-		print("request:", request)
-		
 		data = dict(request.POST)
-		print("data:", data)
-		
 		start_date = data["start_date"][0]
-		print("start_date:", start_date)
-		
 		graduation_date = data["graduation_date"][0]
-		print("graduation_date:", graduation_date)
-		
 		teacher = User.objects.get(username = data["teacher"][0])
-		print("teacher:", teacher, teacher.id)
-
 		start_date_from_timestamp = datetime.fromtimestamp(float(start_date[:-3]+'.000'))
-		print("start_date_from_timestamp:", start_date_from_timestamp)
-		
 		grad_date_from_timestamp = datetime.fromtimestamp(float(graduation_date[:-3]+'.000'))
-		print("grad_date_from_timestamp:", grad_date_from_timestamp)
 		new_cohort = Cohort(
 			cohort_name = data["cohort_name"][0],
 			teacher = teacher,
