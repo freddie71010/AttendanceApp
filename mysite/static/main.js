@@ -74,7 +74,7 @@ console.log("js loaded!")
 
 			success: function(response){
 				console.log("Success entry:", response.student_name)
-				$('.student-list').prepend("<ul><li><a href = 'profile/" + response.student_name + "'>" + response.student_name + "</a></li></ul>");
+				$('.student-list').prepend("<ul><li><a href = 'profile/" + response.username + "'>" + response.student_name + "</a></li></ul>");
 			},
 			error: function(){
 				console.log("Error");

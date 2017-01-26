@@ -14,6 +14,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
+from django.core import serializers
 
 class Index(View):
 	model = Cohort
@@ -59,10 +60,10 @@ class RegisterStudent(View):
 		associated_cohort = Cohort.objects.get(cohort_name="Snuggles") ## WIP
 		associated_cohort.members.add(new_user)
 		associated_cohort.save()
-
+		serialized_user = serializers.serialize('json',new_user)
 		print("user and profile created by: " + str(request.user))
-		blank_form = StudentRegistrationForm()
-		return JsonResponse({"form": blank_form, "members": associated_cohort}, safe=False)
+		
+		return JsonResponse({"form": self.form(), "members": serialized_user}, safe=False)
 
 class RegisterCohort(View):
 	form = CohortRegistrationForm
