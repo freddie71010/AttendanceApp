@@ -1,5 +1,5 @@
 $(document).ready(function(){
-console.log("js loaded")
+console.log("js loaded!")
 // js for the Index.html page
 	$('.new-cohort-button').on('click', function(event){
 		var item = document.getElementById('cohort-register-div')
@@ -18,35 +18,34 @@ console.log("js loaded")
 //ajax for the index.html dynamically submit the form
 	$('#register-cohort').on('click', function(event){
 		event.preventDefault();
-		console.log("register form submitted")
-		console.log(+new Date($('input[name="start_date"]').val()))
-		 kwargs={
-            	"cohort_name": $('input[name="cohort_name"]').val(),
-            	"teacher": $('#id_teacher option:selected').text(),
-            	"start_date": +new Date($('input[name="start_date"]').val()),
-            	"graduation_date": +new Date($('input[name="graduation_date"]').val()),
-            	"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
-            },
-           console.log(typeof(kwargs["graduation_date"]))
-        $.ajax({
-            url: "/register_cohort",
-            type: "post",
-            data: kwargs,
- 
-            
-            success: function(data){
-            	// console.log("success", json );
-            	$('#myform').html(data)
+		console.log("register form submitted!")
+		console.log("Start Date:", +new Date($('input[name="start_date"]').val()))
+		kwargs={
+				"cohort_name": $('input[name="cohort_name"]').val(),
+				"teacher": $('#id_teacher option:selected').text(),
+				"start_date": +new Date($('input[name="start_date"]').val()),
+				"graduation_date": +new Date($('input[name="graduation_date"]').val()),
+				"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
+			},
+		console.log("Grad Date kwargs:", typeof(kwargs["graduation_date"]))
+		$.ajax({
+			url: "/register_cohort",
+			type: "post",
+			data: kwargs,
 
-            },
-            error: function(){
-            	console.log("error");
-            	console.log($('input[name="cohort_name"]').val());
-            }
-            
-        })
-   
-    });
+			success: function(response){
+				console.log("Success entry:", response.cohort_name)
+				$('.cohort-list').prepend("<ul><li><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></li></ul>");
+
+			},
+			error: function(){
+				console.log("error");
+				console.log($('input[name="cohort_name"]').val());
+			}
+			
+		})
+
+	});
 
  // // this code makes sure the django ajax works and we dont have to deal with a bunch of csrf bs
  //    // This function gets cookie with a given name
@@ -98,4 +97,4 @@ console.log("js loaded")
  //                xhr.setRequestHeader("X-CSRFToken", csrftoken);
  //            }
  //        }
-    });
+	});

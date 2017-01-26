@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %} Profile Detail {% endblock %}
+{% block head %} Profile Detail {% endblock %}
+
+{% block content %}
+
+<div class="sub-heading">
+	<h1> Profile: {{profile.first_name}} {{profile.last_name}}</h1>
+	<h3> Cohort: {{profile.cohort_name}}</h3>
+</div>
+
+{% endblock %}

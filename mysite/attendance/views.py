@@ -100,7 +100,7 @@ class RegisterCohort(View):
 			graduation_date = grad_date_from_timestamp,
 			)
 		new_cohort.save()
-		return HttpResponse("success")
+		return JsonResponse({"cohort_name": new_cohort.cohort_name}, safe=False)
 
 		# template = "registration/register_cohort.html"
 		# form = CohortRegistrationForm(request.POST)
@@ -132,11 +132,11 @@ class CohortDetailView(View):
 	template = "teacher/cohort_detail.html"
 	form = StudentRegistrationForm()
 	def get(self, request, cohort):
-		print(cohort)
+		print("cohort:", cohort)
 		cohort = Cohort.objects.get(cohort_name=cohort)
 		members = User.objects.all().filter(cohort=cohort)
-		print (members, len(members))
-		context ={
+		print ("members:", members, len(members))
+		context = {
 			"cohort_name": cohort.cohort_name,
 			"graduation_date": cohort.graduation_date,
 			"start_date" : cohort.start_date,
@@ -149,8 +149,9 @@ class CohortDetailView(View):
 	def post(self, request, cohort):
 		pass
 
-class StudentDetail(View):
-	template = "student/detail.html"
+
+class ProfileDetailView(View):
+	template = "profile/detail.html"
 	def get(self, request, id):
 		user = User.objects.get(pk=id)
 		profile = Profile.objects.get(pk=id)
@@ -158,11 +159,6 @@ class StudentDetail(View):
 
 	def post(self, request):
 		pass
-
-		# post will add information about the student
-	def post(self, request, id):
-		pass
-
 
 
 
