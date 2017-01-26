@@ -31,10 +31,10 @@ class Index(View):
 class RegisterStudent(View):
 	form = StudentRegistrationForm
 
-	def get(self, request):	
-		template = "registration/register_cohort.html"
-		print(request.user.id, request.user)
-		return render(request, template, { "form": self.form() })
+	# def get(self, request):	
+	# 	template = "registration/register_cohort.html"
+	# 	print(request.user.id, request.user)
+	# 	return render(request, template, { "form": self.form() })
 
 	def post(self, request):
 		data = dict(request.POST)
@@ -56,13 +56,13 @@ class RegisterStudent(View):
 			)
 		associated_profile.save()
 
-		associated_cohort = Cohort.objects.get(cohort_name="Snuggles")
-		associated_cohort.add(members = new_user) ## WIP get user to add to Associate_cohort 'User' data column
+		associated_cohort = Cohort.objects.get(cohort_name="Snuggles") ## WIP
+		associated_cohort.members.add(new_user)
 		associated_cohort.save()
 
 		print("user and profile created by: " + str(request.user))
 		blank_form = StudentRegistrationForm()
-		return JsonResponse({"form": blank_form, "members": new_user}, safe=False)
+		return JsonResponse({"form": blank_form, "members": associated_cohort}, safe=False)
 
 class RegisterCohort(View):
 	form = CohortRegistrationForm
