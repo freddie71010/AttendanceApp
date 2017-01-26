@@ -9,5 +9,6 @@ urlpatterns = [
 	url(r'^logout$', logout),
 	url(r'^index$', Index.as_view(), name='index'),
 	url(r'^cohort/(?P<cohort>[\w\-]+$)', CohortDetailView.as_view(), name='cohort_detail'),
+	url(r'^profile/(?P<profile>[\w\-]+$', ProfileDetailView.as_view(), name='profile_detail'),
 ]
 	
