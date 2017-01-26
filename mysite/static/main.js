@@ -73,8 +73,17 @@ console.log("js loaded!")
 			data: kwargs,
 
 			success: function(response){
-				console.log("Success entry:", response.student_name)
-				$('.student-list').prepend("<ul><li><a href = 'profile/" + response.username + "'>" + response.student_name + "</a></li></ul>");
+
+				console.log("Success entry:", response.first_name)
+				$('.student-list').prepend(`<ul><li><a href = 'profile/" + response.first_name + "." + response.last_name + "'>" + response.first_name + " " + response.last_name "</a></li>
+					<form class="student-radio-tags">
+						<input type="radio" class="radio" name="present" value="present" checked>
+						<input type="radio" class="radio" name="unexcused" value="unexcused">
+						<input type="radio" class="radio" name="excused" value="excused">
+						<input type="radio" class="radio" name="late" value="late">
+					</form>
+				</ul>`)
+						
 			},
 			error: function(){
 				console.log("Error");
