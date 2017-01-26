@@ -1,6 +1,6 @@
 $(document).ready(function(){
 console.log("js loaded!")
-// js for the Index.html page
+//hides and unhides "New Cohort" form
 	$('.new-cohort-button').on('click', function(event){
 		var item = document.getElementById('cohort-register-div')
 		var cohort =document.getElementsByClassName('new-cohort-button')		
@@ -13,9 +13,9 @@ console.log("js loaded!")
 			cohort.innerHTML= 'Add Cohort';
 			cohort.id ='id', 'new-cohort-button';
 		}
+	})
 
-		})
-//ajax for the index.html dynamically submit the form
+//ajax for "New Cohort" form
 	$('#register-cohort').on('click', function(event){
 		event.preventDefault();
 		console.log("register form submitted!")
@@ -36,16 +36,30 @@ console.log("js loaded!")
 			success: function(response){
 				console.log("Success entry:", response.cohort_name)
 				$('.cohort-list').prepend("<ul><li><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></li></ul>");
-
 			},
 			error: function(){
-				console.log("error");
-				console.log($('input[name="cohort_name"]').val());
-			}
-			
-		})
-
+				console.log("Error");
+			}	
+		}) //end ajax
 	});
+
+//hides and unhides "New Student" form
+	$('.new-student-button').on('click', function(event){
+		var item = document.getElementById('student-register-div')
+		var student =document.getElementsByClassName('new-student-button')		
+		if (item.className=='hidden'){
+			item.className='unhidden';
+			student.innerHTML='Hide Form';
+			student.id='hidden';
+		} else {
+			item.className ='hidden';
+			student.innerHTML= 'Add student';
+			student.id ='id', 'new-student-button';
+		}
+	})
+
+
+
 
  // // this code makes sure the django ajax works and we dont have to deal with a bunch of csrf bs
  //    // This function gets cookie with a given name
