@@ -32,7 +32,6 @@ class Index(View):
 
 
 class Login(View):
-
 	def get(self, request):
 		return redirect('/')
 
