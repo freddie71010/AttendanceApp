@@ -2,40 +2,57 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from attendance.models import *
 from .forms import *
+from django.contrib.auth import logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.views import login
-from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required, login_required
+from django.utils.decorators import method_decorator
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
-import simplejson as json
 from django.utils import timezone
-from django.contrib.auth.decorators import permission_required
 from django.views.decorators.csrf import csrf_protect
+import simplejson as json
 from datetime import datetime
 from django.core import serializers
 
+
+
+@method_decorator(login_required, name='dispatch') #due to us using CBV(class based views), we need to use insert the 'login_required' decorator into a method decorator in order for it to work (see django docs)
 class Index(View):
+	
 	model = Cohort
 	template = "teacher/index.html"
 	form = CohortRegistrationForm
 
 	def get(self, request):
-		
 		cohorts = Cohort.objects.all()
 		context = {"cohorts": cohorts, "form":self.form()}
-		return render( request, self.template, context)
+		return render(request, self.template, context)
 
 
+class Login(View):
 
+	def get(self, request):
+		return redirect('/')
+
+	def post(self, request):
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username = username, password = password)
+		if user is not None:
+			login(request, user)
+			print("User is successfully logged in as:", username)
+			return redirect('/index')
+		else:
+			return redirect('/')
+
+
+@method_decorator(login_required, name='dispatch')
 class RegisterStudent(View):
-	form = StudentRegistrationForm
-
-	# def get(self, request):	
-	# 	template = "registration/register_cohort.html"
-	# 	print(request.user.id, request.user)
-	# 	return render(request, template, { "form": self.form() })
+	
+	def get(self, request):	
+		pass
 
 	def post(self, request):
 		data = dict(request.POST)
@@ -48,7 +65,6 @@ class RegisterStudent(View):
 		print("new user:", new_user)
 		new_user.save()
 		
-		# need to figure out what needs to be put in user field
 		associated_profile = Profile.objects.create(
 			user = new_user,
 			position = "Student",
@@ -60,18 +76,16 @@ class RegisterStudent(View):
 		associated_cohort = Cohort.objects.get(cohort_name="Snuggles") ## WIP
 		associated_cohort.members.add(new_user)
 		associated_cohort.save()
-		serialized_user = serializers.serialize('json',new_user)
-		print("user and profile created by: " + str(request.user))
-		
-		return JsonResponse({"form": self.form(), "members": serialized_user}, safe=False)
 
+		print("==========user and profile created by: " + str(request.user))
+		return JsonResponse({"first_name": new_user.first_name, "last_name": new_user.last_name}, safe=False)
+
+
+@method_decorator(login_required, name='dispatch')
 class RegisterCohort(View):
-	form = CohortRegistrationForm
-	template = "registration/register_cohort.html"
 	
 	def get(self, request):
-		template = "registration/register_cohort.html"
-		return render(request, template, {"form":self.form()})
+		pass
 
 	def post(self, request):
 		data = dict(request.POST)
@@ -90,6 +104,7 @@ class RegisterCohort(View):
 			graduation_date = grad_date_from_timestamp,
 			)
 		new_cohort.save()
+		print("==========New Cohort has been registered")
 		return JsonResponse({"cohort_name": new_cohort.cohort_name}, safe=False)
 
 		# template = "registration/register_cohort.html"
@@ -114,13 +129,12 @@ class RegisterCohort(View):
 		# 	return render(request, template, {"form":form} )
 	
 
-
-
-
-
+@method_decorator(login_required, name='dispatch')
 class CohortDetailView(View):
+	
 	template = "teacher/cohort_detail.html"
 	form = StudentRegistrationForm()
+	
 	def get(self, request, cohort):
 		print("cohort:", cohort)
 		cohort = Cohort.objects.get(cohort_name=cohort)
@@ -140,8 +154,10 @@ class CohortDetailView(View):
 		pass
 
 
+@method_decorator(login_required, name='dispatch')
 class ProfileDetailView(View):
 	template = "profile/detail.html"
+	
 	def get(self, request, id):
 		user = User.objects.get(pk=id)
 		profile = Profile.objects.get(pk=id)
@@ -149,3 +165,10 @@ class ProfileDetailView(View):
 
 	def post(self, request):
 		pass
+
+
+# logs out user
+def logout_view(request):
+	logout(request)
+	print("User successfully logged out!")
+	return redirect('/')
