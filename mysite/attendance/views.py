@@ -55,6 +55,7 @@ class RegisterStudent(View):
 
 	def post(self, request):
 		data = dict(request.POST)
+		print("data:", data)
 		# print("Register Student view - cohort:", request.POST.cohort)
 		new_user = User.objects.create(
 			first_name = data["first_name"][0],
@@ -72,7 +73,7 @@ class RegisterStudent(View):
 			)
 		associated_profile.save()
 
-		associated_cohort = Cohort.objects.get(cohort_name="Snuggles") ## WIP
+		associated_cohort = Cohort.objects.get(cohort_name=data["cohort_name"][0])
 		associated_cohort.members.add(new_user)
 		associated_cohort.save()
 

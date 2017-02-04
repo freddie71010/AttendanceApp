@@ -56,17 +56,19 @@ console.log("js loaded!")
 			student.innerHTML= 'Add student';
 			student.id ='id', 'new-student-button';
 		}
-	})
+	});
 
 //ajax for "New Student" form
 	$('#register-student').on('click', function(event){
 		event.preventDefault();
-		console.log("register student form submitted!")
+		console.log("register student form submitted!");
 		kwargs = {
 				"first_name": $('input[name="first_name"]').val(),
 				"last_name": $('input[name="last_name"]').val(),
+				"cohort_name": $('.cohort_name').attr('id'),
 				"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
-			},
+			};
+		console.log("kwargs:", kwargs)
 		$.ajax({
 			url: "/register_student",
 			type: "post",
@@ -74,15 +76,18 @@ console.log("js loaded!")
 
 			success: function(response){
 
-				console.log("Success entry:", response.first_name)
-				$('.student-list').prepend(`<ul><li><a href = 'profile/" + response.first_name + "." + response.last_name + "'>" + response.first_name + " " + response.last_name "</a></li>
-					<form class="student-radio-tags">
-						<input type="radio" class="radio" name="present" value="present" checked>
+				$('.student-list').prepend(
+					`<li><a href = 'profile/`
+					+ response.first_name + "." + response.last_name +
+					"'>" + response.first_name + " " + response.last_name + "</a></li>" +
+					`<form class="student-radio-tags">
+						<input type="radio" class="radio" name="present" value="present">
 						<input type="radio" class="radio" name="unexcused" value="unexcused">
 						<input type="radio" class="radio" name="excused" value="excused">
 						<input type="radio" class="radio" name="late" value="late">
 					</form>
-				</ul>`)
+					`);
+				console.log("AJAX register student - success!:", response.first_name);
 						
 			},
 			error: function(){
