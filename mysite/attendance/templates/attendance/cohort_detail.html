@@ -24,6 +24,16 @@
 <ul class="student-list">
 {% for member in members %}
 	<li class="individual-student"><a href="/profile/{{member.username}}">{{member.first_name}} {{member.last_name}}</a></li>
+
+<!-- 	<li class="individual-student"><a href="/profile/{}".format(member.username)>{{member.first_name}} {{member.last_name}}</a>
+		<form class="student-radio-tags">
+			<input type="radio" class="radio" name="present" value="present" checked>
+			<input type="radio" class="radio" name="unexcused" value="unexcused">
+			<input type="radio" class="radio" name="excused" value="excused">
+			<input type="radio" class="radio" name="late" value="late">
+		</form>
+	</li> -->
+
 {% endfor %}	
 </ul>
 {% endblock content %}
