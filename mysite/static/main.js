@@ -19,7 +19,6 @@ console.log("js loaded!")
 	$('#register-cohort').on('click', function(event){
 		event.preventDefault();
 		console.log("register form submitted!")
-		console.log("Start Date:", +new Date($('input[name="start_date"]').val()))
 		kwargs={
 				"cohort_name": $('input[name="cohort_name"]').val(),
 				"teacher": $('#id_teacher option:selected').text(),
@@ -27,19 +26,18 @@ console.log("js loaded!")
 				"graduation_date": +new Date($('input[name="graduation_date"]').val()),
 				"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
 			},
-		console.log("Grad Date kwargs:", typeof(kwargs["graduation_date"]))
 		$.ajax({
 			url: "/register_cohort",
 			type: "post",
 			data: kwargs,
-
 			success: function(response){
-				console.log("Success entry:", response.cohort_name)
 				$('.cohort-list').prepend("<ul><li><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></li></ul>");
+				console.log("Success entry:", response.cohort_name)
+				document.getElementById("add-cohort-form").reset();
 			},
 			error: function(){
 				console.log("Error");
-			}	
+			}
 		}) //end ajax
 	});
 
@@ -68,14 +66,11 @@ console.log("js loaded!")
 				"cohort_name": $('.cohort_name').attr('id'),
 				"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
 			};
-		console.log("kwargs:", kwargs)
 		$.ajax({
 			url: "/register_student",
 			type: "post",
 			data: kwargs,
-
 			success: function(response){
-
 				$('.student-list').prepend(
 					`<li><a href = 'profile/`
 					+ response.first_name + "." + response.last_name +
@@ -88,7 +83,8 @@ console.log("js loaded!")
 					</form>
 					`);
 				console.log("AJAX register student - success!:", response.first_name);
-						
+				document.getElementById("register-student-form").reset();
+				
 			},
 			error: function(){
 				console.log("Error");

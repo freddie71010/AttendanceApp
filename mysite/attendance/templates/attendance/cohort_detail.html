@@ -14,7 +14,7 @@
 <div id="student-register-div" class="hidden">
 	<div class="add-student-form">
 		<h3>Register Student</h3>
-		<form method="post">{% csrf_token %}
+		<form method="post" id="register-student-form">{% csrf_token %}
 		{{ form.as_table }}
 		<button type="submit" id="register-student" value="Register">Register</button>
 		</form>
