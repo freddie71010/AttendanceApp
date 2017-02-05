@@ -19,7 +19,6 @@ console.log("js loaded!")
 	$('#register-cohort').on('click', function(event){
 		event.preventDefault();
 		console.log("register form submitted!")
-		console.log("Start Date:", +new Date($('input[name="start_date"]').val()))
 		kwargs={
 				"cohort_name": $('input[name="cohort_name"]').val(),
 				"teacher": $('#id_teacher option:selected').text(),
@@ -27,19 +26,18 @@ console.log("js loaded!")
 				"graduation_date": +new Date($('input[name="graduation_date"]').val()),
 				"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
 			},
-		console.log("Grad Date kwargs:", typeof(kwargs["graduation_date"]))
 		$.ajax({
 			url: "/register_cohort",
 			type: "post",
 			data: kwargs,
-
 			success: function(response){
-				console.log("Success entry:", response.cohort_name)
 				$('.cohort-list').prepend("<ul><li><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></li></ul>");
+				console.log("Success entry:", response.cohort_name)
+				document.getElementById("add-cohort-form").reset();
 			},
 			error: function(){
 				console.log("Error");
-			}	
+			}
 		}) //end ajax
 	});
 
@@ -56,34 +54,37 @@ console.log("js loaded!")
 			student.innerHTML= 'Add student';
 			student.id ='id', 'new-student-button';
 		}
-	})
+	});
 
 //ajax for "New Student" form
 	$('#register-student').on('click', function(event){
 		event.preventDefault();
-		console.log("register student form submitted!")
+		console.log("register student form submitted!");
 		kwargs = {
 				"first_name": $('input[name="first_name"]').val(),
 				"last_name": $('input[name="last_name"]').val(),
+				"cohort_name": $('.cohort_name').attr('id'),
 				"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
-			},
+			};
 		$.ajax({
 			url: "/register_student",
 			type: "post",
 			data: kwargs,
-
 			success: function(response){
-
-				console.log("Success entry:", response.first_name)
-				$('.student-list').prepend(`<ul><li><a href = 'profile/" + response.first_name + "." + response.last_name + "'>" + response.first_name + " " + response.last_name "</a></li>
-					<form class="student-radio-tags">
-						<input type="radio" class="radio" name="present" value="present" checked>
+				$('.student-list').prepend(
+					`<li><a href = 'profile/`
+					+ response.first_name + "." + response.last_name +
+					"'>" + response.first_name + " " + response.last_name + "</a></li>" +
+					`<form class="student-radio-tags">
+						<input type="radio" class="radio" name="present" value="present">
 						<input type="radio" class="radio" name="unexcused" value="unexcused">
 						<input type="radio" class="radio" name="excused" value="excused">
 						<input type="radio" class="radio" name="late" value="late">
 					</form>
-				</ul>`)
-						
+					`);
+				console.log("AJAX register student - success!:", response.first_name);
+				document.getElementById("register-student-form").reset();
+				
 			},
 			error: function(){
 				console.log("Error");

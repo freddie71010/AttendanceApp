@@ -22,7 +22,7 @@ from django.core import serializers
 class Index(View):
 	
 	model = Cohort
-	template = "teacher/index.html"
+	template = "attendance/index.html"
 	form = CohortRegistrationForm
 
 	def get(self, request):
@@ -55,6 +55,7 @@ class RegisterStudent(View):
 
 	def post(self, request):
 		data = dict(request.POST)
+		print("data:", data)
 		# print("Register Student view - cohort:", request.POST.cohort)
 		new_user = User.objects.create(
 			first_name = data["first_name"][0],
@@ -72,7 +73,7 @@ class RegisterStudent(View):
 			)
 		associated_profile.save()
 
-		associated_cohort = Cohort.objects.get(cohort_name="Snuggles") ## WIP
+		associated_cohort = Cohort.objects.get(cohort_name=data["cohort_name"][0])
 		associated_cohort.members.add(new_user)
 		associated_cohort.save()
 
@@ -106,7 +107,7 @@ class RegisterCohort(View):
 		print("==========New Cohort has been registered")
 		return JsonResponse({"cohort_name": new_cohort.cohort_name}, safe=False)
 
-		# template = "registration/register_cohort.html"
+		# template = "register_cohort.html"
 		# form = CohortRegistrationForm(request.POST)
 		# if form.is_valid():
 		# 	data = form.cleaned_data
@@ -131,7 +132,7 @@ class RegisterCohort(View):
 @method_decorator(login_required, name='dispatch')
 class CohortDetailView(View):
 	
-	template = "teacher/cohort_detail.html"
+	template = "attendance/cohort_detail.html"
 	form = StudentRegistrationForm()
 	
 	def get(self, request, cohort):
@@ -155,7 +156,7 @@ class CohortDetailView(View):
 
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(View):
-	template = "profile/detail.html"
+	template = "attendance/profile_detail.html"
 	
 	def get(self, request, id):
 		user = User.objects.get(pk=id)
