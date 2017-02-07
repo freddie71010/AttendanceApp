@@ -5,18 +5,55 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="{% static 'base.css' %}">
 	<link rel="stylesheet" href"{% static 'css/login.css' %}">
- 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 	 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-	 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 	<title>{% block title %}{% endblock %}</title>
  
 </head>
+<header class="header">
+	<div class="header-logo">
+		<a href="/index" title="home" class="header-logo-image">
+			<span>
+				BYTE Student Tracker
+			</span>
+		</a>
+	</div>
+	
+	<nav class="header-menu">
+		<ul class="header-menu-left">
+			<li class="header-cohorts">
+				<a>
+				Cohorts
+				</a>
+			</li>
+			<li class="header-students">
+				<a>
+				Students
+				</a>
+			</li>
+			<li class="header-search">
+				<a>
+				Search
+				</a>
+			</li>
+			<li class="header-logout">
+				<a>
+				Logout
+				</a>
+			</li>
+		</ul>
+	</nav>
+
+{%block subheader %}
+{% endblock %}
+
+
 <body>
 	<div class="wrapper">
 		<div clas="container">
-			<h1> {% block head %}{% endblock %}</h1>
 			{% block content %}{% endblock %}
 		</div>
 	</div>

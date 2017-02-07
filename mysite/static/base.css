@@ -17,7 +17,7 @@ h1 {
 }
 
 div.wrapper {
-	background-color: light-brown;
+	padding:20px;
 }
 
 #login-button  {
@@ -27,14 +27,14 @@ div.wrapper {
 }
 
 
+
 div.container {
-	font-family: 'Indie Flower', cursive;
 	position:center;
 	padding-top:15%;
 
 }
 
-p#welcome-message, h3#welcom-header, li {
+p#welcome-message, h3#welcom-header {
 	font-family: 'Indie Flower', cursive;
 }
 
@@ -43,4 +43,159 @@ p#welcome-header {
 	color: blue;
 }
 
+/* cohort list idex.html css*/
 
+.new-cohort-button {
+	width : 30%;
+	padding: 5px;
+	display: block ;
+}
+
+div#cohort-list-div:hover {
+	background-color: #d65602
+}
+
+div#cohort-list-div {
+    text-align: center;
+    border: 3px solid orange;
+    background-color: #ffbb02;
+}
+
+div#cohort-register-div {
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.cohort-form-div {
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    max-width: 277px;
+    height: 320px;
+}
+
+.cohort-form-div>form {
+	text-align: left;
+}
+
+#add-cohort-form>p>input {
+	width:100%;
+}
+
+#add-cohort-form>p>select {
+	width:100%;
+}
+/* form appearance */
+
+
+
+/*base html css*/
+
+.header-menu a {
+	color: #bbb;
+}
+
+a {
+	text-decoration: none;
+	cursor:pointer;
+	background-color: transparent;
+}
+
+* {
+	box-sizing: inherit;
+}
+
+nav {
+	display:block;
+}
+
+.header__menu>.header__menu-left {
+	float:left;
+	padding-left:35px;
+}
+
+.header-menu>ul>li {
+	float: left;
+	text-transform: uppercase;
+	margin-right: 1.5em;
+	margin-top: 15px;
+
+}
+
+li {
+	display: list-item;
+	text-align: -webkit-match-parent;
+
+}
+
+.header-menu>ul {
+	margin:16px 0;
+	display:flex;
+	-webkit-box-pack:justify;
+	justify-content: space-between;
+	list-style-type: none;
+
+}
+
+header.header {
+	background-color: #fff;
+	opacity:1;
+	height:72px;
+	display: block;
+	box-sizing: inherit;
+}
+div.header-logo {
+	font-family: MarrSancs, Helvetica, Arial Black, sans-serif;
+	font-weight: 600;
+	text-rendering: geometricPrecision;
+	font-size:13px;
+	border-bottom: 1px solid #eee;
+	position:relative;
+	float: left;
+	padding: 0 10px;
+	min-height:  72px;
+}
+
+.header-logo-image {
+	display: block;
+	width: 155px;
+	height: 22px;
+	padding: 25px;
+	float: right;
+	box-sizing: content-box;
+	background-color: orange;
+}
+
+.header-logo-image span {
+	border:0;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	position: absolute;
+	width:1px;
+	color: white;
+
+}
+
+ul.menu-left a::hover {
+	border: 2px:
+	color:orange; 
+
+}
+
+/*sub header csss*/
+
+subheader {
+	display: block;
+	margin-top: 50px;
+}
+
+
+fa-plus {
+	float:left;
+	display: inline-block;
+}

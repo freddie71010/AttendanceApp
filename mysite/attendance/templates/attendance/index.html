@@ -2,28 +2,38 @@
 {% block title %} Index View {% endblock title %}
 {% block head %} Index {% endblock head %}
 
-{% block content %}
-<h1> This will list all the cohorts</h1>
-<button type="submit"  value="new-cohort" class="new-cohort-button">Add Cohort</button>
+{%block subheader %}
+	<subheader class='subheader'>
 
-<div id="cohort-register-div" class="hidden">
-	<form method="post" id="add-cohort-form" action="/register_cohort">{% csrf_token %}
-            {{ form.as_p }}
-    </form>
-    <button type="submit" value="Register" id="register-cohort">Register</button>
-</div>
-<div class="cohort-list">
+		<button class="btn btn-warning btn-block new-cohort-button"><span class="glyphicon glyphicon-plus"></span> Register New Cohort</button>
+		
+		<div id="cohort-register-div" class="hidden">
+			<div class="cohort-form-div">
+			<form method="post" id="add-cohort-form" action="/register_cohort">{% csrf_token %}
+		            {{ form.as_p }}
+		    </form>
+		    <button type="submit" value="Register" id="register-cohort">Register</button>
+		    </div>
+		</div>
+		
+	</subheader>
+{% endblock %}
+
+
+{% block content %}
+
+<table class="cohort-list">
 	{% for cohort in cohorts %}
+		
 		<ul>
-			<li><a href="cohort/{{ cohort.cohort_name }}">{{ cohort.cohort_name }}</a></li>
+
+			<div id="cohort-list-div">
+				<item id="list-cohort-li"><a href="cohort/{{ cohort.cohort_name }}">{{ cohort.cohort_name }}</a></item>
+			</div>
 		</ul>
 
 	{% endfor %}
 
-
-	{% for student in students %}
-		<li>{{ student.first_name }} {{ student.last_name }}</li>
-	{% endfor %}
 </div>
 {% endblock content %}
 
