@@ -2,24 +2,72 @@
 {% block title %} Cohort Detail {% endblock title %}
 {% block head %} Cohort Detail {% endblock head %}
 
-{% block content %}
-<div class="sub-heading">
-	<h1>This will list all the students in the cohort</h1>
-	<h3>Teacher: {{teacher}}</h3>
-	<h3 class="cohort_name" id="{{cohort_name}}">Cohort Name: {{cohort_name}}</h3>
-	<h3>Start Date: {{start_date}}</h3>
-	<h3>Graduation Date: {{graduation_date}}</h3>
-</div>
-<button type="submit"  value="new-student" class="new-student-button">Add Student</button>
-<div id="student-register-div" class="hidden">
-	<div class="add-student-form">
-		<h3>Register Student</h3>
-		<form method="post" id="register-student-form">{% csrf_token %}
-		{{ form.as_table }}
-		<button type="submit" id="register-student" value="Register">Register</button>
-		</form>
+{%block subheader %}
+<subheader class='subheader'>
+	
+	<h1 class="cohort_name" id="{{cohort_name}}">{{cohort_name}}</h1>
+	<div class="cohort-info">
+		<h3>Teacher: {{teacher}}</h3>
+		<h3>Start Date: {{start_date}}</h3>
+		<h3>Graduation Date: {{graduation_date}}</h3>
 	</div>
+
+	<button class="btn btn-warning btn-block new-student-button"><span class="glyphicon glyphicon-plus"></span> Add Student</button>
+
+	<div id="student-register-div" class="hidden">
+		<div class="add-student-form">
+			<h3>Register Student</h3>
+			<form method="post" id="register-student-form">{% csrf_token %}
+			{{ form.as_table }}
+			<button type="submit" id="register-student" class="btn btn-success btn-small" value="Register"><i class="icon-white icon-plus"> Register</i></button>
+			</form>
+		</div>
+	</div>
+
+</subheader>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="month"> 
+  <ul>
+    <li class="prev">&#10094;</li>
+    <li class="next">&#10095;</li>
+    <li>
+      {{month}} August<br>
+      <span style="font-size:18px">{{year}}2016</span>
+      {{week}} week 1<br>
+    </li>
+  </ul>
 </div>
+
+<ul class="weekdays">
+  <li>Mo</li>
+  <li>Tu</li>
+  <li>We</li>
+  <li>Th</li>
+  <li>Fr</li>
+  <li>Sa</li>
+  <li>Su</li>
+</ul>
+
+<ul class="days"> 
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li>4</li>
+  <li>5</li>
+  <li>6</li>
+  <li>7</li>
+  <li>8</li>
+  <li>9</li>
+  <li><span class="active">10</span></li>
+  <li>11</li>
+</ul>
+
+
+
 
 <ul class="student-list">
 {% for member in members %}

@@ -26,7 +26,9 @@ div.wrapper {
 	width: 10%;
 }
 
-
+body {
+	background-color: #fdffb8;
+}
 
 div.container {
 	position:center;
@@ -59,7 +61,20 @@ div#cohort-list-div {
     text-align: center;
     border: 3px solid orange;
     background-color: #ffbb02;
+    color: white;
 }
+
+#list-cohort-li>a {
+	text-transform: uppercase;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+	color: white;
+}
+
 
 div#cohort-register-div {
     text-align: center;
@@ -147,6 +162,7 @@ header.header {
 	height:72px;
 	display: block;
 	box-sizing: inherit;
+	border-bottom: medium solid;
 }
 div.header-logo {
 	font-family: MarrSancs, Helvetica, Arial Black, sans-serif;
@@ -184,6 +200,27 @@ div.header-logo {
 ul.menu-left a::hover {
 	border: 2px:
 	color:orange; 
+
+}
+
+/* cohort detail view */
+
+.cohort_name {
+    font-family: MarrSancs, Helvetica, Arial Black, sans-serif;
+    font-weight: 700;
+    text-rendering: geometricPrecision;
+    position: relative;
+    text-align: center;
+    color: orange;
+    background-color: cornsilk;
+    border-bottom: medium solid;
+}
+
+.cohort-detail {
+	font-family: MarrSancs, Helvetica, Arial Black, sans-serif;
+	font-weight: 300;
+	position: inline-block;
+	color: orange;
 
 }
 
