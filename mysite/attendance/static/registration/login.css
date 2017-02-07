@@ -1,15 +1,3 @@
-.hidden{
-	display:none;
-}
-
-.unhidden {
-	display:block;
-}
-
-p#welcome-header {
-	color: blue;
-}
-
 h1 {
 	color: orange;
 	position: block;
@@ -39,8 +27,6 @@ p#welcome-message, h3#welcom-header, li {
 }
 
 p#welcome-header {
-	font-family: fantasy;
 	color: blue;
 }
-
 
