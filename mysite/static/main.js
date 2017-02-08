@@ -71,17 +71,33 @@ console.log("js loaded!")
 			type: "post",
 			data: kwargs,
 			success: function(response){
+				console.log(kwargs);	//ERROR:::::::::CSRF token is coming back as undefined!
 				$('.student-list').prepend(
-					`<li><a href = 'profile/`
-					+ response.first_name + "." + response.last_name +
-					"'>" + response.first_name + " " + response.last_name + "</a></li>" +
-					`<form class="student-checkbox-tags">
-						<input type="checkbox" class="checkbox" name="present" value="present">
-						<input type="checkbox" class="checkbox" name="unexcused" value="unexcused">
-						<input type="checkbox" class="checkbox" name="excused" value="excused">
-						<input type="checkbox" class="checkbox" name="late" value="late">
-					</form>
-					`);
+					`<li class="individual-student">
+						<div class="cohort-detail-student-name-div">
+							<a class="username" id="`
+							+ response.first_name + "." + response.last_name +
+							`" href="/profile/`
+							+ response.first_name + "." + response.last_name + 
+							`">`
+							+ response.first_name + " " + response.last_name + 
+							`</a>
+						</div>
+						<form class="student-checkbox-tags">
+							<input type = "hidden" name = "csrfmiddlewaretoken" value = "`
+							+ response.csrfmiddlewaretoken +
+							`">
+							<label>Present</label>
+							<input type="checkbox" class="checkbox" name="present" value="present" checked>
+							<label>Unexcused</label>
+							<input type="checkbox" class="checkbox" name="unexcused" value="unexcused">
+							<label>Excused</label>
+							<input type="checkbox" class="checkbox" name="excused" value="excused">
+							<label>Late</label>
+							<input type="checkbox" class="checkbox" name="late" value="late">
+						</form>
+					</li>
+				`);
 				console.log("AJAX register student - success!:", response.first_name);
 				document.getElementById("register-student-form").reset();
 				

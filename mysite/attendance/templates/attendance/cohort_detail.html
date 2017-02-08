@@ -37,9 +37,9 @@
     <li>
       <month>{{month}} August<month><br>
       <span style="font-size:18px">
-      <year>{{year}}2016</year></span>
+      	<year>{{year}}2016</year>
+      </span>
       <week>{{week}} week 1</week><br>
-
       {{today}} todays date<br>
     </li>
   </ul>
@@ -47,13 +47,13 @@
 
 
 <ul class="weekdays">
+  <li>Su</li>
   <li>Mo</li>
   <li>Tu</li>
   <li>We</li>
   <li>Th</li>
   <li>Fr</li>
   <li>Sa</li>
-  <li>Su</li>
 </ul>
 
 <ul class="days"> 
@@ -68,13 +68,13 @@
 
 
 <ul class="student-list">
-{% for member in members %}
 
+{% for member in members %}
   <li class="individual-student">
 	<div class="cohort-detail-student-name-div">
 		<a class="username" id="{{member.username}}" href="/profile/{{member.username}}".format(member.username)>{{member.first_name}} {{member.last_name}}</a>
 	</div>
-	<form class="student-checkbox-tags">
+	<form class="student-checkbox-tags">{% csrf_token %}
 		<label>Present</label>
 		<input type="checkbox" class="checkbox" name="present" value="present" checked>
 		<label>Unexcused</label>
@@ -85,8 +85,8 @@
 		<input type="checkbox" class="checkbox" name="late" value="late">
 	</form>
   </li>
-
 {% endfor %}	
+
 </ul>
 <div class="submit-attendance-div">
 	<button class="btn btn-success btn-block take-attendance-button"><span class="glyphicon glyphicon-plus"></span> Submit Attendance</button>

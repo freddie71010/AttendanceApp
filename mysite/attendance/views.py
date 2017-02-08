@@ -175,6 +175,7 @@ class ProfileDetailView(View):
 class Attendance(View):
 	def post(self, request, cohort_name, teacher):
 		data = dict(request.POST)
+		print("data:", data)
 		# data should be a list of students with associated data
 		# data = { name: { "date":today , status:status },
 		# 	name2 : {'date': today , status:status },
