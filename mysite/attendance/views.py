@@ -152,11 +152,14 @@ class CohortDetailView(View):
 			"teacher": cohort.teacher,
 			"members": members,
 			"form": self.form,
+			"date": timezone.now(),
 		}
 		return render(request, self.template, context)
 
 	def post(self, request, cohort):
 		pass
+
+
 
 
 @method_decorator(login_required, name='dispatch')
