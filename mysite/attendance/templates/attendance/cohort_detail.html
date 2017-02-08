@@ -35,12 +35,16 @@
     <li class="prev">&#10094;</li>
     <li class="next">&#10095;</li>
     <li>
-      {{month}} August<br>
-      <span style="font-size:18px">{{year}}2016</span>
-      {{week}} week 1<br>
+      <month>{{month}} August<month><br>
+      <span style="font-size:18px">
+      <year>{{year}}2016</year></span>
+      <week>{{week}} week 1</week><br>
+
+      {{today}} todays date<br>
     </li>
   </ul>
 </div>
+
 
 <ul class="weekdays">
   <li>Mo</li>
@@ -60,28 +64,33 @@
   <li>5</li>
   <li>6</li>
   <li>7</li>
-  <li>8</li>
-  <li>9</li>
-  <li><span class="active">10</span></li>
-  <li>11</li>
 </ul>
-
-
 
 
 <ul class="student-list">
 {% for member in members %}
-	<li class="individual-student"><a href="/profile/{{member.username}}">{{member.first_name}} {{member.last_name}}</a></li>
 
-<!-- 	<li class="individual-student"><a href="/profile/{}".format(member.username)>{{member.first_name}} {{member.last_name}}</a>
-		<form class="student-radio-tags">
-			<input type="radio" class="radio" name="present" value="present" checked>
-			<input type="radio" class="radio" name="unexcused" value="unexcused">
-			<input type="radio" class="radio" name="excused" value="excused">
-			<input type="radio" class="radio" name="late" value="late">
-		</form>
-	</li> -->
+  <li class="individual-student">
+	<div class="cohort-detail-student-name-div">
+		<a class="username" id="{{member.username}}" href="/profile/{{member.username}}".format(member.username)>{{member.first_name}} {{member.last_name}}</a>
+	</div>
+	<form class="student-checkbox-tags">
+		<label>Present</label>
+		<input type="checkbox" class="checkbox" name="present" value="present" checked>
+		<label>Unexcused</label>
+		<input type="checkbox" class="checkbox" name="unexcused" value="unexcused">
+		<label>Excused</label>
+		<input type="checkbox" class="checkbox" name="excused" value="excused">
+		<label>Late</label>
+		<input type="checkbox" class="checkbox" name="late" value="late">
+	</form>
+  </li>
 
 {% endfor %}	
 </ul>
+<div class="submit-attendance-div">
+	<button class="btn btn-success btn-block take-attendance-button"><span class="glyphicon glyphicon-plus"></span> Submit Attendance</button>
+</div>
+
+
 {% endblock content %}

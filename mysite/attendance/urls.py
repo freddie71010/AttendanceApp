@@ -11,5 +11,6 @@ urlpatterns = [
 	url(r'^index$', Index.as_view(), name='index'),
 	url(r'^cohort/(?P<cohort>[\w\-]+$)', CohortDetailView.as_view(), name='cohort_detail'),
 	url(r'^profile/(?P<username>[\w\-]+$)', ProfileDetailView.as_view(), name='profile_detail'),
+	url(r'^take_attendance$', Attendance.as_view(), name='take_attendance'),
 ]
 	

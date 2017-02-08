@@ -75,11 +75,11 @@ console.log("js loaded!")
 					`<li><a href = 'profile/`
 					+ response.first_name + "." + response.last_name +
 					"'>" + response.first_name + " " + response.last_name + "</a></li>" +
-					`<form class="student-radio-tags">
-						<input type="radio" class="radio" name="present" value="present">
-						<input type="radio" class="radio" name="unexcused" value="unexcused">
-						<input type="radio" class="radio" name="excused" value="excused">
-						<input type="radio" class="radio" name="late" value="late">
+					`<form class="student-checkbox-tags">
+						<input type="checkbox" class="checkbox" name="present" value="present">
+						<input type="checkbox" class="checkbox" name="unexcused" value="unexcused">
+						<input type="checkbox" class="checkbox" name="excused" value="excused">
+						<input type="checkbox" class="checkbox" name="late" value="late">
 					</form>
 					`);
 				console.log("AJAX register student - success!:", response.first_name);
@@ -91,56 +91,36 @@ console.log("js loaded!")
 			}	
 		}) //end ajax
 	});
+//ajax for "Take-attendance-button" form
+	$('.take-attendance-button').on('click', function(event){
+		event.preventDefault();
+		console.log("submit attendance button clicked!");
+
+		var student_names_obj = {};
+			$(".username").each(function() {
+			    student_names_obj[$(this).attr('id')] = $(this).parent().next().children(':checked').val();
+			});
+
+		// !!!!!! Still working on the above code bloack need to grab date to make this work.
+
+		console.log(student_names_obj)
 
 
- // // this code makes sure the django ajax works and we dont have to deal with a bunch of csrf bs
- //    // This function gets cookie with a given name
- //    function getCookie(name) {
- //        var cookieValue = null;
- //        if (document.cookie && document.cookie != '') {
- //            var cookies = document.cookie.split(';');
- //            for (var i = 0; i < cookies.length; i++) {
- //                var cookie = jQuery.trim(cookies[i]);
- //                // Does this cookie string begin with the name we want?
- //                if (cookie.substring(0, name.length + 1) == (name + '=')) {
- //                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
- //                    break;
- //                }
- //            }
- //        }
- //        return cookieValue;
- //    }
- //    var csrftoken = getCookie('csrftoken');
+		$.ajax({
+			url: "/take_attendance",
+			type: "post",
+			data: student_names_obj,
+			success: function(response){
+	
+				console.log("AJAX register student - success!:", response.first_name);
+				
+			},
+			error: function(){
+				console.log("Error");
+			}	
+		}) //end ajax
+	});
 
- //    /*
- //    The functions below will create a header with csrftoken
- //    */
 
- //    function csrfSafeMethod(method) {
- //        // these HTTP methods do not require CSRF protection
- //        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
- //    }
- //    function sameOrigin(url) {
- //        // test that a given url is a same-origin URL
- //        // url could be relative or scheme relative or absolute
- //        var host = document.location.host; // host + port
- //        var protocol = document.location.protocol;
- //        var sr_origin = '//' + host;
- //        var origin = protocol + sr_origin;
- //        // Allow absolute or scheme relative URLs to same origin
- //        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
- //            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
- //            // or any other URL that isn't scheme relative or absolute i.e relative.
- //            !(/^(\/\/|http:|https:).*/.test(url));
- //    }
 
- //    $.ajaxSetup({
- //        beforeSend: function(xhr, settings) {
- //            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
- //                // Send the token to same-origin, relative URLs only.
- //                // Send the token only if the method warrants CSRF protection
- //                // Using the CSRFToken value acquired earlier
- //                xhr.setRequestHeader("X-CSRFToken", csrftoken);
- //            }
- //        }
 	});

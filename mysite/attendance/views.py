@@ -30,6 +30,11 @@ class Index(View):
 		context = {"cohorts": cohorts, "form":self.form()}
 		return render(request, self.template, context)
 
+# class Search(View):
+# 	model = Cohort, Students
+# 	def post(self, request):
+# 		thing = 
+
 
 class Login(View):
 	def get(self, request):
@@ -165,6 +170,43 @@ class ProfileDetailView(View):
 
 	def post(self, request):
 		pass
+
+@method_decorator(login_required, name='dispatch')
+class Attendance(View):
+	def post(self, request, cohort_name, teacher):
+		data = dict(request.POST)
+		# data should be a list of students with associated data
+		# data = { name: { "date":today , status:status },
+		# 	name2 : {'date': today , status:status },
+			# ect...
+		# }
+		# need to step through and grab all students by name and submit thir attendance in to attendance model.
+		'''sudo 
+			data.keys = [list of keys]
+			for item in [list of keys]:
+				list[item] = {date:date, status:status}
+					student_name = item
+					date = list[item][date]
+					status = list[item][status]
+					cohort = cohort
+					teacher = teacher
+
+				user_profile=User.objects.get(username=usernae)
+				user_attendance_record = AttendanceRecord.objects.create(user_profile.id, date, status, teacher, ....)
+				user_attendance.save()
+		return Httpresponse success
+		'''
+	def get(self, request):
+		pass
+
+
+
+
+
+
+
+
+
 
 
 # logs out user
