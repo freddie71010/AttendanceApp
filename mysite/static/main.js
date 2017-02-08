@@ -107,6 +107,19 @@ console.log("js loaded!")
 			}	
 		}) //end ajax
 	});
+
+// ////// DATE PICKER
+
+   // $( "#datepicker-2" ).datepicker();
+
+   $( "#datepicker" ).datepicker({
+  beforeShowDay: $.datepicker.noWeekends
+});
+
+// !!!!!!!!!!!!!!!!
+
+
+
 //ajax for "Take-attendance-button" form
 	$('.take-attendance-button').on('click', function(event){
 		event.preventDefault();
@@ -116,6 +129,8 @@ console.log("js loaded!")
 			$(".username").each(function() {
 			    student_names_obj[$(this).attr('id')] = $(this).parent().next().children(':checked').val();
 			});
+
+
 
 		// !!!!!! Still working on the above code bloack need to grab date to make this work.
 
