@@ -12,21 +12,23 @@ $(document).ready(function(){
 		for (i = 1; i <= 7; i++) {
 			if (i == 1) {
 				$('.cal-numdays li:nth-child('+i+')').html(start_of_week.date())
+				start_of_week.add(1, 'days')
 			}
 			else {
-				$('.cal-numdays li:nth-child('+i+')').html(start_of_week.date() + i)
+				$('.cal-numdays li:nth-child('+i+')').html(start_of_week.date())
+				start_of_week.add(1, 'days')
 			}
 		};
 	}
 
 	$('.next').on('click', function(event){
-		start_of_week = start_of_week.add(7, 'days')
+		// start_of_week = start_of_week.add(7, 'days')
 		$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
 		date_loop(start_of_week);
 	})
 
 	$('.prev').on('click', function(event){
-		start_of_week = start_of_week.subtract(7, 'days')
+		start_of_week = start_of_week.subtract(14, 'days')
 		$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
 		date_loop(start_of_week);
 	})
