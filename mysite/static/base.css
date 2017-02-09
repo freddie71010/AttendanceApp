@@ -314,13 +314,13 @@ form.student-checkbox-tags {
 }
 
 /* Days (1-31) */
-.days {
+.cal-numdays {
     padding: 10px 0;
     background: #eee;
     margin: 0;
 }
 
-.days li {
+.cal-numdays li {
     list-style-type: none;
     display: inline-block;
     width: 13.6%;

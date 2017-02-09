@@ -1,14 +1,35 @@
 $(document).ready(function(){
-console.log("js loaded!")
+	console.log("js loaded!")
 
-var now = moment();
-console.log("Now:", now);
-// var year = 
-// var month =
-// var day =
-// $('#todays-date').HTML(now.year());
+//Sets calendar values on Cohort Detail page
+	var now = moment();
+	var now_format = now.format("MMMM D, YYYY");
+	var start_of_week = now.startOf('week');
+	$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
+	date_loop(start_of_week);
 
+	function date_loop(start_of_week) {
+		for (i = 1; i <= 7; i++) {
+			if (i == 1) {
+				$('.cal-numdays li:nth-child('+i+')').html(start_of_week.date())
+			}
+			else {
+				$('.cal-numdays li:nth-child('+i+')').html(start_of_week.date() + i)
+			}
+		};
+	}
 
+	$('.next').on('click', function(event){
+		start_of_week = start_of_week.add(7, 'days')
+		$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
+		date_loop(start_of_week);
+	})
+
+	$('.prev').on('click', function(event){
+		start_of_week = start_of_week.subtract(7, 'days')
+		$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
+		date_loop(start_of_week);
+	})
 
 
 //hides and unhides "New Cohort" form
