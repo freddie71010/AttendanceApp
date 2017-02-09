@@ -19,10 +19,10 @@ from django.core import serializers
 
 
 @method_decorator(login_required, name='dispatch') #due to us using CBV(class based views), we need to use insert the 'login_required' decorator into a method decorator in order for it to work (see django docs)
-class Index(View):
+class Cohorts(View):
 	
 	model = Cohort
-	template = "attendance/index.html"
+	template = "attendance/cohorts.html"
 	form = CohortRegistrationForm
 
 	def get(self, request):
@@ -47,7 +47,7 @@ class Login(View):
 		if user is not None:
 			login(request, user)
 			print("User is successfully logged in as:", username)
-			return redirect('/index')
+			return redirect('/cohorts')
 		else:
 			return redirect('/')
 
