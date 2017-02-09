@@ -1,4 +1,33 @@
-img	{
-    max-width: 15%;
-    height: auto;
+div.container {
+	padding-top: 2%;
+}
+
+div.container-center {
+	margin-bottom: 7%;
+}
+
+div.container-center img{
+	display: block;
+	margin-right: auto; 
+	margin-left: auto;
+}
+
+div.container-center form {
+    text-align: center;
+}
+
+.welcome {
+	font-family: 'Indie Flower', cursive;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+p#welcome-header {
+	font-family: fantasy;
+	color: blue;
+}
+
+#login-button  {
+	position: block;
+	width: 10%;
 }

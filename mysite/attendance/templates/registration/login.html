@@ -7,31 +7,30 @@
 {% block title %}Login{% endblock title %}
 {% block head %}Login{% endblock head %}
 {% block content %}
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-	<img src="/static/img/byte_academy_logo.png" alt="..." class="img-rounded">
-
-    <form class="form" method="post" action='/login' >{% csrf_token %}
-        <input type="text" placeholder="Username" name="username">
-        <input type="password" placeholder="Password" name="password">
-        <button type="submit"  value="Login" id="login-button">Login</button>
-    </form>
+	{% if form.errors %}
+		<p>Your username and password didn't match. Please try again.</p>
+	{% endif %}
+	<div class = 'container-center'>
+		<img src="/static/img/byte_academy_logo.png" alt="...">
+		<form class="form" method="post" action="/login" >{% csrf_token %}
+			<input type="text" placeholder="Username" name="username">
+			<input type="password" placeholder="Password" name="password">
+			<button type="submit"  value="Login" id="login-button">Login</button>
+		</form>
+	</div>
 	
-	<div class=container>
-    <h3 id=welcome-header> Welcome Teachers</h3>
-	    <p id=welcome-message>
-			Teachers please use this application to track your students.</br>
-			This is the initial release and will only have basic attendance tracing for cohorts and note system for students.
-	    </p>
-	    <ul> 
-			<li id=line-1>Future releases will have</li>
-			<li> A place for students to login and show off their final projects</li>
-			<li> Analysis of cohorts attendance in infographic</li>
-			<li> Better UI</li>
-
-	    </ul>
-	
+	<div class = 'welcome'>
+		<h3 id="welcome-header"> Welcome Teachers</h3>
+		<p id="welcome-message">
+				Teachers please use this application to track your students.</br>
+				This is the initial release and will only have basic attendance tracing for cohorts and note system for students.
+			<ul> 
+				<li>Future releases will have:</li>
+				<li> A place for students to login and show off their final projects</li>
+				<li> Analysis of cohorts attendance in infographic</li>
+				<li> Better UI</li>
+			</ul>
+		</p>
 	</div>
 
 {% endblock content %}

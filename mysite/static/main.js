@@ -1,5 +1,16 @@
 $(document).ready(function(){
 console.log("js loaded!")
+
+var now = moment();
+console.log("Now:", now);
+// var year = 
+// var month =
+// var day =
+// $('#todays-date').HTML(now.year());
+
+
+
+
 //hides and unhides "New Cohort" form
 	$('.new-cohort-button').on('click', function(event){
 		var item = document.getElementById('cohort-register-div')

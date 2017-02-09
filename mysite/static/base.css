@@ -8,10 +8,6 @@
 	display:block;
 }
 
-p#welcome-header {
-	color: blue;
-}
-
 h1 {
 	color: orange;
 	position: block;
@@ -22,30 +18,15 @@ div.wrapper {
 	padding:20px;
 }
 
-#login-button  {
-	position: block;
-	float: left;
-	width: 10%;
-}
-
 body {
 	background-color: #fdffb8;
 }
 
+/* QUESTION: Is this div.container for pages other than login? Login container has a padding-top of 2% */
 div.container {
-	position:center;
-	padding-top:15%;
-
+	padding-top: 15%;
 }
 
-p#welcome-message, h3#welcom-header {
-	font-family: 'Indie Flower', cursive;
-}
-
-p#welcome-header {
-	font-family: fantasy;
-	color: blue;
-}
 
 
 /*!!!!!!!!!!!!!!!!!*/
