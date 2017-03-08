@@ -142,16 +142,6 @@ $(document).ready(function(){
 		}) //end ajax
 	});
 
-// ////// DATE PICKER
-
-   // $( "#datepicker-2" ).datepicker();
-
-   $( "#datepicker" ).datepicker({
-  beforeShowDay: $.datepicker.noWeekends
-});
-
-// !!!!!!!!!!!!!!!!
-
 
 
 //ajax for "Take-attendance-button" form
@@ -164,12 +154,9 @@ $(document).ready(function(){
 			    student_names_obj[$(this).attr('id')] = $(this).parent().next().children(':checked').val();
 			});
 
-
-
 		// !!!!!! Still working on the above code bloack need to grab date to make this work.
 
 		console.log(student_names_obj)
-
 
 		$.ajax({
 			url: "/take_attendance",
@@ -184,8 +171,24 @@ $(document).ready(function(){
 				console.log("Error");
 			}	
 		}) //end ajax
-	});
+	}); //end func
+
+
+	// when a specific date number is clicked on, the background changes and that date is selected for DB query use
+	$('ul.cal-numdays li').on('click', function(event){
+		$('ul.cal-numdays li').removeAttr("style");
+		$(this).css("background-color","yellow");
+
+		clicked_date = $(this).text();
+		clicked_begin_of_week = start_of_week.subtract(7, 'd'); //finds beginning of week
+		diff = parseInt(clicked_date) - parseInt(clicked_begin_of_week.format('D'));
+		new_button_date = start_of_week.add(diff,'d');
+
+		$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + new_button_date.format('ddd, MMM D'));
+	}); //end func
 
 
 
-	});
+
+
+}); //end doc
