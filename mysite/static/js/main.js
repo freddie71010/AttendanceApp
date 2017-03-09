@@ -180,11 +180,17 @@ $(document).ready(function(){
 		$(this).css("background-color","yellow");
 
 		clicked_date = $(this).text();
-		clicked_begin_of_week = start_of_week.subtract(7, 'd'); //finds beginning of week
-		diff = parseInt(clicked_date) - parseInt(clicked_begin_of_week.format('D'));
-		new_button_date = start_of_week.add(diff,'d');
-
-		$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + new_button_date.format('ddd, MMM D'));
+		diff = parseInt(start_of_week.format('D')) - parseInt(clicked_date);
+		new_button_date = start_of_week.subtract(diff,'d');
+		$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + start_of_week.format('ddd, MMM D'));
+		
+		console.log(
+			"clicked_date:\t", clicked_date,
+			"start_of_week:\t", start_of_week.format('MMM D'),
+			"new_button_date:\t", new_button_date.format('MMM D'),
+			"\ndiff:\t",diff
+			);
+		
 	}); //end func
 
 
