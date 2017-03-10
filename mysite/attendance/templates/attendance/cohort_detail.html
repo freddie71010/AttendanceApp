@@ -75,15 +75,15 @@
 	<div class="cohort-detail-student-name-div">
 		<a class="username" id="{{member.username}}" href="/profile/{{member.username}}".format(member.username)>{{member.first_name}} {{member.last_name}}</a>
 	</div>
-	<form class="student-checkbox-tags">{% csrf_token %}
+	<form class="student-radio-tags">{% csrf_token %}
 		<label>Present</label>
-		<input type="checkbox" class="checkbox" name="present" value="present" checked>
+		<input type="radio" class="radio" name="student-attendance" value="present">
 		<label>Unexcused</label>
-		<input type="checkbox" class="checkbox" name="unexcused" value="unexcused">
+		<input type="radio" class="radio" name="student-attendance" value="unexcused">
 		<label>Excused</label>
-		<input type="checkbox" class="checkbox" name="excused" value="excused">
+		<input type="radio" class="radio" name="student-attendance" value="excused">
 		<label>Late</label>
-		<input type="checkbox" class="checkbox" name="late" value="late">
+		<input type="radio" class="radio" name="student-attendance" value="late">
 	</form>
   </li>
 {% endfor %}	

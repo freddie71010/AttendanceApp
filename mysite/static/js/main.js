@@ -174,18 +174,18 @@ $(document).ready(function(){
 							+ response.first_name + " " + response.last_name + 
 							`</a>
 						</div>
-						<form class="student-checkbox-tags">
+						<form class="student-radio-tags">
 							<input type = "hidden" name = "csrfmiddlewaretoken" value = "`
 							+ response.csrfmiddlewaretoken +
 							`">
 							<label>Present</label>
-							<input type="checkbox" class="checkbox" name="present" value="present" checked>
+							<input type="radio" class="radio" name="student-attendance" value="present">
 							<label>Unexcused</label>
-							<input type="checkbox" class="checkbox" name="unexcused" value="unexcused">
+							<input type="radio" class="radio" name="student-attendance" value="unexcused">
 							<label>Excused</label>
-							<input type="checkbox" class="checkbox" name="excused" value="excused">
+							<input type="radio" class="radio" name="student-attendance" value="excused">
 							<label>Late</label>
-							<input type="checkbox" class="checkbox" name="late" value="late">
+							<input type="radio" class="radio" name="student-attendance" value="late">
 						</form>
 					</li>
 				`);
@@ -207,9 +207,10 @@ $(document).ready(function(){
 		console.log("submit attendance button clicked!");
 
 		var student_names_obj = {};
-			$(".username").each(function() {
-			    student_names_obj[$(this).attr('id')] = $(this).parent().next().children(':checked').val();
-			});
+		$(".username").each(function() {
+		    student_names_obj[$(this).attr('id')] = $(this).parent().next().children(':checked').val();
+		});
+
 
 		// !!!!!! Still working on the above code bloack need to grab date to make this work.
 
