@@ -11,7 +11,8 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.utils import timezone
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+
 import simplejson as json
 from datetime import datetime
 from django.core import serializers
@@ -61,7 +62,6 @@ class RegisterStudent(View):
 	def post(self, request):
 		data = dict(request.POST)
 		print("data:", data)
-		# print("Register Student view - cohort:", request.POST.cohort)
 		new_user = User.objects.create(
 			first_name = data["first_name"][0],
 			last_name = data["last_name"][0],
@@ -82,7 +82,7 @@ class RegisterStudent(View):
 		associated_cohort.members.add(new_user)
 		associated_cohort.save()
 
-		print("==========user and profile created by: " + str(request.user))
+		print("==========user and profile created by: " + str(request.user) + "==========")
 		return JsonResponse({"first_name": new_user.first_name, "last_name": new_user.last_name}, safe=False)
 
 
@@ -160,10 +160,9 @@ class CohortDetailView(View):
 		pass
 
 
-
-
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(View):
+	
 	template = "attendance/profile_detail.html"
 	
 	def get(self, request, id):
@@ -174,9 +173,15 @@ class ProfileDetailView(View):
 	def post(self, request):
 		pass
 
+
 @method_decorator(login_required, name='dispatch')
 class Attendance(View):
-	def post(self, request, cohort_name, teacher):
+	
+	def get(self, request):
+		pass
+	
+	@ensure_csrf_cookie
+	def post(self, request):
 		data = dict(request.POST)
 		print("data:", data)
 		# data should be a list of students with associated data
@@ -200,8 +205,6 @@ class Attendance(View):
 				user_attendance.save()
 		return Httpresponse success
 		'''
-	def get(self, request):
-		pass
 
 
 

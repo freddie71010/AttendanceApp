@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	console.log("js loaded!")
 
-//ON LOAD ===============
+// ON LOAD ===========================================================================================
 
 //Sets calendar values on Cohort Detail page
 	var now = moment();
@@ -9,8 +9,8 @@ $(document).ready(function(){
 	$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
 	date_loop(start_of_week);
 
-	//Sets background color to yellow for today's date
-	initial_date_background();
+	//defaults settings as if the current day was selected - background color to yellow, button value set as today's date
+	onload_sets_todays_date();
 
 
 //FUNCTIONS =============================================================================
@@ -28,16 +28,18 @@ $(document).ready(function(){
 		start_of_week.subtract(7, 'days')
 	} //end func
 
-	function initial_date_background() {
+	function onload_sets_todays_date() {
 		todays_date = moment();
 		for (i = 0; i < $('ul.cal-numdays li').length; ++i) {
 			if (parseInt(todays_date.format('D')) == parseInt($('.cal-numdays li:nth-child('+i+')').text())){
 				$('.cal-numdays li:nth-child('+i+')').css("background-color","yellow");
 				$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + todays_date.format('ddd, MMM D'));
+				$('.take-attendance-button').attr('value', todays_date.format('MM-DD-YYYY'));
 			}
 		}
 	} //end func
-//=============================================================================
+
+// ===========================================================================================
 
 	//when next button is clicked, the following week's dates are displayed
 	$('.next').on('click', function(event){
@@ -73,6 +75,7 @@ $(document).ready(function(){
 		clicked_date = $(this).text();
 		start_of_week.add(diff,'d');
 		$('.take-attendance-button').removeAttr('disabled');
+		$('.take-attendance-button').attr('value', start_of_week.format('MM-DD-YYYY'));
 		$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + start_of_week.format('ddd, MMM D'));
 		
 		console.log(
@@ -85,11 +88,7 @@ $(document).ready(function(){
 		start_of_week.subtract(diff,'d');
 	}); //end func
 
-
-
-
-
-
+// ===========================================================================================
 
 //hides and unhides "New Cohort" form
 	$('.new-cohort-button').on('click', function(event){
@@ -104,7 +103,7 @@ $(document).ready(function(){
 			cohort.innerHTML= 'Add Cohort';
 			cohort.id ='id', 'new-cohort-button';
 		}
-	})
+	});
 
 //ajax for "New Cohort" form
 	$('#register-cohort').on('click', function(event){
@@ -127,10 +126,12 @@ $(document).ready(function(){
 				document.getElementById("add-cohort-form").reset();
 			},
 			error: function(){
-				console.log("Error");
+				console.log("****New Cohort Error****");
 			}
 		}) //end ajax
 	});
+
+// ===========================================================================================
 
 //hides and unhides "New Student" form
 	$('.new-student-button').on('click', function(event){
@@ -162,7 +163,8 @@ $(document).ready(function(){
 			type: "post",
 			data: kwargs,
 			success: function(response){
-				console.log(kwargs);	//ERROR:::::::::CSRF token is coming back as undefined!
+				console.log("=========Success function reached!=========");
+				console.log("kwargs:",kwargs);
 				$('.student-list').prepend(
 					`<li class="individual-student">
 						<div class="cohort-detail-student-name-div">
@@ -179,7 +181,7 @@ $(document).ready(function(){
 							+ response.csrfmiddlewaretoken +
 							`">
 							<label>Present</label>
-							<input type="radio" class="radio" name="student-attendance" value="present">
+							<input type="radio" class="radio" name="student-attendance" value="present" checked="true">
 							<label>Unexcused</label>
 							<input type="radio" class="radio" name="student-attendance" value="unexcused">
 							<label>Excused</label>
@@ -189,44 +191,46 @@ $(document).ready(function(){
 						</form>
 					</li>
 				`);
-				console.log("AJAX register student - success!:", response.first_name);
+				console.log("AJAX Register Student - Success!:", response.first_name);
 				document.getElementById("register-student-form").reset();
 				
 			},
 			error: function(){
-				console.log("Error");
+				console.log("****New Student AJAX Error****");
 			}	
 		}) //end ajax
-	});
+	}); //end func
 
-
+// ===========================================================================================
 
 //ajax for "Take-attendance-button" form
 	$('.take-attendance-button').on('click', function(event){
 		event.preventDefault();
-		console.log("submit attendance button clicked!");
+		console.log("Submit Attendance Button Clicked!");
 
 		var student_names_obj = {};
 		$(".username").each(function() {
 		    student_names_obj[$(this).attr('id')] = $(this).parent().next().children(':checked').val();
 		});
-
-
-		// !!!!!! Still working on the above code bloack need to grab date to make this work.
-
-		console.log(student_names_obj)
+		var date_value = $('.take-attendance-button').attr('value');
+		var kwargs = {
+					"student_names_obj": student_names_obj,
+					"date_value": $('.take-attendance-button').attr('value'),
+					"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
+		};
+		console.log("kwargs:", kwargs)
 
 		$.ajax({
 			url: "/take_attendance",
 			type: "post",
-			data: student_names_obj,
+			data: kwargs,
 			success: function(response){
-	
-				console.log("AJAX register student - success!:", response.first_name);
+				console.log("Success function reached!");
+
 				
 			},
 			error: function(){
-				console.log("Error");
+				console.log("****Submit Attendance AJAX Error****");
 			}	
 		}) //end ajax
 	}); //end func
