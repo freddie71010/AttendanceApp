@@ -242,7 +242,7 @@ li.individual-student {
     font-size: 15px;
     padding: 12px;
 }
-.student-checkbox-tags>label{
+.student-radio-tags>label{
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
@@ -253,11 +253,11 @@ li.individual-student>a {
 	color: black;
 }
 
-input.checkbox {
+input.radio {
     display: inline-block;
 }
 
-form.student-checkbox-tags {
+form.student-radio-tags {
     display: inline-block;
     padding-left: 30px;
 }

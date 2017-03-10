@@ -35,14 +35,7 @@
     <li class="prev">&#10094;</li>
     <li class="next">&#10095;</li>
     <li>
-      <div id='todays-date'>Hello</div>
-      
-      <!-- <month>{{month}} August<month><br>
-      <span style="font-size:18px">
-      	<year>{{year}}2016</year>
-      </span>
-      <week>{{week}} week 1</week><br>
-      {{today}} todays date<br> -->
+      <div id='todays-date'></div>
     </li>
   </ul>
 </div>
@@ -71,27 +64,29 @@
 <ul class="student-list">
 
 {% for member in members %}
-  <li class="individual-student">
-	<div class="cohort-detail-student-name-div">
-		<a class="username" id="{{member.username}}" href="/profile/{{member.username}}".format(member.username)>{{member.first_name}} {{member.last_name}}</a>
-	</div>
-	<form class="student-checkbox-tags">{% csrf_token %}
-		<label>Present</label>
-		<input type="checkbox" class="checkbox" name="present" value="present" checked>
-		<label>Unexcused</label>
-		<input type="checkbox" class="checkbox" name="unexcused" value="unexcused">
-		<label>Excused</label>
-		<input type="checkbox" class="checkbox" name="excused" value="excused">
-		<label>Late</label>
-		<input type="checkbox" class="checkbox" name="late" value="late">
-	</form>
-  </li>
+  	<li class="individual-student">
+		<div class="cohort-detail-student-name-div">
+			<a class="username" id="{{member.username}}" href="/profile/{{member.username}}".format(member.username)>{{member.first_name}} {{member.last_name}}</a>
+		</div>
+		<form method = 'post' class="student-radio-tags">{% csrf_token %}
+			<label>Present</label>
+			<input type="radio" class="radio" name="student-attendance" value="present">
+			<label>Unexcused</label>
+			<input type="radio" class="radio" name="student-attendance" value="unexcused">
+			<label>Excused</label>
+			<input type="radio" class="radio" name="student-attendance" value="excused">
+			<label>Late</label>
+			<input type="radio" class="radio" name="student-attendance" value="late">
+		</form>
+  	</li>
 {% endfor %}	
+	<div class="submit-attendance-div">
+		<button class="btn btn-success btn-block take-attendance-button">
+			<span class="glyphicon glyphicon-plus"></span>Submit Attendance
+		</button>
+	</div>
 
 </ul>
-<div class="submit-attendance-div">
-	<button class="btn btn-success btn-block take-attendance-button"><span class="glyphicon glyphicon-plus"></span> Submit Attendance</button>
-</div>
 
 
 {% endblock content %}
