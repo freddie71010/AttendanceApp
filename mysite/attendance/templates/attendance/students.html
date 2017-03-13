@@ -11,6 +11,7 @@
 			<div class="student-form-div">
 			<form method="post" id="add-student-form" action="/register_student">{% csrf_token %}
 		            {{ form.as_p }}
+		            Cohort:<input id="id_cohort" type="text" name="cohort">
 		    </form>
 		    <button class="btn btn-success btn-lg active register-student"><span class="glyphicon glyphicon-plus"></span></button>
 		    </div>
@@ -26,10 +27,13 @@
 	{% for student in students %}
 		
 		<ul>
-
-			<div id="student-list-div">
-				<item id="list-student-li"><a href="profile/{{ student.student_name }}">{{ student.student_name }}</a></item>
-			</div>
+			<li>Name: {{student.first_name}} {{student.last_name}}</li>
+			<li>Email: {{student.email}}</li>
+			<li>
+				<div id="student-list-div">
+					<item id="list-student-li"><a href="profile/{{ student.username }}">{{ student.username }}</a></item>
+				</div>
+			</li>
 		</ul>
 
 	{% endfor %}

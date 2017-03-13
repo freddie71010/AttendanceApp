@@ -31,10 +31,19 @@ class Cohorts(View):
 		context = {"cohorts": cohorts, "form":self.form()}
 		return render(request, self.template, context)
 
-# class Search(View):
-# 	model = Cohort, Students
-# 	def post(self, request):
-# 		thing = 
+
+@method_decorator(login_required, name='dispatch')
+class AllStudents(View):
+
+	template = "attendance/students.html"
+	form = StudentRegistrationForm
+
+	def get(self, request):
+		print("All Students page");
+		students = User.objects.all().order_by('last_name')
+		context = {"students": students, "form":self.form()}
+		return render(request, self.template, context)
+
 
 
 class Login(View):
@@ -236,17 +245,6 @@ class Attendance(View):
 
 
 
-
-@method_decorator(login_required, name='dispatch')
-class AllStudentsView(View):
-	template = "attendance/students.html"
-
-	def get(self, request):
-		print("All Students page");
-		# access student table
-		# select all students from table
-		# return all students sorted in alphabetical order
-		return render(request, self.template)
 
 
 
