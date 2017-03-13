@@ -34,7 +34,7 @@ $(document).ready(function(){
 			if (parseInt(todays_date.format('D')) == parseInt($('.cal-numdays li:nth-child('+i+')').text())){
 				$('.cal-numdays li:nth-child('+i+')').css("background-color","yellow");
 				$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + todays_date.format('ddd, MMM D'));
-				$('.take-attendance-button').attr('value', todays_date.format('MM-DD-YYYY'));
+				$('.take-attendance-button').attr('value', todays_date.format('YYYY-MM-DD'));
 			}
 		}
 	} //end func
@@ -227,8 +227,13 @@ $(document).ready(function(){
 			type: "post",
 			data: kwargs,
 			success: function(response){
-				$('li.individual-student').css('background-color',"green");
-				alert('Attendance form submitted!');
+				// $('li.individual-student').css('background-color',"green");
+				console.log("Error msg:",response.error_msg);
+				if ((response.error_msg).length !== 0) {
+					alert("You forgot to fill out the following student's attendance:\n"+response.error_msg);
+				} else {
+					alert('Attendance updated!');
+				}
 			},
 			error: function(){
 				console.log("****Submit Attendance AJAX Error****");
