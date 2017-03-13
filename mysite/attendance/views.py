@@ -176,14 +176,41 @@ class ProfileDetailView(View):
 
 @method_decorator(login_required, name='dispatch')
 class Attendance(View):
+	template = "attendance/cohort_detail.html"
 	
 	def get(self, request):
 		pass
 	
-	@ensure_csrf_cookie
+
 	def post(self, request):
-		data = dict(request.POST)
-		print("data:", data)
+		print("request:",request.POST)
+		
+		user_data = {}
+		for key, value in dict(request.POST).iteritems():
+		    if 'student_name_obj' in key:
+		        field = key.split('[')[1].replace(']', '')
+		        user_data[key] = value
+		print(user_data)
+
+		# data = request.POST
+		# date = data["date_value"]
+		# print(date)
+		# students = data["student_names_obj"][0]
+		# print(students)
+		# for item in data:
+		# 	print(item)
+		# 	atd_rec = AttendanceRecord(
+		# 		user = item,
+		# 		status = item,
+		# 		date = date
+		# 		)
+		# 	print("\natd_rec:",atd_rec)
+			# atd_rec.save()
+			# else:
+				# return JsonResponse({"Error:": "No attendance records submitted. Please fill out and try again."})
+
+		return JsonResponse({}, safe=False)
+
 		# data should be a list of students with associated data
 		# data = { name: { "date":today , status:status },
 		# 	name2 : {'date': today , status:status },
