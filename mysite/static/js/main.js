@@ -227,10 +227,8 @@ $(document).ready(function(){
 			type: "post",
 			data: kwargs,
 			success: function(response){
-				console.log("Success function reached!");
-				// alert('Attendance form submitted!');
-
-				
+				$('li.individual-student').css('background-color',"green");
+				alert('Attendance form submitted!');
 			},
 			error: function(){
 				console.log("****Submit Attendance AJAX Error****");

@@ -177,20 +177,42 @@ class ProfileDetailView(View):
 @method_decorator(login_required, name='dispatch')
 class Attendance(View):
 	template = "attendance/cohort_detail.html"
-	
+
 	def get(self, request):
 		pass
 	
 
 	def post(self, request):
-		print("request:",request.POST)
+		data = request.POST.dict()
+		date = data["date_value"]
+		year = date[-4:]
+		month_date = date[:5]
+		proper_date = year + '-' + month_date
+# "'03-13-2017' value has an invalid date format. It must be in YYYY-MM-DD
+		for key in data.keys():
+			name = key
+			status = data[name]
+			if name[0:7] != 'student':
+				print("skipped")
+				pass
+			else:
+				user_instance = User.objects.get(username = name[18:-1])
+				record=AttendanceRecord(user=user_instance, status=status, date=proper_date)
+				record.save()
+				print("attendance successfully submited for " + name[18:-1])
+
+
+
+
 		
-		user_data = {}
-		for key, value in dict(request.POST).iteritems():
-		    if 'student_name_obj' in key:
-		        field = key.split('[')[1].replace(']', '')
-		        user_data[key] = value
-		print(user_data)
+
+
+		# user_data = {}
+		# for key, value in dict(request.POST).items():
+		#     if 'student_name_obj' in key:
+		#         field = key.split('[')[1].replace(']', '')
+		#         user_data[key] = value
+		# print(user_data)
 
 		# data = request.POST
 		# date = data["date_value"]
