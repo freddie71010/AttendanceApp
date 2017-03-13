@@ -237,7 +237,16 @@ class Attendance(View):
 
 
 
+@method_decorator(login_required, name='dispatch')
+class AllStudentsView(View):
+	template = "attendance/students.html"
 
+	def get(self, request):
+		print("All Students page");
+		# access student table
+		# select all students from table
+		# return all students sorted in alphabetical order
+		return render(request, self.template)
 
 
 

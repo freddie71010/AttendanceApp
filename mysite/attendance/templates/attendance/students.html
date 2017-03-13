@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %} Index View {% endblock title %}
+{% block head %} Index {% endblock head %}
+
+{%block subheader %}
+	<subheader class='subheader'>
+
+		<button class="btn btn-warning btn-block new-student-button"><span class="glyphicon glyphicon-plus"></span> Register New Student</button>
+		
+		<div id="student-register-div" class="hidden">
+			<div class="student-form-div">
+			<form method="post" id="add-student-form" action="/register_student">{% csrf_token %}
+		            {{ form.as_p }}
+		    </form>
+		    <button class="btn btn-success btn-lg active register-student"><span class="glyphicon glyphicon-plus"></span></button>
+		    </div>
+		</div>
+		
+	</subheader>
+{% endblock %}
+
+
+{% block content %}
+
+<table class="student-list">
+	{% for student in students %}
+		
+		<ul>
+
+			<div id="student-list-div">
+				<item id="list-student-li"><a href="profile/{{ student.student_name }}">{{ student.student_name }}</a></item>
+			</div>
+		</ul>
+
+	{% endfor %}
+
+</div>
+{% endblock content %}
+
