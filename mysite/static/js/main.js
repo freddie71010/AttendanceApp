@@ -210,7 +210,9 @@ $(document).ready(function(){
 
 		var student_names_obj = {};
 		$(".username").each(function() {
-		    student_names_obj[$(this).attr('id')] = $(this).parent().next().children(':checked').val();
+		    id = $(this).attr('id');
+		    status = $(this).parent().next().children(':checked').val();
+		    student_names_obj[id] = status;
 		});
 		var date_value = $('.take-attendance-button').attr('value');
 		var kwargs = {
@@ -226,6 +228,7 @@ $(document).ready(function(){
 			data: kwargs,
 			success: function(response){
 				console.log("Success function reached!");
+				// alert('Attendance form submitted!');
 
 				
 			},

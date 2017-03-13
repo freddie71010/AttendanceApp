@@ -66,7 +66,7 @@
 {% for member in members %}
   	<li class="individual-student">
 		<div class="cohort-detail-student-name-div">
-			<a class="username" id="{{member.username}}" href="/profile/{{member.username}}".format(member.username)>{{member.first_name}} {{member.last_name}}</a>
+			<a class="username" id="{{member.username}}" href="/profile/{{member.username}}">{{member.first_name}} {{member.last_name}}</a>
 		</div>
 		<form method = 'post' class="student-radio-tags">{% csrf_token %}
 			<label>Present</label>
