@@ -176,86 +176,74 @@ class ProfileDetailView(View):
 
 @method_decorator(login_required, name='dispatch')
 class Attendance(View):
+
 	template = "attendance/cohort_detail.html"
 
 	def get(self, request):
-		pass
+		data = request.GET.dict()
+		date = data["date_value"]
+		print("Grab Attendance data".center(60, '='))
+		for k, v in list(data.items()):
+			name = k
+			status = data[name]
+			if name[0:7] != 'student':
+				del data[k]
+				pass
+		print(data)
+		
+		date_records = AttendanceRecord.objects.all().filter(date=date)
+		spec_date_records = {}
+		for user in data:
+			name = user
+			print("name:", name[18:-1])
+			user_obj = User.objects.get(username = name[18:-1])
+			date_rec = date_records.get(user_id = user_obj.id)
+			print("\tuser_obj:", user_obj, "\tid:",user_obj.id, '\tdate_rec:', date_rec.status)
+			spec_date_records[user_obj.username] = date_rec.status
+		print("RECORDS:",len(spec_date_records), spec_date_records)
+		return JsonResponse({"spec_date_records": spec_date_records}, safe=False)
 	
 
 	def post(self, request):
 		data = request.POST.dict()
 		date = data["date_value"]
-		year = date[-4:]
-		month_date = date[:5]
-		proper_date = year + '-' + month_date
-# "'03-13-2017' value has an invalid date format. It must be in YYYY-MM-DD
+		error_msg = []
+		
+		# Checks for 'undefined' entries and returns error message if any are found
+		print("Undefined List check".center(60, '='))
 		for key in data.keys():
 			name = key
 			status = data[name]
 			if name[0:7] != 'student':
-				print("skipped")
+				pass
+			else:
+				status = data[name]
+				if status == 'undefined':
+					error_msg.append(name[18:-1])
+		print("error_msg:",error_msg)
+		if len(error_msg) != 0:
+			return JsonResponse({"error_msg":error_msg}, safe=False)
+
+		# Adds/updates attendance data
+		print("Attendance data add/update".center(60, '='))
+		for key in data.keys():
+			print("KEY:",key)
+			name = key
+			status = data[name]
+			if name[0:7] != 'student':
+				print("Skipped...")
 				pass
 			else:
 				user_instance = User.objects.get(username = name[18:-1])
-				record=AttendanceRecord(user=user_instance, status=status, date=proper_date)
-				record.save()
-				print("attendance successfully submited for " + name[18:-1])
+				print("\tuser_instance:", user_instance, "\tid:",user_instance.id)
+				obj, record = AttendanceRecord.objects.update_or_create(
+					user_id=user_instance.id, date=date, 
+					defaults = {'date':date, 'status':status}
+					)
+				print("\tRecord:",record)
+				print("\tAttendance successfully submitted for " + name[18:-1])
 
-
-
-
-		
-
-
-		# user_data = {}
-		# for key, value in dict(request.POST).items():
-		#     if 'student_name_obj' in key:
-		#         field = key.split('[')[1].replace(']', '')
-		#         user_data[key] = value
-		# print(user_data)
-
-		# data = request.POST
-		# date = data["date_value"]
-		# print(date)
-		# students = data["student_names_obj"][0]
-		# print(students)
-		# for item in data:
-		# 	print(item)
-		# 	atd_rec = AttendanceRecord(
-		# 		user = item,
-		# 		status = item,
-		# 		date = date
-		# 		)
-		# 	print("\natd_rec:",atd_rec)
-			# atd_rec.save()
-			# else:
-				# return JsonResponse({"Error:": "No attendance records submitted. Please fill out and try again."})
-
-		return JsonResponse({}, safe=False)
-
-		# data should be a list of students with associated data
-		# data = { name: { "date":today , status:status },
-		# 	name2 : {'date': today , status:status },
-			# ect...
-		# }
-		# need to step through and grab all students by name and submit thir attendance in to attendance model.
-		'''sudo 
-			data.keys = [list of keys]
-			for item in [list of keys]:
-				list[item] = {date:date, status:status}
-					student_name = item
-					date = list[item][date]
-					status = list[item][status]
-					cohort = cohort
-					teacher = teacher
-
-				user_profile=User.objects.get(username=usernae)
-				user_attendance_record = AttendanceRecord.objects.create(user_profile.id, date, status, teacher, ....)
-				user_attendance.save()
-		return Httpresponse success
-		'''
-
-
+		return JsonResponse({"error_msg":error_msg}, safe=False)
 
 
 

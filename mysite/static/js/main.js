@@ -34,7 +34,7 @@ $(document).ready(function(){
 			if (parseInt(todays_date.format('D')) == parseInt($('.cal-numdays li:nth-child('+i+')').text())){
 				$('.cal-numdays li:nth-child('+i+')').css("background-color","yellow");
 				$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + todays_date.format('ddd, MMM D'));
-				$('.take-attendance-button').attr('value', todays_date.format('MM-DD-YYYY'));
+				$('.take-attendance-button').attr('value', todays_date.format('YYYY-MM-DD'));
 			}
 		}
 	} //end func
@@ -69,23 +69,77 @@ $(document).ready(function(){
 
 	// when a specific date number is clicked on, the background changes and that date is selected for DB query use
 	$('ul.cal-numdays li').on('click', function(event){
+		event.preventDefault();
+
 		diff = $(this).index();
 		$('ul.cal-numdays li').removeAttr("style id");
 		$(this).css("background-color","yellow");
 		clicked_date = $(this).text();
 		start_of_week.add(diff,'d');
 		$('.take-attendance-button').removeAttr('disabled');
-		$('.take-attendance-button').attr('value', start_of_week.format('MM-DD-YYYY'));
+		$('.take-attendance-button').attr('value', start_of_week.format('YYYY-MM-DD'));
 		$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + start_of_week.format('ddd, MMM D'));
-		
-		console.log(
-			"clicked_date:\t", clicked_date,
-			"\tstart_of_week:\t", start_of_week.format('MMM D'),
-			"\ndiff:\t",diff,
-			"\n======================================"
-			);		
-
 		start_of_week.subtract(diff,'d');
+
+		var student_names_obj = {};
+		$(".username").each(function() {
+		    id = $(this).attr('id');
+		    status = $(this).parent().next().children(':checked').val();
+		    student_names_obj[id] = status;
+		});
+		var date_value = $('.take-attendance-button').attr('value');
+		var kwargs = {
+					"student_names_obj": student_names_obj,
+					"date_value": $('.take-attendance-button').attr('value'),
+					"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
+		};
+		console.log("kwargs:", kwargs)
+
+		$.ajax({
+			url: "/get_attendance",
+			type: "GET",
+			data: kwargs,
+			success: function(response){
+				console.log("Response:",response);
+				data = response.spec_date_records;
+				console.log("data:", (data))
+
+				$.each(data, function(k,v) {
+					console.log("impt:", k, v);
+					
+
+
+
+
+
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					// once the period is fixed, I believe the date data will load if a date is clicked on
+
+					k.replace(".", "\\.");
+					console.log("K:", k);
+					$("'form#"+ k + " input:radio[value='" + v + "']").val();
+				})
+				console.log("Date records loaded successfully.")
+			},
+			error: function(){
+				console.log("****Date Records Load Error****");
+			}
+		}) //end ajax
+
+
 	}); //end func
 
 // ===========================================================================================
@@ -118,7 +172,7 @@ $(document).ready(function(){
 			},
 		$.ajax({
 			url: "/register_cohort",
-			type: "post",
+			type: "POST",
 			data: kwargs,
 			success: function(response){
 				$('.cohort-list').prepend("<ul><li><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></li></ul>");
@@ -160,7 +214,7 @@ $(document).ready(function(){
 			};
 		$.ajax({
 			url: "/register_student",
-			type: "post",
+			type: "POST",
 			data: kwargs,
 			success: function(response){
 				console.log("=========Success function reached!=========");
@@ -181,7 +235,7 @@ $(document).ready(function(){
 							+ response.csrfmiddlewaretoken +
 							`">
 							<label>Present</label>
-							<input type="radio" class="radio" name="student-attendance" value="present" checked="true">
+							<input type="radio" class="radio" name="student-attendance" value="present" checked>
 							<label>Unexcused</label>
 							<input type="radio" class="radio" name="student-attendance" value="unexcused">
 							<label>Excused</label>
@@ -224,11 +278,16 @@ $(document).ready(function(){
 
 		$.ajax({
 			url: "/take_attendance",
-			type: "post",
+			type: "POST",
 			data: kwargs,
 			success: function(response){
-				$('li.individual-student').css('background-color',"green");
-				alert('Attendance form submitted!');
+				// $('li.individual-student').css('background-color',"green");
+				console.log("Error msg:",response.error_msg);
+				if ((response.error_msg).length !== 0) {
+					alert("You forgot to fill out the following student's attendance:\n"+response.error_msg);
+				} else {
+					alert('Attendance updated!');
+				}
 			},
 			error: function(){
 				console.log("****Submit Attendance AJAX Error****");
