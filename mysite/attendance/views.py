@@ -197,7 +197,10 @@ class Attendance(View):
 			name = user
 			print("name:", name[18:-1])
 			user_obj = User.objects.get(username = name[18:-1])
-			date_rec = date_records.get(user_id = user_obj.id)
+			try:
+				date_rec = date_records.get(user_id = user_obj.id)
+			except: # if no date data is found in DB for that user, exit loop and return "NO_DATE_DATA_FOUND"
+				return JsonResponse({"spec_date_records": "NO_DATE_DATA_FOUND"}, safe=False)
 			print("\tuser_obj:", user_obj, "\tid:",user_obj.id, '\tdate_rec:', date_rec.status)
 			spec_date_records[user_obj.username] = date_rec.status
 		print("RECORDS:",len(spec_date_records), spec_date_records)
