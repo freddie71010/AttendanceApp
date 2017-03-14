@@ -10,7 +10,9 @@ urlpatterns = [
 	url(r'^logout$', logout_view, name='logout'),
 	url(r'^cohorts$', Cohorts.as_view(), name='cohorts'),
 	url(r'^cohort/(?P<cohort>[\w\-]+$)', CohortDetailView.as_view(), name='cohort_detail'),
-	url(r'^profile/(?P<username>[\w\-]+$)', ProfileDetailView.as_view(), name='profile_detail'),
+	url(r'^profile/(?P<id>[0-9]+)/$', ProfileDetailView.as_view(), name='profile_detail'),
 	url(r'^take_attendance$', Attendance.as_view(), name='take_attendance'),
+	url(r'^liststudents$', ListStudents.as_view(), name="liststudents"),
+	url(r'^search$', Search.as_view(), name="search")
 ]
 	

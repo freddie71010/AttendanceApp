@@ -31,10 +31,15 @@ class Cohorts(View):
 		context = {"cohorts": cohorts, "form":self.form()}
 		return render(request, self.template, context)
 
-# class Search(View):
-# 	model = Cohort, Students
-# 	def post(self, request):
-# 		thing = 
+@method_decorator(login_required, name="dispatch")
+class ListStudents(View):
+	model = Profile
+	template = "attendance/liststudents.html"
+
+	def get (self, request):
+		students = User.objects.all()
+		context = {"students": students}
+		return render(request, self.template, context)
 
 
 class Login(View):
@@ -166,9 +171,19 @@ class ProfileDetailView(View):
 	template = "attendance/profile_detail.html"
 	
 	def get(self, request, id):
-		user = User.objects.get(pk=id)
-		profile = Profile.objects.get(pk=id)
-		return render(request, self.template, {"user":user,"profile":profile})
+		print(id)
+		user = User.objects.get(id=id)
+		attendance = AttendanceRecord.objects.filter(user=user)
+		print (dict(attendance))
+		# profile = Profile.objects.get(user=user)
+
+		# attendance = AttendanceRecord.objects.all()
+
+		context = {
+			"user": user,
+			"attendance": attendance,
+		}
+		return render(request, self.template, context)
 
 	def post(self, request):
 		pass
@@ -200,60 +215,27 @@ class Attendance(View):
 				record=AttendanceRecord(user=user_instance, status=status, date=proper_date)
 				record.save()
 				print("attendance successfully submited for " + name[18:-1])
-
-
-
-
 		
-
-
-		# user_data = {}
-		# for key, value in dict(request.POST).items():
-		#     if 'student_name_obj' in key:
-		#         field = key.split('[')[1].replace(']', '')
-		#         user_data[key] = value
-		# print(user_data)
-
-		# data = request.POST
-		# date = data["date_value"]
-		# print(date)
-		# students = data["student_names_obj"][0]
-		# print(students)
-		# for item in data:
-		# 	print(item)
-		# 	atd_rec = AttendanceRecord(
-		# 		user = item,
-		# 		status = item,
-		# 		date = date
-		# 		)
-		# 	print("\natd_rec:",atd_rec)
-			# atd_rec.save()
-			# else:
-				# return JsonResponse({"Error:": "No attendance records submitted. Please fill out and try again."})
-
 		return JsonResponse({}, safe=False)
 
-		# data should be a list of students with associated data
-		# data = { name: { "date":today , status:status },
-		# 	name2 : {'date': today , status:status },
-			# ect...
-		# }
-		# need to step through and grab all students by name and submit thir attendance in to attendance model.
-		'''sudo 
-			data.keys = [list of keys]
-			for item in [list of keys]:
-				list[item] = {date:date, status:status}
-					student_name = item
-					date = list[item][date]
-					status = list[item][status]
-					cohort = cohort
-					teacher = teacher
 
-				user_profile=User.objects.get(username=usernae)
-				user_attendance_record = AttendanceRecord.objects.create(user_profile.id, date, status, teacher, ....)
-				user_attendance.save()
-		return Httpresponse success
-		'''
+class Search(View):
+	def post(self, request):
+		# search by type. "student", "cohort", "teacher"
+		# sort the type of query depending on the type. "name"
+		# {_list[0]:"FN", _list[1]:"LN", _type: "person"}
+		req = request.POST.dict()
+		if req["_type"] == "student":
+			user_obj = User.objects.all().filter(firstname=first_name, lastname=last_name)
+			profile_obj = Profile.objects.get(user=user_obj)
+			# username = firstname.lastname
+			url = 'profile/' + username 
+			return redirect(url)	
+		else:
+			# send to the endpoint for the correct url
+			redirect = "cohort/" + req["_list[0]"]
+			return redirect(redirect)
+
 
 
 

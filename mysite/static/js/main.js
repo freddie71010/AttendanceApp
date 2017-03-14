@@ -238,6 +238,20 @@ $(document).ready(function(){
 
 
 
+// Search Toggle
+	$('#search').toggle('click', function(event){
+		$('#search_drop_down').attr("style", "display:block");
+	})
+
+// Handles Search functionality
+	$('.search_drop_down').on('click', function(event){
+		event.preventDefault();
+		console.log("Search Button Clicked!");
+
+		$.ajax({
+			url
+		})
+
 
 
 

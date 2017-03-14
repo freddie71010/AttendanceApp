@@ -33,16 +33,26 @@
 				<a href ="/cohorts">Cohorts</a>
 			</li>
 			<li class="header-students">
-				<a href ="">Students</a>
+				<a href ="/liststudents">Students</a>
 			</li>
 			<li class="header-search">
-				<a href ="">Search</a>
+				<a href='/search'>Search</a>
 			</li>
 			<li class="header-logout">
 				<a href ="/logout">Logout</a>
 			</li>
 		</ul>
 	</nav>
+</header>
+<search>
+    <form id="searchform" accept-charset="utf-8">
+      <button class="searchbutton" type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+      <input class="searchfield" id="searchbox" type="text" placeholder="Search">
+    </form>
+</search>
+
 
 {%block subheader %}
 {% endblock %}

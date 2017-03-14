@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock title %}
+{% block head %}Search{% endblock head %}
+{% block content %}
+<div class="list-group">
+{% for student in students %}
+	<a href="/profile/{{student.username}}" class="list-group-item">{{student.first_name}} {{student.last_name}}</a>
+{% endfor %}
+<div class="list-group">
+{% endblock %}

@@ -5,8 +5,17 @@
 {% block content %}
 
 <div class="sub-heading">
-	<h1> Profile: {{profile.first_name}} {{profile.last_name}}</h1>
-	<h3> Cohort: {{profile.cohort_name}}</h3>
+	<h1> Profile: {{user.first_name}} {{user.last_name}}</h1>
+	<h3> Cohort: </h3>
+</div>
+<div class="attendace-record">
+	{% for record in attendance %}
+	<div class="list-group">
+		<li class="list-item">
+			{{record.date}},{{record.status}}
+		</li>
+	</div>
+	{% endfor %}
 </div>
 
 {% endblock %}

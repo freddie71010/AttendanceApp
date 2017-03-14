@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}List Students{% endblock title %}
+{% block head %}List Students{% endblock head %}
+{% block content %}
+
+<div class="list-group">
+{% for student in students %}
+	<a href="/profile/{{student.id}}" class="list-group-item">{{student.first_name}} {{student.last_name}}</a>
+{% endfor %}
+<div class="list-group">
+{% endblock %}
