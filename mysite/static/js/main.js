@@ -106,8 +106,31 @@ $(document).ready(function(){
 
 				$.each(data, function(k,v) {
 					console.log("impt:", k, v);
-					k.replace(".", "\\.")
-					$("'#"+ k + " input:radio[name=" + v + "]:checked'").val();
+					
+
+
+
+
+
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
+					// once the period is fixed, I believe the date data will load if a date is clicked on
+
+					k.replace(".", "\\.");
+					console.log("K:", k);
+					$("'form#"+ k + " input:radio[value='" + v + "']").val();
 				})
 				console.log("Date records loaded successfully.")
 			},
