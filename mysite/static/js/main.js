@@ -71,6 +71,7 @@ $(document).ready(function(){
 	$('ul.cal-numdays li').on('click', function(event){
 		event.preventDefault();
 
+		//modifies various elements on page - specific date background color, attendance button text changes
 		diff = $(this).index();
 		$('ul.cal-numdays li').removeAttr("style id");
 		$(this).css("background-color","yellow");
@@ -81,6 +82,10 @@ $(document).ready(function(){
 		$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance - " + start_of_week.format('ddd, MMM D'));
 		start_of_week.subtract(diff,'d');
 
+		//resets all radio inputs to empty
+		$(".student-radio-tags input:radio").prop('checked', false)
+
+		//creates object with student information to be used in ajax call
 		var student_names_obj = {};
 		$(".username").each(function() {
 		    id = $(this).attr('id');
@@ -95,6 +100,8 @@ $(document).ready(function(){
 		};
 		console.log("kwargs:", kwargs)
 
+		
+		//ajax call to grab user date data from DB
 		$.ajax({
 			url: "/get_attendance",
 			type: "GET",
@@ -103,36 +110,29 @@ $(document).ready(function(){
 				console.log("Response:",response);
 				data = response.spec_date_records;
 				console.log("data:", (data))
-
-				$.each(data, function(k,v) {
-					console.log("impt:", k, v);
-					
-
-
-
-
-
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					//Need to replace the period in 'Bob.J' with 'Bob\\.J'
-					// once the period is fixed, I believe the date data will load if a date is clicked on
-
-					k.replace(".", "\\.");
-					console.log("K:", k);
-					$("'form#"+ k + " input:radio[value='" + v + "']").val();
-				})
-				console.log("Date records loaded successfully.")
+				// if DB has NO date date, the string "NO_DATE_DATA_FOUND" is returned here
+				if (data === "NO_DATE_DATA_FOUND"){
+					alert("No date data found!");
+				} else { 
+				//load the data from DB into the radio inputs
+					$.each(data, function(k,v) {
+						console.log("impt:", k, v);
+						if (v === "present") {
+							i = 1;
+						} else if (v === "unexcused") {
+							i = 2;
+						} else if (v === "excused") {
+							i = 3;
+						} else { //"late"
+							i = 4;
+						};
+						console.log("\ti:", i);
+						k = k.replace(".", "\\.");
+						console.log("\tK:", k);
+						$("form#" + k + ".student-radio-tags input:radio[value='" + v + "']").prop('checked', true)
+					})
+					console.log("Date records loaded successfully.")
+				}; //end else
 			},
 			error: function(){
 				console.log("****Date Records Load Error****");
