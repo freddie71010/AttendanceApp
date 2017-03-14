@@ -180,14 +180,36 @@ class Attendance(View):
 	template = "attendance/cohort_detail.html"
 
 	def get(self, request):
-		pass
+		data = request.GET.dict()
+		date = data["date_value"]
+		print("Grab Attendance data".center(60, '='))
+		for k, v in list(data.items()):
+			name = k
+			status = data[name]
+			if name[0:7] != 'student':
+				del data[k]
+				pass
+		print(data)
+		
+		date_records = AttendanceRecord.objects.all().filter(date=date)
+		spec_date_records = {}
+		for user in data:
+			name = user
+			print("name:", name[18:-1])
+			user_obj = User.objects.get(username = name[18:-1])
+			date_rec = date_records.get(user_id = user_obj.id)
+			print("\tuser_obj:", user_obj, "\tid:",user_obj.id, '\tdate_rec:', date_rec.status)
+			spec_date_records[user_obj.username] = date_rec.status
+		print("RECORDS:",len(spec_date_records), spec_date_records)
+		return JsonResponse({"spec_date_records": spec_date_records}, safe=False)
 	
+
 	def post(self, request):
 		data = request.POST.dict()
 		date = data["date_value"]
 		error_msg = []
 		
-		# Checks for 'undefined' entries
+		# Checks for 'undefined' entries and returns error message if any are found
 		print("Undefined List check".center(60, '='))
 		for key in data.keys():
 			name = key
@@ -219,7 +241,6 @@ class Attendance(View):
 					defaults = {'date':date, 'status':status}
 					)
 				print("\tRecord:",record)
-				
 				print("\tAttendance successfully submitted for " + name[18:-1])
 
 		return JsonResponse({"error_msg":error_msg}, safe=False)
