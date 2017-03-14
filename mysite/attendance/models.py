@@ -60,7 +60,7 @@ ATTENDANCE_TYPES =  (
 class AttendanceRecord(models.Model):
 	user = models.ForeignKey(User)
 	status = models.CharField("", max_length=10, choices=ATTENDANCE_TYPES)
-	date =models.DateField(default=None)
+	date = models.DateField(default=None)
 
 	def as_json( self, *args, **kwargs):
 		return self.__dict__

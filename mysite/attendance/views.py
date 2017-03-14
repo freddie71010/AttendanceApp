@@ -173,12 +173,7 @@ class ProfileDetailView(View):
 	def get(self, request, id):
 		print(id)
 		user = User.objects.get(id=id)
-		attendance = AttendanceRecord.objects.filter(user=user)
-		print (dict(attendance))
-		# profile = Profile.objects.get(user=user)
-
-		# attendance = AttendanceRecord.objects.all()
-
+		attendance = AttendanceRecord.objects.filter(user_id=user.id)
 		context = {
 			"user": user,
 			"attendance": attendance,
@@ -203,7 +198,7 @@ class Attendance(View):
 		year = date[-4:]
 		month_date = date[:5]
 		proper_date = year + '-' + month_date
-# "'03-13-2017' value has an invalid date format. It must be in YYYY-MM-DD
+		
 		for key in data.keys():
 			name = key
 			status = data[name]

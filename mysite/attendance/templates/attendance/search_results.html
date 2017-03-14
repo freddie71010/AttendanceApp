@@ -2,6 +2,10 @@
 {% block title %}Search{% endblock title %}
 {% block head %}Search{% endblock head %}
 {% block content %}
+<div class="detail-search-form">
+	
+</div>
+
 <div class="list-group">
 {% for student in students %}
 	<a href="/profile/{{student.username}}" class="list-group-item">{{student.first_name}} {{student.last_name}}</a>
