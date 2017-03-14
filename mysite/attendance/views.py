@@ -31,10 +31,15 @@ class Cohorts(View):
 		context = {"cohorts": cohorts, "form":self.form()}
 		return render(request, self.template, context)
 
-# class Search(View):
-# 	model = Cohort, Students
-# 	def post(self, request):
-# 		thing = 
+@method_decorator(login_required, name="dispatch")
+class ListStudents(View):
+	model = Profile
+	template = "attendance/liststudents.html"
+
+	def get (self, request):
+		students = User.objects.all()
+		context = {"students": students}
+		return render(request, self.template, context)
 
 
 class Login(View):
@@ -166,9 +171,14 @@ class ProfileDetailView(View):
 	template = "attendance/profile_detail.html"
 	
 	def get(self, request, id):
-		user = User.objects.get(pk=id)
-		profile = Profile.objects.get(pk=id)
-		return render(request, self.template, {"user":user,"profile":profile})
+		print(id)
+		user = User.objects.get(id=id)
+		attendance = AttendanceRecord.objects.filter(user_id=user.id)
+		context = {
+			"user": user,
+			"attendance": attendance,
+		}
+		return render(request, self.template, context)
 
 	def post(self, request):
 		pass
@@ -229,6 +239,7 @@ class Attendance(View):
 
 		# Adds/updates attendance data
 		print("Attendance data add/update".center(60, '='))
+
 		for key in data.keys():
 			print("KEY:",key)
 			name = key
@@ -238,6 +249,7 @@ class Attendance(View):
 				pass
 			else:
 				user_instance = User.objects.get(username = name[18:-1])
+
 				print("\tuser_instance:", user_instance, "\tid:",user_instance.id)
 				obj, record = AttendanceRecord.objects.update_or_create(
 					user_id=user_instance.id, date=date, 
@@ -245,6 +257,29 @@ class Attendance(View):
 					)
 				print("\tRecord:",record)
 				print("\tAttendance successfully submitted for " + name[18:-1])
+
+		
+		return JsonResponse({}, safe=False)
+
+
+class Search(View):
+	def post(self, request):
+		# search by type. "student", "cohort", "teacher"
+		# sort the type of query depending on the type. "name"
+		# {_list[0]:"FN", _list[1]:"LN", _type: "person"}
+		req = request.POST.dict()
+		if req["_type"] == "student":
+			user_obj = User.objects.all().filter(firstname=first_name, lastname=last_name)
+			profile_obj = Profile.objects.get(user=user_obj)
+			# username = firstname.lastname
+			url = 'profile/' + username 
+			return redirect(url)	
+		else:
+			# send to the endpoint for the correct url
+			redirect = "cohort/" + req["_list[0]"]
+			return redirect(redirect)
+
+
 
 		return JsonResponse({"error_msg":error_msg}, safe=False)
 
