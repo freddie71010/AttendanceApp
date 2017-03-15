@@ -31,16 +31,6 @@ class Cohorts(View):
 		context = {"cohorts": cohorts, "form":self.form()}
 		return render(request, self.template, context)
 
-@method_decorator(login_required, name="dispatch")
-class ListStudents(View):
-	model = Profile
-	template = "attendance/liststudents.html"
-
-	def get (self, request):
-		students = User.objects.all()
-		context = {"students": students}
-		return render(request, self.template, context)
-
 
 class Login(View):
 	def get(self, request):
@@ -280,8 +270,23 @@ class Search(View):
 		return render(request, self.template)
 
 
+@method_decorator(login_required, name='dispatch')
+class AllStudents(View):
+	template = "attendance/students.html"
 
-
+	def get (self, request):
+		students = User.objects.all()
+		projects = Profile.objects.all()
+		cohorts = Cohort.objects.all()
+	
+		context = {
+		"students": students, 
+		"projects": projects, 
+		"cohorts": cohorts
+		}
+		
+		print("context:",context)
+		return render(request, self.template, context)
 
 # logs out user
 def logout_view(request):
