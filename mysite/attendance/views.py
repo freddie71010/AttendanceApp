@@ -19,7 +19,7 @@ from django.core import serializers
 
 
 
-@method_decorator(login_required, name='dispatch') #due to us using CBV(class based views), we need to use insert the 'login_required' decorator into a method decorator in order for it to work (see django docs)
+@method_decorator(login_required, name='dispatch') #due to us usifseang CBV(class based views), we need to use insert the 'login_required' decorator into a method decorator in order for it to work (see django docs)
 class Cohorts(View):
 	
 	model = Cohort
@@ -263,37 +263,20 @@ class Attendance(View):
 
 
 class Search(View):
+	template = "attendance/search_results.html"
+	# form data is not sending over properly
 	def post(self, request):
-		# search by type. "student", "cohort", "teacher"
-		# sort the type of query depending on the type. "name"
-		# {_list[0]:"FN", _list[1]:"LN", _type: "person"}
-		req = request.POST.dict()
-		if req["_type"] == "student":
-			user_obj = User.objects.all().filter(firstname=first_name, lastname=last_name)
-			profile_obj = Profile.objects.get(user=user_obj)
-			# username = firstname.lastname
-			url = 'profile/' + username 
-			return redirect(url)	
-		else:
-			# send to the endpoint for the correct url
-			redirect = "cohort/" + req["_list[0]"]
-			return redirect(redirect)
-
-
-
-		return JsonResponse({"error_msg":error_msg}, safe=False)
-
-
-
-@method_decorator(login_required, name='dispatch')
-class AllStudentsView(View):
-	template = "attendance/students.html"
+		data = request.POST['search']
+		print(data)
+		user_obj = User.objects.filter(username__icontains=data)
+		cohort_obj = Cohort.objects.filter(cohort_name__icontains=data)
+		context = {
+			"users": user_obj,
+			"cohorts": cohort_obj,
+		}
+		return render(request, self.template, context)
 
 	def get(self, request):
-		print("All Students page");
-		# access student table
-		# select all students from table
-		# return all students sorted in alphabetical order
 		return render(request, self.template)
 
 
