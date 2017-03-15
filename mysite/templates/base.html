@@ -1,79 +1,74 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="{% static 'css/base.css' %}">
-	<link rel="stylesheet" href="{% static 'css/login.css' %}">
-	 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<script
-	  src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-	  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
-	  crossorigin="anonymous"></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-	<title>{% block title %}{% endblock %}</title>
- 
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="{% static 'css/base.css' %}">
+		<link rel="stylesheet" href="{% static 'css/login.css' %}">
+		 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script
+		  src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+		  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+		  crossorigin="anonymous"></script>
+	 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+		{% block topscripts %}{% endblock topscripts %}
+		<title>{% block title %}{% endblock title %}</title>
+	 
+	</head>
 
-<header class="header">
-	<div class="header-logo">
-		<a href="/index" title="home" class="header-logo-image">
-			<span>
-				BYTE Student Tracker
-			</span>
-		</a>
-	</div>
-	
-	<nav class="header-menu">
-		<ul class="header-menu-left">
-			<li class="header-cohorts">
-				<a href ="/cohorts">Cohorts</a>
-			</li>
-			<li class="header-students">
-				<a href ="/liststudents">Students</a>
-			</li>
-			<li class="header-search">
-				<a href='/search'>Search</a>
-			</li>
-			<li class="header-logout">
-				<a href ="/logout">Logout</a>
-			</li>
-		</ul>
-	</nav>
-</header>
-<search>
-    <form id="searchform" accept-charset="utf-8">
-      <button class="searchbutton" type="submit">
-        <i class="fa fa-search"></i>
-      </button>
-      <input class="searchfield" id="searchbox" type="text" placeholder="Search">
-    </form>
-</search>
-
-
-{%block subheader %}
-{% endblock %}
-<div class="background">
-
-<body>
-	<div class="wrapper">
-		<div class="container">
-			{% block content %}{% endblock %}
+	<header class="header">
+		<div class="header-logo">
+			<a href="/index" title="home" class="header-logo-image">
+				<span>
+					BYTE Student Tracker
+				</span>
+			</a>
 		</div>
-	</div>
-<footer>
-	
-</footer>
- 
+		
+		<nav class="header-menu">
+			<ul class="header-menu-left">
+				<li class="header-cohorts">
+					<a href ="/cohorts">Cohorts</a>
+				</li>
+				<li class="header-students">
+					<a href ="/students">Students</a>
+				</li>
+				<li class="header-search">
+					<a href='/search'>Search</a>
+				</li>
+				<li class="header-logout">
+					<a href ="/logout">Logout</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	<search>
+	    <form id="searchform" accept-charset="utf-8">
+	      <button class="searchbutton" type="submit">
+	        <i class="fa fa-search"></i>
+	      </button>
+	      <input class="searchfield" id="searchbox" type="text" placeholder="Search">
+	    </form>
+	</search>
 
- <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
- 
-  {% block javascript %}
-  {% endblock %}
 
-</body>
-</div>
+	{%block subheader %}{% endblock subheader %}
+
+	<body class='background'>
+		<div class="wrapper">
+			<div class="container">
+				{% block content %}{% endblock content %}
+			</div>
+		</div>
+	</body>
+
+	<footer class='footer'>
+		<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+		{% block javascript %}
+		{% endblock javascript %}	
+	</footer>
+		 
 </html>

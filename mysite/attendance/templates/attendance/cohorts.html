@@ -24,16 +24,13 @@
 
 <table class="cohort-list">
 	{% for cohort in cohorts %}
-		
-		<ul>
-
-			<div id="cohort-list-div">
-				<item id="list-cohort-li"><a href="cohort/{{ cohort.cohort_name }}">{{ cohort.cohort_name }}</a></item>
-			</div>
-		</ul>
-
+	<ul>
+		<div id="cohort-list-div">
+			<item id="list-cohort-li"><a href="cohort/{{ cohort.cohort_name }}">{{ cohort.cohort_name }}</a></item>
+		</div>
+	</ul>
 	{% endfor %}
+</table>
 
-</div>
 {% endblock content %}
 
