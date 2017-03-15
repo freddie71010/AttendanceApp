@@ -45,14 +45,14 @@
 			</ul>
 		</nav>
 	</header>
-	<search>
-	    <form id="searchform" accept-charset="utf-8">
-	      <button class="searchbutton" type="submit">
-	        <i class="fa fa-search"></i>
-	      </button>
-	      <input class="searchfield" id="searchbox" type="text" placeholder="Search">
-	    </form>
-	</search>
+<search>
+    <form id="searchform" action="/search" method="post" accept-charset="utf-8">{% csrf_token %}
+      <button class="searchbutton" type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+      <input class="searchfield" id="searchbox" type="text" name="search" placeholder="Search">
+    </form>
+</search>
 
 
 	{%block subheader %}{% endblock subheader %}

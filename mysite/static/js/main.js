@@ -299,15 +299,15 @@ $(document).ready(function(){
 
 
 // Handles Search functionality
-	// $('.search_drop_down').on('click', function(event){
-	// 	event.preventDefault();
-	// 	console.log("Search Button Clicked!");
+	$('.search_drop_down').on('click', function(event){
+		event.preventDefault();
+		console.log("Search Button Clicked!");
 
-	// 	$.ajax({
-	// 		url:"/search",
-	// 		type:"post",
-	// 		data
-	// 	})
+		$.ajax({
+			url:"/search",
+			type:"post",
+			data
+		})
 
 
 

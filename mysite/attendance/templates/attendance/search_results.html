@@ -3,12 +3,19 @@
 {% block head %}Search{% endblock head %}
 {% block content %}
 <div class="detail-search-form">
-	
+	<h1>Detail Search</h1>
+	<form></form><label>First Name</label>
+	<form></form><label>Last Name</label>	
+	<form></form><label>Cohort Name</label>
 </div>
 
 <div class="list-group">
-{% for student in students %}
-	<a href="/profile/{{student.username}}" class="list-group-item">{{student.first_name}} {{student.last_name}}</a>
+{% for user in users %}
+	<a href="/profile/{{user.username}}" class="list-group-item">{{user.first_name}} {{user.last_name}}</a>
 {% endfor %}
+{% for cohort in cohorts %}
+	<a href="/cohort/{{cohort.cohort_name}}" class="list-group-item">{{cohort.cohort_name}}</a>
 <div class="list-group">
+{% endfor %}
+
 {% endblock %}

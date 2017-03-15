@@ -19,7 +19,7 @@ from django.core import serializers
 
 
 
-@method_decorator(login_required, name='dispatch') #due to us using CBV(class based views), we need to use insert the 'login_required' decorator into a method decorator in order for it to work (see django docs)
+@method_decorator(login_required, name='dispatch') #due to us usifseang CBV(class based views), we need to use insert the 'login_required' decorator into a method decorator in order for it to work (see django docs)
 class Cohorts(View):
 	
 	model = Cohort
@@ -253,6 +253,8 @@ class Attendance(View):
 
 
 class Search(View):
+	template = "attendance/search_results.html"
+	# form data is not sending over properly
 	def post(self, request):
 		# search by type. "student", "cohort", "teacher"
 		# sort the type of query depending on the type. "name"
@@ -273,6 +275,19 @@ class Search(View):
 
 		return JsonResponse({"error_msg":error_msg}, safe=False)
 
+	# 	data = request.POST['search']
+	# 	print(data)
+	# 	user_obj = User.objects.filter(username__icontains=data)
+	# 	cohort_obj = Cohort.objects.filter(cohort_name__icontains=data)
+	# 	context = {
+	# 		"users": user_obj,
+	# 		"cohorts": cohort_obj,
+	# 	}
+	# 	return render(request, self.template, context)
+
+	# def get(self, request):
+	# 	return render(request, self.template)
+
 
 
 @method_decorator(login_required, name='dispatch')
@@ -292,8 +307,6 @@ class AllStudents(View):
 		
 		print("context:",context)
 		return render(request, self.template, context)
-
-
 
 # logs out user
 def logout_view(request):
