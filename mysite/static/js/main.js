@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	console.log("js loaded!")
+	console.log("main.js loaded!")
 
 // ON LOAD ===========================================================================================
 
@@ -308,6 +308,8 @@ $(document).ready(function(){
 	// 		type:"post",
 	// 		data
 	// 	})
+
+
 
 
 

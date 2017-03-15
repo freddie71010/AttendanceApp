@@ -37,19 +37,26 @@
 <table id="allstudents" class="display">
     <thead>
         <tr>
+            <th>ID (TEMP FIELD)</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
             <th>Username</th>
+            <th>Final Project</th>
+            <th>Cohort</th>
+
         </tr>
     </thead>
     <tbody>
     {% for student in students %}
         <tr>
+            <td>{{student.id}}</td>
             <td>{{student.first_name}}</td>
             <td>{{student.last_name}}</td>
             <td>{{student.email}}</td>
             <td><a href="/profile/{{student.username}}">{{student.username}}</a></td>
+            <td></td>
+            <td></td>
 
         </tr>
     {% endfor %}
