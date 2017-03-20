@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	console.log("main.js loaded!")
 
+
+
 // ON LOAD ===========================================================================================
 
 //Sets calendar values on Cohort Detail page
@@ -60,7 +62,8 @@ $(document).ready(function(){
 		
 		$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
 		date_loop(start_of_week);		
-		$('ul.cal-numdays li').removeAttr("style");		
+		$('ul.cal-numdays li').removeAttr("style");
+
 		$('.take-attendance-button').attr('disabled', 'disabled');
 		$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance");
 
@@ -71,11 +74,22 @@ $(document).ready(function(){
 	$('ul.cal-numdays li').on('click', function(event){
 		event.preventDefault();
 
+		//activates popover (boostrap JS) functionality
+		$(function () {
+			$('[data-toggle="popover"]').popover()
+		})
+
 		//modifies various elements on page - specific date background color, attendance button text changes
+		//---------------------------------------------------------------------------------------------------
 		diff = $(this).index();
 		$('ul.cal-numdays li').removeAttr("style id");
+		
+		//removes the dismissible button elements from a prev click
+		$('ul.cal-numdays li a').detach();
+		$('ul.cal-numdays li div').detach();
+		
 		$(this).css("background-color","yellow");
-		clicked_date = $(this).text();
+		$(this).attr('id', 'clicked_date');
 		start_of_week.add(diff,'d');
 		$('.take-attendance-button').removeAttr('disabled');
 		$('.take-attendance-button').attr('value', start_of_week.format('YYYY-MM-DD'));
@@ -112,7 +126,8 @@ $(document).ready(function(){
 				console.log("data:", (data))
 				// if DB has NO date date, the string "NO_DATE_DATA_FOUND" is returned here
 				if (data === "NO_DATE_DATA_FOUND"){
-					alert("No date data found!");
+					$('<a id="clicked_date_popover" data-placement="bottom" tabindex="0" role="button" data-toggle="popover" data-trigger="focus"  data-content="No Date Data Found!"></a>').appendTo('#clicked_date');
+					$('#clicked_date_popover').popover('show');
 				} else { 
 				//load the data from DB into the radio inputs
 					$.each(data, function(k,v) {
@@ -306,8 +321,8 @@ $(document).ready(function(){
 		$.ajax({
 			url:"/search",
 			type:"post",
-			data
 		})
+	});
 
 
 
