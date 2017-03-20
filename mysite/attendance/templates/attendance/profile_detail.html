@@ -34,24 +34,10 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <span>
-                        <h1 class="panel-title pull-left" style="font-size:30px;">John Doe <small>example@pods.tld</small> <i class="fa fa-check text-success" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="John Doe is sharing with you"></i></h1>
-                        <div class="dropdown pull-right">
-                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Friends
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="#">Familly</a></li>
-                                <li><a href="#"><i class="fa fa-fw fa-check" aria-hidden="true"></i> Friends</a></li>
-                                <li><a href="#">Work</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add a new aspect</a></li>
-                            </ul>
-                        </div>
+                        <h1 class="panel-title pull-left" style="font-size:30px;">{{user.username}} <small>{{user.email}}</small> <i class="fa fa-check text-success" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="John Doe is sharing with you"></i></h1>
                     </span>
                     <br><br>
-                    <i class="fa fa-tags" aria-hidden="true"></i> <a href="/tags/diaspora" class="tag">#diaspora</a> <a href="/tags/hashtag" class="tag">#hashtag</a> <a href="/tags/caturday" class="tag">#caturday</a>
-                    <br><br><hr>
+              
                     <span class="pull-left">
                         <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o" aria-hidden="true"></i> Posts</a>
                         <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-picture-o" aria-hidden="true"></i> Photos <span class="badge">42</span></a>
@@ -73,14 +59,11 @@
                             <img class="media-object img-circle" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="50px" height="50px" style="margin-right:8px; margin-top:-5px;">
                         </a>
                     </div>
-                    <h4><a href="#" style="text-decoration:none;"><strong>John Doe</strong></a> – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i> 42 minutes ago</i></a></small></small></h4>
+                    <h4><a href="#" style="text-decoration:none;"><strong>John Doe</strong></a> – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i> {{user.last_updated}}</i></a></small></small></h4>
                     <span>
                         <div class="navbar-right">
                             <div class="dropdown">
-                                <button class="btn btn-link btn-xs dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i class="fa fa-cog" aria-hidden="true"></i>
-                                    <span class="caret"></span>
-                                </button>
+                           
                                 <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
                                     <li><a href="#"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> Report</a></li>
                                     <li><a href="#"><i class="fa fa-fw fa-ban" aria-hidden="true"></i> Ignore</a></li>
@@ -93,7 +76,6 @@
                         </div>
                     </span>
                     <hr>
-
                     <div class="attendace-record">
 						{% for record in attendance %}
 							<div class="list-group">
