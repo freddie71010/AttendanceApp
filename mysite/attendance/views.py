@@ -5,7 +5,7 @@ from .forms import *
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.views import login
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, StudentProfileForm
 from django.contrib.auth.decorators import permission_required, login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse, JsonResponse
@@ -154,6 +154,26 @@ class CohortDetailView(View):
 	def post(self, request, cohort):
 		pass
 
+@method_decorator(login_required, name="dispatch")
+class ProfileUpdateView(View):
+	template = "attendance/build_profile"
+	form = StudentProfileForm
+	 def get(self, request):
+	 	context = {
+	 		form = self.form(),
+	 	}
+	 	# I probably need to use local sotrage to get my user query.
+	 	return render(request, self.template, context)
+
+	 def post(self, requst):
+	 	profile = self.form(request.POST)
+	 	if profile.is_valid():
+	 		profile.save()
+	 	else:
+	 		return "err"
+
+
+	 	
 
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(View):

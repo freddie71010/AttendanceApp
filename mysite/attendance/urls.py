@@ -14,7 +14,8 @@ urlpatterns = [
 	url(r'^take_attendance$', Attendance.as_view(), name='take_attendance'),
 	url(r'^get_attendance$', Attendance.as_view(), name='get_attendance'),
 	url(r'^students$', AllStudents.as_view(), name="allstudents"),
-	url(r'^search$', Search.as_view(), name="search")
+	url(r'^search$', Search.as_view(), name="search"),
+	url(r'profile_update$', ProfileUpdateView.as_view(), name="profile_update")
 
 ]
 	
