@@ -13,7 +13,7 @@ urlpatterns = [
 	url(r'^profile/(?P<id>[0-9]+)/$', ProfileDetailView.as_view(), name='profile_detail'),
 	url(r'^take_attendance$', Attendance.as_view(), name='take_attendance'),
 	url(r'^get_attendance$', Attendance.as_view(), name='get_attendance'),
-	url(r'^liststudents$', ListStudents.as_view(), name="liststudents"),
+	url(r'^students$', AllStudents.as_view(), name="allstudents"),
 	url(r'^search$', Search.as_view(), name="search")
 
 ]
