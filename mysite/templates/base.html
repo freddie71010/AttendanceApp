@@ -36,23 +36,22 @@
 				<li class="header-students">
 					<a href ="/students">Students</a>
 				</li>
-				<li class="header-search">
-					<a href='/search'>Search</a>
-				</li>
+
 				<li class="header-logout">
 					<a href ="/logout">Logout</a>
 				</li>
+			
+			    <form id="searchform" action="/search" method="post" accept-charset="utf-8">{% csrf_token %}
+			      <button class="searchbutton" type="submit">
+			        <i class="fa fa-search"></i>
+			      </button>
+			      <input class="searchfield" id="searchbox" type="text" name="search" placeholder="Search">
+			   </form>
+
+
 			</ul>
 		</nav>
 	</header>
-<search>
-    <form id="searchform" action="/search" method="post" accept-charset="utf-8">{% csrf_token %}
-      <button class="searchbutton" type="submit">
-        <i class="fa fa-search"></i>
-      </button>
-      <input class="searchfield" id="searchbox" type="text" name="search" placeholder="Search">
-    </form>
-</search>
 
 
 	{%block subheader %}{% endblock subheader %}
