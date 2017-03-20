@@ -5,7 +5,7 @@ from .forms import *
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.views import login
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, StudentProfileForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from django.contrib.auth.decorators import permission_required, login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse, JsonResponse
@@ -156,34 +156,26 @@ class CohortDetailView(View):
 
 @method_decorator(login_required, name="dispatch")
 class ProfileUpdateView(View):
-	template = "attendance/build_profile"
-	form = StudentProfileForm
-	 def get(self, request):
-	 	context = {
-	 		form = self.form(),
-	 	}
-	 	# I probably need to use local sotrage to get my user query.
-	 	return render(request, self.template, context)
+	template = "attendance/build_profile.html"
+	
+	def get(self, request):
+		# I probably need to use local sotrage to get my user query.
+		return render(request, self.template)
 
-	 def post(self, requst):
-	 	profile = self.form(request.POST)
-	 	if profile.is_valid():
-	 		profile.save()
-	 	else:
-	 		return "err"
+	def post(self, requst):
+		data = dict(request.POST)
+		user = User.objects.get(username=data["username"])
 
 
-	 	
 
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(View):
 	
 	template = "attendance/profile_detail.html"
 	
-	def get(self, request, id):
-		print(id)
-		user = User.objects.get(id=id)
-		attendance = AttendanceRecord.objects.filter(user_id=user.id)
+	def get(self, request, username):
+		user = User.objects.get(username=username)
+		attendance = AttendanceRecord.objects.filter(user=user)
 		context = {
 			"user": user,
 			"attendance": attendance,
