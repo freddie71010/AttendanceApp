@@ -185,7 +185,7 @@ class Attendance(View):
 		print("Grab Attendance data".center(60, '='))
 		for k, v in list(data.items()):
 			name = k
-			status = data[name]
+			# status = data[name]
 			if name[0:7] != 'student':
 				del data[k]
 				pass
