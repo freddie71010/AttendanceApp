@@ -25,3 +25,5 @@ class CohortRegistrationForm(ModelForm):
     class Meta:
         model = Cohort
         fields = ["cohort_name", "teacher", "start_date", "graduation_date"]
+
+

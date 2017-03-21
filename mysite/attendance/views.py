@@ -154,16 +154,28 @@ class CohortDetailView(View):
 	def post(self, request, cohort):
 		pass
 
+@method_decorator(login_required, name="dispatch")
+class ProfileUpdateView(View):
+	template = "attendance/build_profile.html"
+	
+	def get(self, request):
+		# I probably need to use local sotrage to get my user query.
+		return render(request, self.template)
+
+	def post(self, requst):
+		data = dict(request.POST)
+		user = User.objects.get(username=data["username"])
+
+
 
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(View):
 	
 	template = "attendance/profile_detail.html"
 	
-	def get(self, request, id):
-		print(id)
-		user = User.objects.get(id=id)
-		attendance = AttendanceRecord.objects.filter(user_id=user.id)
+	def get(self, request, username):
+		user = User.objects.get(username=username)
+		attendance = AttendanceRecord.objects.filter(user=user)
 		context = {
 			"user": user,
 			"attendance": attendance,
