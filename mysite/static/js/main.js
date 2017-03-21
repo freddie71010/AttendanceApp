@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	console.log("main.js loaded!")
 
+
+
 // ON LOAD ===========================================================================================
 
 //Sets calendar values on Cohort Detail page
@@ -39,6 +41,13 @@ $(document).ready(function(){
 		}
 	} //end func
 
+	//removes the dismissible button elements from a prev click
+	function remove_popover() {
+		$('ul.cal-numdays li a').detach();
+		$('ul.cal-numdays li div').detach();
+	}; //end func
+
+
 // ===========================================================================================
 
 	//when next button is clicked, the following week's dates are displayed
@@ -60,7 +69,8 @@ $(document).ready(function(){
 		
 		$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
 		date_loop(start_of_week);		
-		$('ul.cal-numdays li').removeAttr("style");		
+		$('ul.cal-numdays li').removeAttr("style");
+
 		$('.take-attendance-button').attr('disabled', 'disabled');
 		$('.take-attendance-button').html("<span class='glyphicon glyphicon-plus'></span> Submit Attendance");
 
@@ -71,11 +81,21 @@ $(document).ready(function(){
 	$('ul.cal-numdays li').on('click', function(event){
 		event.preventDefault();
 
+		//activates popover (boostrap JS) functionality
+		$(function () {
+			$('[data-toggle="popover"]').popover()
+		})
+
 		//modifies various elements on page - specific date background color, attendance button text changes
+		//---------------------------------------------------------------------------------------------------
 		diff = $(this).index();
 		$('ul.cal-numdays li').removeAttr("style id");
+		$(".btn-group").children().removeClass("active");
+		
+		remove_popover();
+		
 		$(this).css("background-color","yellow");
-		clicked_date = $(this).text();
+		$(this).attr('id', 'clicked_date');
 		start_of_week.add(diff,'d');
 		$('.take-attendance-button').removeAttr('disabled');
 		$('.take-attendance-button').attr('value', start_of_week.format('YYYY-MM-DD'));
@@ -89,8 +109,7 @@ $(document).ready(function(){
 		var student_names_obj = {};
 		$(".username").each(function() {
 		    id = $(this).attr('id');
-		    status = $(this).parent().next().children(':checked').val();
-		    student_names_obj[id] = status;
+		    student_names_obj[id] = 'NA';
 		});
 		var date_value = $('.take-attendance-button').attr('value');
 		var kwargs = {
@@ -98,7 +117,7 @@ $(document).ready(function(){
 					"date_value": $('.take-attendance-button').attr('value'),
 					"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 		};
-		console.log("kwargs:", kwargs)
+		console.log("pre-ajax kwargs:", kwargs)
 
 		
 		//ajax call to grab user date data from DB
@@ -107,31 +126,30 @@ $(document).ready(function(){
 			type: "GET",
 			data: kwargs,
 			success: function(response){
+				console.log("AJAX call to grab user date data from DB=============");
 				console.log("Response:",response);
 				data = response.spec_date_records;
-				console.log("data:", (data))
+				console.log("spec_date_records data:", (data))
 				// if DB has NO date date, the string "NO_DATE_DATA_FOUND" is returned here
 				if (data === "NO_DATE_DATA_FOUND"){
-					alert("No date data found!");
+					$('<a id="clicked_date_popover" data-placement="bottom" tabindex="0" role="button" data-toggle="popover" data-trigger="focus"  data-content="No Date Data Found!"></a>').appendTo('#clicked_date');
+					$('#clicked_date_popover').popover('show');
 				} else { 
-				//load the data from DB into the radio inputs
+				//load the data from DB into the radio input buttons
 					$.each(data, function(k,v) {
-						console.log("impt:", k, v);
 						if (v === "present") {
-							i = 1;
+							i = 0;
 						} else if (v === "unexcused") {
-							i = 2;
+							i = 1;
 						} else if (v === "excused") {
-							i = 3;
+							i = 2;
 						} else { //"late"
-							i = 4;
+							i = 3;
 						};
-						console.log("\ti:", i);
 						k = k.replace(".", "\\.");
-						console.log("\tK:", k);
-						$("form#" + k + ".student-radio-tags input:radio[value='" + v + "']").prop('checked', true)
+						$("form#" + k + " .btn-group").children().eq(i).addClass('active');
 					})
-					console.log("Date records loaded successfully.")
+					console.log("AJAX finished*****")
 				}; //end else
 			},
 			error: function(){
@@ -261,11 +279,13 @@ $(document).ready(function(){
 	$('.take-attendance-button').on('click', function(event){
 		event.preventDefault();
 		console.log("Submit Attendance Button Clicked!");
+		remove_popover();
 
 		var student_names_obj = {};
 		$(".username").each(function() {
 		    id = $(this).attr('id');
-		    status = $(this).parent().next().children(':checked').val();
+		    status = $(this).parent().next().children('.btn-group').children('.active').children().val();
+		    // status = $(this).parent().next().children(':checked').val();
 		    student_names_obj[id] = status;
 		});
 		var date_value = $('.take-attendance-button').attr('value');
@@ -274,8 +294,9 @@ $(document).ready(function(){
 					"date_value": $('.take-attendance-button').attr('value'),
 					"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 		};
-		console.log("kwargs:", kwargs)
+		console.log("pre-ajax kwargs:", kwargs)
 
+		//ajax call to send user date data to DB
 		$.ajax({
 			url: "/take_attendance",
 			type: "POST",
@@ -283,7 +304,7 @@ $(document).ready(function(){
 			success: function(response){
 				// $('li.individual-student').css('background-color',"green");
 				console.log("Error msg:",response.error_msg);
-				if ((response.error_msg).length !== 0) {
+				if (response.error_msg !== undefined) {
 					alert("You forgot to fill out the following student's attendance:\n"+response.error_msg);
 				} else {
 					alert('Attendance updated!');
@@ -299,6 +320,7 @@ $(document).ready(function(){
 
 
 // Handles Search functionality
+
 	// $('.search_drop_down').on('click', function(event){
 	// 	event.preventDefault();
 	// 	console.log("Search Button Clicked!");
@@ -308,7 +330,6 @@ $(document).ready(function(){
 	// 		type:"post",
 	// 		data
 	// 	})
-
 
 
 

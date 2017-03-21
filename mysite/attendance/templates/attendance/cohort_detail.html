@@ -51,7 +51,9 @@
 </ul>
 
 <ul class="cal-numdays"> 
-  <li>1</li>
+  <li>
+  	<a tabindex="0" role="button" data-toggle="popover" data-trigger="focus"  data-content="Dismissible popover! Look at me!">1</a>
+  </li>
   <li>2</li>
   <li>3</li>
   <li>4</li>
@@ -69,14 +71,20 @@
 			<a class="username" id="{{member.username}}" href="/profile/{{member.username}}">{{member.first_name}} {{member.last_name}}</a>
 		</div>
 		<form method = 'post' class="student-radio-tags" id="{{member.username}}">{% csrf_token %}
-			<label>Present</label>
-			<input type="radio" class="radio" name="student-attendance" value="present">
-			<label>Unexcused</label>
-			<input type="radio" class="radio" name="student-attendance" value="unexcused">
-			<label>Excused</label>
-			<input type="radio" class="radio" name="student-attendance" value="excused">
-			<label>Late</label>
-			<input type="radio" class="radio" name="student-attendance" value="late">
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary">
+					<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="present">Present
+				</label>
+				<label class="btn btn-primary">
+					<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="unexcused">Unexcused
+				</label>
+				<label class="btn btn-primary">
+					<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="excused">Excused
+				</label>
+				<label class="btn btn-primary">
+					<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="late">Late
+				</label>
+				</div>
 		</form>
   	</li>
 {% endfor %}	
