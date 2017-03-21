@@ -176,9 +176,11 @@ class ProfileDetailView(View):
 	def get(self, request, username):
 		user = User.objects.get(username=username)
 		attendance = AttendanceRecord.objects.filter(user=user)
+		cohort_info = user.cohort_set.values()   
 		context = {
 			"user": user,
 			"attendance": attendance,
+			"cohort":cohort_info[0],
 		}
 		return render(request, self.template, context)
 

@@ -18,13 +18,13 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel gravida metus, non ultrices sapien. Morbi odio metus, dapibus non nibh id amet.</p>
                             <hr>
                             <h3><strong>Location</strong></h3>
-                            <p>Earth</p>
+                            <p>New York</p>
                             <hr>
-                            <h3><strong>Gender</strong></h3>
-                            <p>Unknown</p>
+                            <h3><strong>Cohort</strong></h3>
+                            <p>{{cohort.cohort_name}}</p>
                             <hr>
-                            <h3><strong>Birthday</strong></h3>
-                            <p>January 01 1901</p>
+                            <h3><strong>Graduation Date</strong></h3>
+                            <p>{{cohort.graduation_date}}</p>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                             <img class="media-object img-circle" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="50px" height="50px" style="margin-right:8px; margin-top:-5px;">
                         </a>
                     </div>
-                    <h4><a href="#" style="text-decoration:none;"><strong>John Doe</strong></a> – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i> {{user.last_updated}}</i></a></small></small></h4>
+                    <h4><a href="#" style="text-decoration:none;"><strong>{{user.username}}</strong></a> – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i> {{user.last_updated}}</i></a></small></small></h4>
                     <span>
                         <div class="navbar-right">
                             <div class="dropdown">
