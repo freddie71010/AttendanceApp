@@ -5,6 +5,15 @@ from django.utils.text import slugify
 from django.core import serializers
 
 
+'''
+User Fields
+
+attendancerecord, cohort, date_joined, email, first_name, 
+groups, id, is_active, is_staff, is_superuser, last_login, last_name, logentry, password, profile, user_permissions, username
+'''
+
+
+
 class Profile(models.Model):
 	user = models.OneToOneField(User, default=None)
 	position = models.CharField(default=None,max_length=100)
