@@ -248,23 +248,29 @@ $(document).ready(function(){
 							+ response.first_name + " " + response.last_name + 
 							`</a>
 						</div>
-						<form class="student-radio-tags">
-							<input type = "hidden" name = "csrfmiddlewaretoken" value = "`
+						<form method = 'post' class="student-radio-tags" id="`
+							+ response.first_name + "." + response.last_name +
+						`">`
 							+ response.csrfmiddlewaretoken +
-							`">
-							<label>Present</label>
-							<input type="radio" class="radio" name="student-attendance" value="present" checked>
-							<label>Unexcused</label>
-							<input type="radio" class="radio" name="student-attendance" value="unexcused">
-							<label>Excused</label>
-							<input type="radio" class="radio" name="student-attendance" value="excused">
-							<label>Late</label>
-							<input type="radio" class="radio" name="student-attendance" value="late">
+							`<div class="btn-group btn-group-justified" data-toggle="buttons">
+								<label class="btn btn-primary">
+									<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="present">Present
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="unexcused">Unexcused
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="excused">Excused
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="late">Late
+								</label>
+							</div>
 						</form>
 					</li>
 				`);
 				console.log("AJAX Register Student - Success!:", response.first_name);
-				document.getElementById("register-student-form").reset();
+				document.getElementById("add-student-form").reset();
 				
 			},
 			error: function(){
