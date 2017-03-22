@@ -12,15 +12,14 @@
 		<h3>Graduation Date: {{graduation_date}}</h3>
 	</div>
 
-	<button class="btn btn-warning btn-block new-student-button"><span class="glyphicon glyphicon-plus"></span> Add Student</button>
+	<button class="btn btn-warning btn-block new-student-button"><span class="glyphicon glyphicon-plus"></span> Register Student</button>
 
 	<div id="student-register-div" class="hidden">
-		<div class="add-student-form">
-			<h3>Register Student</h3>
-			<form method="post" id="register-student-form">{% csrf_token %}
-			{{ form.as_table }}
-			<button type="submit" id="register-student" class="btn btn-success btn-small" value="Register"><i class="icon-white icon-plus"> Register</i></button>
+		<div class="student-form-div">
+			<form method="post" id="add-student-form">{% csrf_token %}
+				{{ form.as_p }}
 			</form>
+			<button type ="button" id="register-student" class="btn btn-primary btn-lg btn-block btn-success register-student"><span class="glyphicon glyphicon-plus"></span></button>
 		</div>
 	</div>
 
@@ -50,10 +49,8 @@
   <li>Sa</li>
 </ul>
 
-<ul class="cal-numdays"> 
-  <li>
-  	<a tabindex="0" role="button" data-toggle="popover" data-trigger="focus"  data-content="Dismissible popover! Look at me!">1</a>
-  </li>
+<ul class="cal-numdays list-group"> 
+  <li>1</li>
   <li>2</li>
   <li>3</li>
   <li>4</li>
@@ -71,7 +68,7 @@
 			<a class="username" id="{{member.username}}" href="/profile/{{member.username}}">{{member.first_name}} {{member.last_name}}</a>
 		</div>
 		<form method = 'post' class="student-radio-tags" id="{{member.username}}">{% csrf_token %}
-			<div class="btn-group" data-toggle="buttons">
+			<div class="btn-group btn-group-justified" data-toggle="buttons">
 				<label class="btn btn-primary">
 					<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="present">Present
 				</label>
@@ -88,13 +85,13 @@
 		</form>
   	</li>
 {% endfor %}	
+
+</ul>
 	<div class="submit-attendance-div">
 		<button class="btn btn-success btn-block take-attendance-button">
 			<span class="glyphicon glyphicon-plus"></span>Submit Attendance
 		</button>
 	</div>
-
-</ul>
 
 
 {% endblock content %}

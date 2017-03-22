@@ -132,7 +132,7 @@ $(document).ready(function(){
 				console.log("spec_date_records data:", (data))
 				// if DB has NO date date, the string "NO_DATE_DATA_FOUND" is returned here
 				if (data === "NO_DATE_DATA_FOUND"){
-					$('<a id="clicked_date_popover" data-placement="bottom" tabindex="0" role="button" data-toggle="popover" data-trigger="focus"  data-content="No Date Data Found!"></a>').appendTo('#clicked_date');
+					$('<a id="clicked_date_popover" data-placement="bottom" tabindex="0" role="button" data-toggle="popover" data-trigger="focus"  data-content="No Attendance Records Found!"></a>').appendTo('#clicked_date');
 					$('#clicked_date_popover').popover('show');
 				} else { 
 				//load the data from DB into the radio input buttons
