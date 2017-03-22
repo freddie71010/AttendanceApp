@@ -1,69 +1,43 @@
 {% extends "base.html" %}
+
 {% block title %} Students {% endblock title %}
 {% block head %} Students {% endblock head %}
 
 {% block topscripts %}
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">  
-
 {% endblock topscripts %}
 
-{% block subheader %}
-	<subheader class='subheader'>
-
-		<button class="btn btn-warning btn-block new-student-button"><span class="glyphicon glyphicon-plus"></span> Register New Student</button>
-		
-		<div id="student-register-div" class="hidden">
-			<div class="student-form-div">
-			<form method="post" id="add-student-form" action="/register_student">{% csrf_token %}
-		            {{ form.as_p }}
-		    </form>
-		    <button class="btn btn-success btn-lg active register-student"><span class="glyphicon glyphicon-plus"></span></button>
-		    </div>
-		</div>
-		
-	</subheader>
-{% endblock %}
-
+{% block subheader %}{% endblock subheader %}
 
 {% block content %}
-
-<!-- <table class="student-list">
-	{% for student in students %}
-		<a href="/profile/{{student.id}}" class="list-group-item">{{student.first_name}} {{student.last_name}}</a>
-	{% endfor %}
-</table> -->
-
-
-<table id="allstudents" class="display">
+<table id="allstudents" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>ID (TEMP FIELD)</th>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Email</th>
             <th>Username</th>
             <th>Final Project</th>
             <th>Cohort</th>
+            <th>Cohort Start Date</th>
+            <th>Cohort Grad Date</th>
+
 
         </tr>
     </thead>
     <tbody>
     {% for student in students %}
         <tr>
-            <td>{{student.id}}</td>
             <td>{{student.first_name}}</td>
             <td>{{student.last_name}}</td>
-            <td>{{student.email}}</td>
             <td><a href="/profile/{{student.username}}">{{student.username}}</a></td>
-            <td></td>
-            <td></td>
-
+            <td>{{student.final_project}}</td>
+            <td>{{student.cohort_name}}</td>
+            <td>{{student.cohort_start_date}}</td>
+            <td>{{student.cohort_grad_date}}</td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
-
-
 {% endblock content %}
 
 

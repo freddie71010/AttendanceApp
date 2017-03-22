@@ -289,18 +289,31 @@ class AllStudents(View):
 	template = "attendance/students.html"
 
 	def get (self, request):
-		students = User.objects.all()
-		projects = Profile.objects.all()
-		cohorts = Cohort.objects.all()
-	
-		context = {
-		"students": students, 
-		"projects": projects, 
-		"cohorts": cohorts
-		}
+		# Includes only students; filters out admins
+		students = User.objects.filter(is_staff = False)
 		
-		print("context:",context)
-		return render(request, self.template, context)
+		for student in students:
+			try: 
+				student.__dict__['final_project'] = student.profile.final_project
+			except:
+				student.__dict__['final_project'] = "-"
+			
+			try:
+				student.__dict__['cohort_name'] = student.cohort_set.values()[0]['cohort_name']
+			except:
+				student.__dict__['cohort_name'] = "-"
+			
+			try:
+				student.__dict__['cohort_start_date'] = student.cohort_set.values()[0]['start_date']
+			except:
+				student.__dict__['cohort_start_date'] = "-"
+			
+			try:
+				student.__dict__['cohort_grad_date'] = student.cohort_set.values()[0]['graduation_date']
+			except:
+				student.__dict__['cohort_grad_date'] = "-"
+			
+		return render(request, self.template, {"students": students})
 
 # logs out user
 def logout_view(request):
