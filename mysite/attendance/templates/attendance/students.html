@@ -10,12 +10,11 @@
 {% block subheader %}{% endblock subheader %}
 
 {% block content %}
-<table id="allstudents" class="display">
+<table id="allstudents" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Email</th>
             <th>Username</th>
             <th>Final Project</th>
             <th>Cohort</th>
@@ -30,7 +29,6 @@
         <tr>
             <td>{{student.first_name}}</td>
             <td>{{student.last_name}}</td>
-            <td>{{student.email}}</td>
             <td><a href="/profile/{{student.username}}">{{student.username}}</a></td>
             <td>{{student.final_project}}</td>
             <td>{{student.cohort_name}}</td>
