@@ -289,7 +289,9 @@ class AllStudents(View):
 	template = "attendance/students.html"
 
 	def get (self, request):
-		students = User.objects.all()
+		# Includes only students; filters out admins
+		students = User.objects.filter(is_staff = False)
+		
 		for student in students:
 			try: 
 				student.__dict__['final_project'] = student.profile.final_project
