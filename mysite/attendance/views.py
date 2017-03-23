@@ -199,25 +199,28 @@ class Attendance(View):
 		print("Grab Attendance data".center(60, '='))
 		for k, v in list(data.items()):
 			name = k
-			# status = data[name]
 			if name[0:7] != 'student':
 				del data[k]
 				pass
-		print(data)
-		
 		date_records = AttendanceRecord.objects.all().filter(date=date)
 		spec_date_records = {}
+		error_check = 0
 		for user in data:
 			name = user
-			print("name:", name[18:-1])
 			user_obj = User.objects.get(username = name[18:-1])
 			try:
 				date_rec = date_records.get(user_id = user_obj.id)
 			except: # if no date data is found in DB for that user, exit loop and return "NO_DATE_DATA_FOUND"
-				return JsonResponse({"spec_date_records": "NO_DATE_DATA_FOUND"}, safe=False)
-			print("\tuser_obj:", user_obj, "\tid:",user_obj.id, '\tdate_rec:', date_rec.status)
+				print("\tError with:\t", user_obj)
+				error_check += 1
+				if len(data) == error_check:
+					print("All attendance records missing: ", error_check, "/", len(data))
+					return JsonResponse({"spec_date_records": "NO_DATE_DATA_FOUND"}, safe=False)
+				continue
+			print("user_obj:", user_obj, "\tid:",user_obj.id, '\tdate_rec:', date_rec.status)
 			spec_date_records[user_obj.username] = date_rec.status
 		print("RECORDS:",len(spec_date_records), spec_date_records)
+		print("Attendance records missing: ", error_check, "/", len(data))
 		return JsonResponse({"spec_date_records": spec_date_records}, safe=False)
 	
 
