@@ -250,9 +250,8 @@ $(document).ready(function(){
 						</div>
 						<form method = 'post' class="student-radio-tags" id="`
 							+ response.first_name + "." + response.last_name +
-						`">`
-							+ response.csrfmiddlewaretoken +
-							`<div class="btn-group btn-group-justified" data-toggle="buttons">
+						`">
+							<div class="btn-group btn-group-justified" data-toggle="buttons">
 								<label class="btn btn-primary">
 									<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="present">Present
 								</label>
