@@ -193,7 +193,7 @@ $(document).ready(function(){
 			type: "POST",
 			data: kwargs,
 			success: function(response){
-				$('.cohort-list').prepend("<ul><li><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></li></ul>");
+				$('.container').prepend("<ul><div id='cohort-list-div'><item id='list-cohort-li'><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></item></div></ul>");
 				console.log("Success entry:", response.cohort_name)
 				document.getElementById("add-cohort-form").reset();
 			},
