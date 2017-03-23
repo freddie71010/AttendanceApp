@@ -1,3 +1,20 @@
 # AttendanceApp
 
-Attendance application for educational insititutions to monitor student attendance.
+Attendance application for teachers and administrators of small educational organizations to monitor student attendance.  
+* Log-in system ensures only teachers and administrators have access to data
+* Ability to create new cohort classes and register students for each class
+* Class pages have a calendar attendance form where student attendance is viewable and updatable
+
+Prototype application.
+
+## Technologies
+* Python - Django framework
+* Javascript/jQuery 
+  * DataTables plugin
+  * Moment.js
+* HTML5/CSS3
+* SQLite
+* Bootstrap framework - jQuery, CSS, HTML
+
+## Credits
+Freddie von Stange and Andrew Kolansky
