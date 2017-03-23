@@ -1,44 +1,38 @@
 /*base css stuff and some login stuff*/
 
+
+.container {
+    width: 750px;
+}
+
 .hidden{
-	display:none;
+    display:none;
 }
 
 .unhidden {
-	display:block;
+    display:block;
 }
 
 h1 {
-	color: orange;
-	position: block;
-	padding : 4%;
+    color: orange;
+    position: block;
+    padding : 4%;
 }
 
 div.wrapper {
-	padding:20px;
+    padding:20px;
 }
 
-body {
-	background-color: #fdffb8;
-}
-
-/* QUESTION: Is this div.container for pages other than login? Login container has a padding-top of 2% */
-div.container {
-	padding-top: 15%;
-}
+/*body {
+    background-color: #fdffb8;
+}*/
 
 
 /*!!!!!!!!!!!!!!!!!*/
-/* cohort list idex.html css*/
-
-.new-cohort-button {
-	width : 30%;
-	padding: 5px;
-	display: block ;
-}
+/* cohort list index.html css*/
 
 div#cohort-list-div:hover {
-	background-color: #d65602
+    background-color: #d65602;
 }
 
 div#cohort-list-div {
@@ -49,24 +43,23 @@ div#cohort-list-div {
 }
 
 #list-cohort-li>a {
-	text-transform: uppercase;
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 24px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 500;
-	line-height: 26.4px;
-	color: white;
+    text-transform: uppercase;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    color: white;
 }
 
 
-div#cohort-register-div {
+div#cohort-register-div, div#student-register-div {
     text-align: center;
     padding-top: 15px;
     padding-bottom: 10px;
 }
 
-.cohort-form-div {
+.cohort-form-div, .student-form-div {
     position: relative;
     margin: auto;
     top: 0;
@@ -74,116 +67,123 @@ div#cohort-register-div {
     bottom: 0;
     right: 0;
     max-width: 277px;
-    height: 320px;
 }
 
-.cohort-form-div>form {
-	text-align: left;
+.cohort-form-div>form, .student-form-div>form {
+    text-align: left;
 }
 
-#add-cohort-form>p>input {
-	width:100%;
+#add-cohort-form>p>input, #add-student-form>p>input {
+    width:100%;
 }
 
-#add-cohort-form>p>select {
-	width:100%;
+#add-cohort-form>p>select, #add-student-form>p>select {
+    width:100%;
+}
+
+#add-cohort-form, #add-student-form {
+    margin-bottom: 20px;
 }
 /* form appearance */
 
-
+/*.student-form-div {
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    max-width: 277px;
+}*/
 
 /*base html css*/
 
 .header-menu a {
-	color: #bbb;
+    color: #bbb;
 }
 
 a {
-	text-decoration: none;
-	cursor:pointer;
-	background-color: transparent;
-}
-
-* {
-	box-sizing: inherit;
+    text-decoration: none;
+    cursor:pointer;
+    background-color: transparent;
 }
 
 nav {
-	display:block;
+    display:block;
 }
 
 .header__menu>.header__menu-left {
-	float:left;
-	padding-left:35px;
+    float:left;
+    padding-left:35px;
 }
 
 .header-menu>ul>li {
-	float: left;
-	text-transform: uppercase;
-	margin-right: 1.5em;
-	margin-top: 15px;
+    float: left;
+    text-transform: uppercase;
+    margin-right: 1.5em;
+    margin-top: 15px;
 
 }
 
 li {
-	display: list-item;
-	text-align: -webkit-match-parent;
+    display: list-item;
+    text-align: -webkit-match-parent;
 
 }
 
 .header-menu>ul {
-	margin:16px 0;
-	display:flex;
-	-webkit-box-pack:justify;
-	justify-content: space-between;
-	list-style-type: none;
+    margin:16px 0;
+    display:flex;
+    -webkit-box-pack:justify;
+    justify-content: space-between;
+    list-style-type: none;
 
 }
 
 header.header {
-	background-color: #fff;
-	opacity:1;
-	height:72px;
-	display: block;
-	box-sizing: inherit;
-	border-bottom: medium solid;
+    background-color: #fff;
+    opacity:1;
+    height:72px;
+    display: block;
+    box-sizing: inherit;
+    border-bottom: medium solid;
 }
 div.header-logo {
-	font-family: MarrSancs, Helvetica, Arial Black, sans-serif;
-	font-weight: 600;
-	text-rendering: geometricPrecision;
-	font-size:13px;
-	border-bottom: 1px solid #eee;
-	position:relative;
-	float: left;
-	padding: 0 10px;
-	min-height:  72px;
+    font-family: MarrSancs, Helvetica, Arial Black, sans-serif;
+    font-weight: 600;
+    text-rendering: geometricPrecision;
+    font-size:13px;
+    border-bottom: 1px solid #eee;
+    position:relative;
+    float: left;
+    padding: 0 10px;
+    min-height:  72px;
 }
 
 .header-logo-image {
-	display: block;
-	width: 155px;
-	height: 22px;
-	padding: 25px;
-	float: right;
-	box-sizing: content-box;
-	background-color: orange;
+    display: block;
+    width: 155px;
+    height: 22px;
+    padding: 25px;
+    float: right;
+    box-sizing: content-box;
+    background-color: orange;
 }
 
 .header-logo-image span {
-	border:0;
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	position: absolute;
-	width:1px;
-	color: white;
+    border:0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    position: absolute;
+    width:1px;
+    color: white;
 
 }
 
 ul.menu-left a::hover {
-	border: 2px:
-	color:orange; 
+    border: 2px:
+    color:orange; 
 
 }
 
@@ -201,18 +201,18 @@ ul.menu-left a::hover {
 }
 
 .cohort-detail {
-	font-family: MarrSancs, Helvetica, Arial Black, sans-serif;
-	font-weight: 300;
-	position: inline-block;
-	color: orange;
+    font-family: MarrSancs, Helvetica, Arial Black, sans-serif;
+    font-weight: 300;
+    position: inline-block;
+    color: orange;
 
 }
 
 /*sub header csss*/
 
 subheader {
-	display: block;
-	margin-top: 50px;
+    display: block;
+    margin-top: 50px;
 }
 
 /* calendar in cohort detail */
@@ -220,7 +220,6 @@ subheader {
 /* student list */
 
 ul.student-list {
-    /* margin: 0; */
     padding: 10px 0;
     background-color: #f5f5f5;
     border: medium black;
@@ -228,16 +227,14 @@ ul.student-list {
 }
 
 .cohort-detail-student-name-div {
-
-	border:0;
-
+    padding-bottom: 4px;
 }
 
 li.individual-student {
-    border: 3px solid;
-    background-color: #c3bdb4;
+    border: 1px solid;
+    background-color: #eeeeee;
     list-style-type: none;
-    margin-bottom: 5px;
+    margin-bottom: -1px;
     font-size: 15px;
     padding: 12px;
 }
@@ -249,7 +246,7 @@ li.individual-student {
     padding: 0px 30px 0px 30px;
 }
 li.individual-student>a {
-	color: black;
+    color: black;
 }
 
 input.radio {
@@ -258,7 +255,7 @@ input.radio {
 
 form.student-radio-tags {
     display: inline-block;
-    padding-left: 30px;
+    padding-left: 5px 10px 0px 10px;
 }
 
 /* Month header */
@@ -337,4 +334,11 @@ form.student-radio-tags {
     padding: 5px;
     background: #1abc9c;
     color: white !important
+}
+
+
+.btn-success {
+/*    background-color: #f0ad4e;
+    border-color: #eb9821;*/
+    margin-top:20px;
 }
