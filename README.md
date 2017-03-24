@@ -12,6 +12,7 @@ Prototype application.
 * Javascript/jQuery 
   * DataTables plugin
   * Moment.js
+  * jQuery UI
 * HTML5/CSS3
 * SQLite
 * Bootstrap framework - jQuery, CSS, HTML
