@@ -19,7 +19,7 @@ from django.core import serializers
 
 
 
-@method_decorator(login_required, name='dispatch') #due to us usifseang CBV(class based views), we need to use insert the 'login_required' decorator into a method decorator in order for it to work (see django docs)
+@method_decorator(login_required, name='dispatch') #due to CBV(class based views), we need to use insert the 'login_required' decorator into a method decorator in order for it to work (see django docs)
 class Cohorts(View):
 	
 	model = Cohort
@@ -89,6 +89,7 @@ class RegisterCohort(View):
 
 	def post(self, request):
 		data = dict(request.POST)
+		print(data)
 		start_date = data["start_date"][0]
 		graduation_date = data["graduation_date"][0]
 		teacher = User.objects.get(username = data["teacher"][0])
@@ -154,6 +155,8 @@ class CohortDetailView(View):
 	def post(self, request, cohort):
 		pass
 
+
+# WIP
 @method_decorator(login_required, name="dispatch")
 class ProfileUpdateView(View):
 	template = "attendance/build_profile.html"
