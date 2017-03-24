@@ -26,4 +26,6 @@ class CohortRegistrationForm(ModelForm):
         model = Cohort
         fields = ["cohort_name", "teacher", "start_date", "graduation_date"]
 
-
+    def __init__(self, *args, **kwargs):
+        super(CohortRegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['teacher'] =  forms.ModelChoiceField(queryset=User.objects.filter(is_staff = True),empty_label="Select a teacher",)
