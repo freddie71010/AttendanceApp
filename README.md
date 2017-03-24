@@ -9,12 +9,12 @@ Prototype application.
 
 ## Technologies
 * Python - Django framework
-* Javascript/jQuery 
+* JavaScript/jQuery 
   * DataTables plugin
   * Moment.js
   * jQuery UI
 * HTML5/CSS3
-* Bootstrap framework - jQuery, CSS, HTML
+* Bootstrap framework - JavaScript, CSS, HTML
 * SQLite
 
 ## Credits
