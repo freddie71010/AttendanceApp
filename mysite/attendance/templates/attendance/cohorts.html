@@ -2,7 +2,11 @@
 {% block title %} Index View {% endblock title %}
 {% block head %} Index {% endblock head %}
 
-{%block subheader %}
+{% block topscripts %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock topscripts %}
+
+{% block subheader %}
 	<subheader class='subheader'>
 
 		<button class="btn btn-warning btn-block new-cohort-button"><span class="glyphicon glyphicon-plus"></span> Register New Cohort</button>
@@ -12,17 +16,15 @@
 			<form method="post" id="add-cohort-form" action="/register_cohort">{% csrf_token %}
 		            {{ form.as_p }}
 		    </form>
-		    <button type ="button" class="btn btn-primary btn-lg btn-block btn-success register-cohort"><span class="glyphicon glyphicon-plus"></span></button>
+		    <button type ="button" id="register-cohort" class="btn btn-primary btn-lg btn-block btn-success register-cohort"><span class="glyphicon glyphicon-plus"></span></button>
 		    </div>
 		</div>
 		
 	</subheader>
-{% endblock %}
+{% endblock subheader %}
 
 
 {% block content %}
-
-<table class="cohort-list">
 	{% for cohort in cohorts %}
 	<ul>
 		<div id="cohort-list-div">
@@ -30,7 +32,9 @@
 		</div>
 	</ul>
 	{% endfor %}
-</table>
-
 {% endblock content %}
 
+{% block javascript %}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock javascript %}

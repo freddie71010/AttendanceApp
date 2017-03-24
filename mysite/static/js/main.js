@@ -11,9 +11,11 @@ $(document).ready(function(){
 	$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
 	date_loop(start_of_week);
 
-	//defaults settings as if the current day was selected - background color to yellow, button value set as today's date
+//defaults settings as if the current day was selected - background color to yellow, button value set as today's date
 	onload_sets_todays_date();
 
+
+	$(".datepicker").datepicker();
 
 //FUNCTIONS =============================================================================
 	function date_loop(start_of_week) {
@@ -187,15 +189,23 @@ $(document).ready(function(){
 				"start_date": +new Date($('input[name="start_date"]').val()),
 				"graduation_date": +new Date($('input[name="graduation_date"]').val()),
 				"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
-			},
+			}
+		//Checks to see if all form fields are filled out
+		if (isNaN(kwargs.graduation_date) || isNaN(kwargs.start_date) || kwargs.teacher === "Select a teacher" || kwargs.cohort_name == null | kwargs.cohort_name == "") {
+			alert("Please fill out all fields.");
+			return false;
+		}
+		
+		console.log("No Error - continuing to ajax!")
 		$.ajax({
 			url: "/register_cohort",
 			type: "POST",
 			data: kwargs,
 			success: function(response){
-				$('.cohort-list').prepend("<ul><li><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></li></ul>");
-				console.log("Success entry:", response.cohort_name)
+				$('.container').prepend("<ul><div id='cohort-list-div'><item id='list-cohort-li'><a href = 'cohort/" + response.cohort_name + "'>" + response.cohort_name + "</a></item></div></ul>");
 				document.getElementById("add-cohort-form").reset();
+				alert('Cohort added!');
+				console.log("Success entry:", response.cohort_name);
 			},
 			error: function(){
 				console.log("****New Cohort Error****");
@@ -250,9 +260,8 @@ $(document).ready(function(){
 						</div>
 						<form method = 'post' class="student-radio-tags" id="`
 							+ response.first_name + "." + response.last_name +
-						`">`
-							+ response.csrfmiddlewaretoken +
-							`<div class="btn-group btn-group-justified" data-toggle="buttons">
+						`">
+							<div class="btn-group btn-group-justified" data-toggle="buttons">
 								<label class="btn btn-primary">
 									<input type="radio" class="radio" name="student-attendance" autocomplete="off" value="present">Present
 								</label>
