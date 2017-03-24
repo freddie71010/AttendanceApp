@@ -29,3 +29,6 @@ class CohortRegistrationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(CohortRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['teacher'] =  forms.ModelChoiceField(queryset=User.objects.filter(is_staff = True),empty_label="Select a teacher",)
+        self.fields['start_date'].widget.attrs['class'] = 'datepicker'
+        self.fields['graduation_date'].widget.attrs['class'] = 'datepicker'
+

@@ -2,6 +2,10 @@
 {% block title %} Index View {% endblock title %}
 {% block head %} Index {% endblock head %}
 
+{% block topscripts %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock topscripts %}
+
 {% block subheader %}
 	<subheader class='subheader'>
 
@@ -30,3 +34,7 @@
 	{% endfor %}
 {% endblock content %}
 
+{% block javascript %}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock javascript %}

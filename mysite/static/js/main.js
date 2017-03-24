@@ -11,9 +11,11 @@ $(document).ready(function(){
 	$('#todays-date').html("Week of " + start_of_week.format("MMMM D, YYYY"));
 	date_loop(start_of_week);
 
-	//defaults settings as if the current day was selected - background color to yellow, button value set as today's date
+//defaults settings as if the current day was selected - background color to yellow, button value set as today's date
 	onload_sets_todays_date();
 
+
+	$(".datepicker").datepicker();
 
 //FUNCTIONS =============================================================================
 	function date_loop(start_of_week) {
