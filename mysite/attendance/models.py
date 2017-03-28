@@ -72,6 +72,9 @@ class AttendanceRecord(models.Model):
 	status = models.CharField("", max_length=10, choices=ATTENDANCE_TYPES)
 	date = models.DateField(default=None)
 
+	class Meta:
+		ordering = ('-date',)
+
 	def as_json( self, *args, **kwargs):
 		return self.__dict__
 

@@ -14,8 +14,16 @@
                         </div>
                         <div class="media-body">
                             <hr>
-                            <h3 id="bio_update"><strong>Bio</strong></h3>
+                            <h3 id="bio_title"><strong>Bio</strong></h3>
                             <p>{{ profile.bio}}</p>
+                                 <div id="bio_update_div" class="hidden">   
+                                    <form id="bio_update_form">{% csrf_token %}
+                                        <input id="bio-input" placeholder="Write your mini bio here" type="text" name="bio-form">
+                                    </form>
+                                    <button id="bio-btn" style="width:100%" class="btn btn-btn-success">Submit
+                                    </button> 
+                                </div>
+
                             <hr>
                             <h3><strong>Location</strong></h3>
                             <p>New York</p>
@@ -27,6 +35,13 @@
                             <p>{{cohort.graduation_date}}</p>
                             <h3 id="final_project"><strong>Final Project</strong></h3>
                             <p>{{profile.final_project}}</p>
+                            
+                            <div id="final_form_div" class="hidden">
+                                <form id="final_project_form">{% csrf_token %}
+                                    <input type="text" id="final_proj_input" name="project">
+                                </form>
+                                <button id="final-btn" style="width:100%" class="btn btn-btn-success">submit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -36,7 +51,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <span>
-                        <h1 class="panel-title pull-left" style="font-size:30px;">{{user.username}} <small>{{user.email}}</small> <i class="fa fa-check text-success" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="John Doe is sharing with you"></i></h1>
+                        <h1 class="panel-title pull-left" style="font-size:30px;" id="id_username">{{user.username}}</h1>
                     </span>
                     <br><br>
               

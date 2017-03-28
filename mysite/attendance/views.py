@@ -177,29 +177,35 @@ class ProfileDetailView(View):
 		}
 		return render(request, self.template, context)
 
+
 def update_bio(request):
 	req = request.POST.dict()
+	print(req)
 	un = req["user"]
-	student = User.objects.filter(username=un)
-	update = student.profile.update(
-		bio = req["new_bio"],
+	student = User.objects.get(username=un)
+	print (student.first_name)
+	print(req["bio"])
+	# student is the user object
+	update = Profile.objects.update_or_create(
+		bio = req["bio"],
+		user = student,
 		)
 	update.save()
 	print("update success")
 	# Profile.object.update()
-	return HttpResponse("Success")
+	return JsonResponse({})
 
 def update_final_project(request):
 	req = request.POST.dict()
 	un = req["user"]
-	student = User.objects.filter(username=un)
-	update = student.profile.update(
+	student = User.objects.get(username=un)
+	update = student.profile.update_or_create(
 		final_project = req["final_project"],
 		)
 	update.save()
 	print("update success")
 	# Profile.object.update()
-	return HttpResponse("Success")
+	return JsonResponse({})
 
 def update_profile_attendance(request):
 	data = request.POST.dict()
@@ -211,7 +217,7 @@ def update_profile_attendance(request):
 		status=status,
 	)
 	update.save()
-	return HttpResponse("Success")		
+	return JsonResponse({})		
 
 
 @method_decorator(login_required, name='dispatch')
@@ -295,6 +301,7 @@ class Attendance(View):
 		return JsonResponse({}, safe=False)
 
 
+@method_decorator(login_required, name='dispatch')
 class Search(View):
 	template = "attendance/search_results.html"
 	# form data is not sending over properly
@@ -345,6 +352,8 @@ class AllStudents(View):
 		return render(request, self.template, {"students": students})
 
 # logs out user
+
+
 def logout_view(request):
 	logout(request)
 	print("User successfully logged out!")
