@@ -180,18 +180,14 @@ class ProfileDetailView(View):
 
 def update_bio(request):
 	req = request.POST.dict()
-	print(req)
 	un = req["user"]
 	student = User.objects.get(username=un)
-	print (student.first_name)
-	print(req["bio"])
+	bio = req["bio"]
 	# student is the user object
-	update = Profile.objects.update_or_create(
-		bio = req["bio"],
-		user = student,
-		)
-	update.save()
-	print("update success")
+	update = Profile.objects.update(
+		bio = bio,
+	)
+
 	# Profile.object.update()
 	return JsonResponse({})
 
@@ -199,9 +195,9 @@ def update_final_project(request):
 	req = request.POST.dict()
 	un = req["user"]
 	student = User.objects.get(username=un)
-	update = student.profile.update_or_create(
-		final_project = req["final_project"],
-		)
+	update = Prodile.objects.update(
+		final_project = final_project
+	)
 	update.save()
 	print("update success")
 	# Profile.object.update()
