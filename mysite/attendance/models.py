@@ -23,6 +23,7 @@ class Profile(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	updated_by = models.ForeignKey(User, related_name="+", default=0)
 	final_project = models.CharField(default=None, max_length=300)
+	bio = models.TextField(default="Bio Goes Here", max_length=500)
 
 	class Meta:
 		ordering = ('-created_at',)

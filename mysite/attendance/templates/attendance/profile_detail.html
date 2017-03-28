@@ -5,7 +5,7 @@
 {% block content %}
 
 <div style="padding-top:50px;"> </div>
-        <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+        <div class="col-lg-5 col-md-4 hidden-sm hidden-xs">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="media">
@@ -14,23 +14,25 @@
                         </div>
                         <div class="media-body">
                             <hr>
-                            <h3><strong>Bio</strong></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel gravida metus, non ultrices sapien. Morbi odio metus, dapibus non nibh id amet.</p>
+                            <h3 id="bio_update"><strong>Bio</strong></h3>
+                            <p>{{ profile.bio}}</p>
                             <hr>
                             <h3><strong>Location</strong></h3>
                             <p>New York</p>
                             <hr>
-                            <h3><strong>Cohort</strong></h3>
+                            <h3 id="cohort_update"><strong>Cohort</strong></h3>
                             <p>{{cohort.cohort_name}}</p>
                             <hr>
-                            <h3><strong>Graduation Date</strong></h3>
+                            <h3 id="graduation_update"><strong>Graduation Date</strong></h3>
                             <p>{{cohort.graduation_date}}</p>
+                            <h3 id="final_project"><strong>Final Project</strong></h3>
+                            <p>{{profile.final_project}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <span>

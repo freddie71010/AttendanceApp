@@ -179,16 +179,32 @@ class ProfileDetailView(View):
 	def get(self, request, username):
 		user = User.objects.get(username=username)
 		attendance = AttendanceRecord.objects.filter(user=user)
-		cohort_info = user.cohort_set.values()   
+		cohort_info = user.cohort_set.values() 
+		profile = Profile.objects.filter(user=user)  
+		print (profile)
 		context = {
 			"user": user,
 			"attendance": attendance,
 			"cohort":cohort_info[0],
+			"profile": profile,
 		}
 		return render(request, self.template, context)
 
-	def post(self, request):
-		pass
+def update_bio(request):
+	req = request.POST.dict()
+	user = req["user"]
+	Profile.update
+	pass
+
+def update_final_project(request):
+	pass
+
+def update_attendance(request):
+	pass
+
+def aupdate_final_project(request):
+	pass
+		
 
 
 @method_decorator(login_required, name='dispatch')
