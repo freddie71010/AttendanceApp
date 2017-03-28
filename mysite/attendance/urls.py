@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from attendance.views import *
-
+from . import views
 
 urlpatterns = [
 	url(r'^$', login, name='login'),
@@ -15,7 +15,7 @@ urlpatterns = [
 	url(r'^get_attendance$', Attendance.as_view(), name='get_attendance'),
 	url(r'^students$', AllStudents.as_view(), name="allstudents"),
 	url(r'^search$', Search.as_view(), name="search"),
-	url(r'profile_update$', ProfileUpdateView.as_view(), name="profile_update")
-
-]
-	
+	url(r'update_bio$', views.update_bio, name="update_bio"),
+	url(r'update_final_project$', views.update_final_project, name="update_final_project"),
+	url(r'update_profile_attendance$', views.update_profile_attendance )
+	]

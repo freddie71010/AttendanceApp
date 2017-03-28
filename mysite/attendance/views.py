@@ -156,19 +156,6 @@ class CohortDetailView(View):
 		pass
 
 
-# WIP
-@method_decorator(login_required, name="dispatch")
-class ProfileUpdateView(View):
-	template = "attendance/build_profile.html"
-	
-	def get(self, request):
-		# I probably need to use local sotrage to get my user query.
-		return render(request, self.template)
-
-	def post(self, requst):
-		data = dict(request.POST)
-		user = User.objects.get(username=data["username"])
-
 
 
 @method_decorator(login_required, name='dispatch')
@@ -180,7 +167,7 @@ class ProfileDetailView(View):
 		user = User.objects.get(username=username)
 		attendance = AttendanceRecord.objects.filter(user=user)
 		cohort_info = user.cohort_set.values() 
-		profile = Profile.objects.filter(user=user)  
+		profile = user.profile 
 		print (profile)
 		context = {
 			"user": user,
@@ -192,19 +179,39 @@ class ProfileDetailView(View):
 
 def update_bio(request):
 	req = request.POST.dict()
-	user = req["user"]
-	Profile.update
-	pass
+	un = req["user"]
+	student = User.objects.filter(username=un)
+	update = student.profile.update(
+		bio = req["new_bio"],
+		)
+	update.save()
+	print("update success")
+	# Profile.object.update()
+	return HttpResponse("Success")
 
 def update_final_project(request):
-	pass
+	req = request.POST.dict()
+	un = req["user"]
+	student = User.objects.filter(username=un)
+	update = student.profile.update(
+		final_project = req["final_project"],
+		)
+	update.save()
+	print("update success")
+	# Profile.object.update()
+	return HttpResponse("Success")
 
-def update_attendance(request):
-	pass
-
-def aupdate_final_project(request):
-	pass
-		
+def update_profile_attendance(request):
+	data = request.POST.dict()
+	date = data["date_value"]
+	un = data["user"]
+	user = User.objects.get(username=un)
+	update=user.attendancerecord.update(
+		date=date,
+		status=status,
+	)
+	update.save()
+	return HttpResponse("Success")		
 
 
 @method_decorator(login_required, name='dispatch')
