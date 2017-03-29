@@ -189,19 +189,18 @@ def update_bio(request):
 	)
 
 	# Profile.object.update()
-	return JsonResponse({})
+	return JsonResponse({"profile":bio})
 
 def update_final_project(request):
 	req = request.POST.dict()
 	un = req["user"]
+	final_project = req["final_project"]
 	student = User.objects.get(username=un)
-	update = Prodile.objects.update(
-		final_project = final_project
+	update = Profile.objects.update(
+		final_project = final_project,
 	)
-	update.save()
-	print("update success")
 	# Profile.object.update()
-	return JsonResponse({})
+	return JsonResponse({"profile": final_project})
 
 def update_profile_attendance(request):
 	data = request.POST.dict()

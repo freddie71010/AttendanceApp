@@ -386,29 +386,17 @@ $(document).ready(function(){
 	}); //end func
 
 //ajax for "Final-Project-button" form
-	$('.take-attendance-button').on('click', function(event){
+	$('#final-btn').on('click', function(event){
 		event.preventDefault();
-		console.log("Submit Attendance Button Clicked!");
-		remove_popover();
-
-		var student_names_obj = {};
-		$(".username").each(function() {
-		    id = $(this).attr('id');
-		    status = $(this).parent().next().children('.btn-group').children('.active').children().val();
-		    // status = $(this).parent().next().children(':checked').val();
-		    student_names_obj[id] = status;
-		});
-		var date_value = $('.take-attendance-button').attr('value');
 		var kwargs = {
-					"student_names_obj": student_names_obj,
-					"date_value": $('.take-attendance-button').attr('value'),
-					"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
-		};
-		console.log("pre-ajax kwargs:", kwargs)
+			'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+			'user': $('h1#id_username').text(),
+			'final_project': $('#final_proj_input').val()
+		}
 
-		//ajax call to send user date data to DB
+		//ajax call final project
 		$.ajax({
-			url: "/take_attendance",
+			url: "/update_final_project",
 			type: "POST",
 			data: kwargs,
 			success: function(response){
@@ -421,7 +409,7 @@ $(document).ready(function(){
 				}
 			},
 			error: function(){
-				console.log("****Submit Attendance AJAX Error****");
+				console.log("****AJAX Error****");
 			}	
 		}) //end ajax
 	}); //end func
