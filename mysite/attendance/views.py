@@ -197,8 +197,10 @@ def update_final_project(request):
 def update_profile_attendance(request):
 	data = request.POST.dict()
 	date = data["date_value"]
+	status= data["status"]
 	un = data["user"]
 	user = User.objects.get(username=un)
+	AttendanceRecord.objects.filter(user=student, date=date).update(status=status)
 	
 	return JsonResponse({})		
 

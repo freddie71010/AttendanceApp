@@ -415,5 +415,33 @@ $(document).ready(function(){
 	}); //end func
 
 
+	$('.list-item').on("click", function(event){
+	 	event.preventDefault()
+	 	var item = $(this).children().first().next().next()
+	 	console.log(item)
+	 	console.log(item.hasClass('hidden'))
+	 	console.log(item.className)
+		if (item.hasClass('hidden')){
+		item.removeClass('hidden')
+		item.addClass('unhidden')
+		} else {
+		item.removeClass('unhidden')
+		item.addClass('hidden')
+
+		}
+
+	 	var kwargs = {
+	 		'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"').val(),
+	 		'user':$('h1#id_username').text(),
+	 		'date': this.dataset.id,
+	 		'status': ''
+	 	};
+	 	console.log(kwargs)
+
+	 	// ajax submit 
+	})
+
+
+
 
 }); //end doc
