@@ -15,7 +15,7 @@
                         <div class="media-body">
                             <hr>
                             <h3 id="bio_title"><strong>Bio</strong></h3>
-                            <p>{{ profile.bio}}</p>
+                            <p>{{ profile.bio }}</p>
                                  <div id="bio_update_div" class="hidden">   
                                     <form id="bio_update_form">{% csrf_token %}
                                         <input id="bio-input" placeholder="Write your mini bio here" type="text" name="bio-form">
@@ -93,17 +93,48 @@
                         </div>
                     </span>
                     <hr>
-                    <div class="attendace-record">
+  <!--                   <div class="attendace-record">
 						{% for record in attendance %}
 							<div class="list-group">
-								<li class="list-item">
-									{{record.date}},{{record.status}}
-								</li>
+								<div class="list-item">
+									<div>{{record.date}},{{record.status}}</div>
+                                    <div><button>Update</button></div>
+								</div>
 							</div>
 						<hr>
 							{% endfor %}
-					</div>
+					</div> -->
 
+                <div class="attendace-record">
+                    {% for record in attendance %}
+                    <div class="list-group">
+                        <div class="list-item ">
+                            <div>{{record.date}},{{record.status}}</div>
+                        
+
+                            <form class="profile-radio-tags" id="profile-attendance-form">{% csrf_token %}
+                                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                                        <label class="btn btn-primary">
+                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="present">Present
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="unexcused">Unexcused
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="excused">Excused
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Late
+                                        </label>
+                                        <label class="btn btn-success">
+                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Submit
+                                        </label>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
                     
 
 {% endblock %}
