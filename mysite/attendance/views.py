@@ -183,12 +183,7 @@ def update_bio(request):
 	un = req["user"]
 	student = User.objects.get(username=un)
 	bio = req["bio"]
-	# student is the user object
-	update = Profile.objects.update(
-		bio = bio,
-	)
-
-	# Profile.object.update()
+	Profile.objects.filter(user=student).update(bio=bio)
 	return JsonResponse({"profile":bio})
 
 def update_final_project(request):
@@ -196,10 +191,7 @@ def update_final_project(request):
 	un = req["user"]
 	final_project = req["final_project"]
 	student = User.objects.get(username=un)
-	update = Profile.objects.update(
-		final_project = final_project,
-	)
-	# Profile.object.update()
+	Profile.objects.filter(user=student).update(final_project=final_project)
 	return JsonResponse({"profile": final_project})
 
 def update_profile_attendance(request):
@@ -207,11 +199,7 @@ def update_profile_attendance(request):
 	date = data["date_value"]
 	un = data["user"]
 	user = User.objects.get(username=un)
-	update=user.attendancerecord.update(
-		date=date,
-		status=status,
-	)
-	update.save()
+	
 	return JsonResponse({})		
 
 

@@ -108,17 +108,17 @@
                 <div class="attendace-record">
                     {% for record in attendance %}
                     <div class="list-group">
-                        <div class="list-item ">
-                            <div>{{record.date}},{{record.status}}</div>
-                        
-
-                            <form class="profile-radio-tags" id="profile-attendance-form">{% csrf_token %}
+                        <div class="list-item">
+                            <div id="{{record.date}}" class="student-detail-date">{{record.date}}</div>
+                            <div id="{{record.status}}" class="date-status">{{record.status}}</div>
+                    
+                            <form class="profile-radio-tags hidden" id="profile-attendance-form">{% csrf_token %}
                                     <div class="btn-group btn-group-justified" data-toggle="buttons">
                                         <label class="btn btn-primary">
                                             <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="present">Present
                                         </label>
                                         <label class="btn btn-primary">
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="unexcused">Unexcused
+                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="unexcused">Unexcu
                                         </label>
                                         <label class="btn btn-primary">
                                             <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="excused">Excused
@@ -126,10 +126,11 @@
                                         <label class="btn btn-primary">
                                             <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Late
                                         </label>
-                                        <label class="btn btn-success">
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Submit
-                                        </label>
                                     </div>
+                                    
+                                    <button id="button-{{record.date}}" class="btn btn-success btn-group-justified">
+                                        Submit
+                                    </button>
                             </form>
                         </div>
                     </div>
