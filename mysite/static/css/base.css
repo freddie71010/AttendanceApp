@@ -366,13 +366,15 @@ form.student-radio-tags {
 .student-detail-date {
     font-family: 'Maven Pro', sans-serif;
     font-size: 2em;
-    float:left;
+    display: inline;
 }
 
 .date-status {
     font-family: 'Maven Pro', sans-serif;
     font-size: 2em;
-    float:right;
+    display:inline;
+    padding-left: 25%;
+
 }
 
 

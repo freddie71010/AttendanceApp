@@ -184,7 +184,7 @@ def update_bio(request):
 	student = User.objects.get(username=un)
 	bio = req["bio"]
 	Profile.objects.filter(user=student).update(bio=bio)
-	return JsonResponse({"profile":bio})
+	return JsonResponse({"bio":bio})
 
 def update_final_project(request):
 	req = request.POST.dict()
@@ -192,7 +192,7 @@ def update_final_project(request):
 	final_project = req["final_project"]
 	student = User.objects.get(username=un)
 	Profile.objects.filter(user=student).update(final_project=final_project)
-	return JsonResponse({"profile": final_project})
+	return JsonResponse({"final_project": final_project})
 
 def update_profile_attendance(request):
 	data = request.POST.dict()

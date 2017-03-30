@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12">
+        <div class="col-lg-7 col-md-8 col-sm-8 col-xs-8">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <span>
@@ -110,8 +110,7 @@
                     <div class="list-group">
                         <div class="list-item" data-id="{{record.date}}">
                             <div  class="student-detail-date">{{record.date}}</div>
-                            <div data-id="{{record.status}}" class="date-status">{{record.status}}</div>
-                    
+                            <div data-id="{{record.status}}" class="date-status" style="text-align:left">{{record.status}}</div>
                             <form class="profile-radio-tags hidden" id="profile-attendance-form">{% csrf_token %}
                                     <div class="btn-group btn-group-justified" data-toggle="buttons">
                                         <label class="btn btn-primary">
@@ -128,9 +127,6 @@
                                         </label>
                                     </div>
                                     
-                                    <button id="button-{{record.date}}" class="btn btn-success btn-group-justified">
-                                        Submit
-                                    </button>
                             </form>
                         </div>
                     </div>

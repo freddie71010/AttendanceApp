@@ -372,12 +372,9 @@ $(document).ready(function(){
 			data: kwargs,
 			success: function(response){
 				// $('li.individual-student').css('background-color',"green");
-				console.log("Error msg:",response.error_msg);
-				if (response.error_msg !== undefined) {
-					alert("No information processed"+response.error_msg);
-				} else {
-					alert('Attendance updated!');
-				}
+				console.log(response)
+				$('#bio_title').next().html(response['bio'])
+				
 			},
 			error: function(){
 				console.log("****AJAX Error****");
@@ -401,12 +398,7 @@ $(document).ready(function(){
 			data: kwargs,
 			success: function(response){
 				// $('li.individual-student').css('background-color',"green");
-				console.log("Error msg:",response.error_msg);
-				if (response.error_msg !== undefined) {
-					alert("You forgot to fill out the following student's attendance:\n"+response.error_msg);
-				} else {
-					alert('Attendance updated!');
-				}
+				$('#final_project').next().html(response['final_project'])
 			},
 			error: function(){
 				console.log("****AJAX Error****");
