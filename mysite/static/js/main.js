@@ -409,10 +409,8 @@ $(document).ready(function(){
 
 	$('.list-item').on("click", function(event){
 	 	event.preventDefault()
-	 	var item = $(this).children().first().next().next()
-	 	console.log(item)
-	 	console.log(item.hasClass('hidden'))
-	 	console.log(item.className)
+	 	console.log("clicked")
+	 	var item = $(this).next()
 		if (item.hasClass('hidden')){
 		item.removeClass('hidden')
 		item.addClass('unhidden')
@@ -421,17 +419,36 @@ $(document).ready(function(){
 		item.addClass('hidden')
 
 		}
+	});
+
+	$('label.btn-primary').on("dblclick", function(event){
+		event.preventDefault();
+		console.log('button clicked')
 
 	 	var kwargs = {
 	 		'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"').val(),
 	 		'user':$('h1#id_username').text(),
-	 		'date': this.dataset.id,
-	 		'status': ''
-	 	};
+	 		'date': $(this).parent().parent().prev().attr('data-id'),
+	 		'status': $(".active input[name='profile-attendance']").val()
+	 	}
 	 	console.log(kwargs)
 
 	 	// ajax submit 
-	})
+	 	$.ajax({
+	 		url:"/update_profile_attendance",
+	 		type: "POST",
+	 		data: kwargs,
+	 		success: function(response){
+	 			console.log(response)
+				$(this).attr("data-id").html(response['status'])	 			
+	 		},
+	 		error: function(response){
+	 			console.log(response['err'])
+	 		}
+	 	});
+
+
+	});
 
 
 

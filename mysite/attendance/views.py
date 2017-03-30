@@ -195,15 +195,15 @@ def update_final_project(request):
 	return JsonResponse({"final_project": final_project})
 
 def update_profile_attendance(request):
-	data = request.POST.dict()
-	date = data["date_value"]
-	status= data["status"]
-	un = data["user"]
+	print("ROUTE HIT")
+	req = request.POST.dict()
+	date = req["date"]
+	status= req["status"]
+	un = req["user"]
 	user = User.objects.get(username=un)
-	AttendanceRecord.objects.filter(user=student, date=date).update(status=status)
 	
-	return JsonResponse({})		
-
+	AttendanceRecord.objects.filter(user=user, date=date).update(status=status)
+	return JsonResponse({"status":status, 'err':error})		
 
 @method_decorator(login_required, name='dispatch')
 class Attendance(View):

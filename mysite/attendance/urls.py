@@ -17,5 +17,5 @@ urlpatterns = [
 	url(r'^search$', Search.as_view(), name="search"),
 	url(r'update_bio$', views.update_bio, name="update_bio"),
 	url(r'update_final_project$', views.update_final_project, name="update_final_project"),
-	url(r'update_profile_attendance$', views.update_profile_attendance )
+	url(r'update_profile_attendance$', views.update_profile_attendance, name="update_profile_attendance" )
 	]

@@ -110,8 +110,9 @@
                     <div class="list-group">
                         <div class="list-item" data-id="{{record.date}}">
                             <div  class="student-detail-date">{{record.date}}</div>
-                            <div data-id="{{record.status}}" class="date-status" style="text-align:left">{{record.status}}</div>
-                            <form class="profile-radio-tags hidden" id="profile-attendance-form">{% csrf_token %}
+                            <div data-id="{{record.status}}" class="date-status" >{{record.status}}</div>
+                        </div>
+                        <form class="profile-radio-tags" id="profile-attendance-form">{% csrf_token %}
                                     <div class="btn-group btn-group-justified" data-toggle="buttons">
                                         <label class="btn btn-primary">
                                             <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="present">Present
@@ -128,7 +129,6 @@
                                     </div>
                                     
                             </form>
-                        </div>
                     </div>
                     {% endfor %}
                 </div>
