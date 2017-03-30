@@ -156,19 +156,6 @@ class CohortDetailView(View):
 		pass
 
 
-# WIP
-@method_decorator(login_required, name="dispatch")
-class ProfileUpdateView(View):
-	template = "attendance/build_profile.html"
-	
-	def get(self, request):
-		# I probably need to use local sotrage to get my user query.
-		return render(request, self.template)
-
-	def post(self, requst):
-		data = dict(request.POST)
-		user = User.objects.get(username=data["username"])
-
 
 
 @method_decorator(login_required, name='dispatch')
@@ -179,17 +166,44 @@ class ProfileDetailView(View):
 	def get(self, request, username):
 		user = User.objects.get(username=username)
 		attendance = AttendanceRecord.objects.filter(user=user)
-		cohort_info = user.cohort_set.values()   
+		cohort_info = user.cohort_set.values() 
+		profile = user.profile 
+		print (profile)
 		context = {
 			"user": user,
 			"attendance": attendance,
 			"cohort":cohort_info[0],
+			"profile": profile,
 		}
 		return render(request, self.template, context)
 
-	def post(self, request):
-		pass
 
+def update_bio(request):
+	req = request.POST.dict()
+	un = req["user"]
+	student = User.objects.get(username=un)
+	bio = req["bio"]
+	Profile.objects.filter(user=student).update(bio=bio)
+	return JsonResponse({"bio":bio})
+
+def update_final_project(request):
+	req = request.POST.dict()
+	un = req["user"]
+	final_project = req["final_project"]
+	student = User.objects.get(username=un)
+	Profile.objects.filter(user=student).update(final_project=final_project)
+	return JsonResponse({"final_project": final_project})
+
+def update_profile_attendance(request):
+	print("ROUTE HIT")
+	req = request.POST.dict()
+	date = req["date"].replace('%', '')
+	status= req["status"]
+	un = req["user"]
+	user = User.objects.get(username=un)
+	
+	AttendanceRecord.objects.filter(user=user, date=date).update(status=status)
+	return JsonResponse({"status":status})		
 
 @method_decorator(login_required, name='dispatch')
 class Attendance(View):
@@ -272,6 +286,7 @@ class Attendance(View):
 		return JsonResponse({}, safe=False)
 
 
+@method_decorator(login_required, name='dispatch')
 class Search(View):
 	template = "attendance/search_results.html"
 	# form data is not sending over properly
@@ -322,6 +337,8 @@ class AllStudents(View):
 		return render(request, self.template, {"students": students})
 
 # logs out user
+
+
 def logout_view(request):
 	logout(request)
 	print("User successfully logged out!")

@@ -23,6 +23,7 @@ class Profile(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	updated_by = models.ForeignKey(User, related_name="+", default=0)
 	final_project = models.CharField(default=None, max_length=300)
+	bio = models.TextField(default="Bio Goes Here", max_length=500)
 
 	class Meta:
 		ordering = ('-created_at',)
@@ -70,6 +71,9 @@ class AttendanceRecord(models.Model):
 	user = models.ForeignKey(User)
 	status = models.CharField("", max_length=10, choices=ATTENDANCE_TYPES)
 	date = models.DateField(default=None)
+
+	class Meta:
+		ordering = ('-date',)
 
 	def as_json( self, *args, **kwargs):
 		return self.__dict__

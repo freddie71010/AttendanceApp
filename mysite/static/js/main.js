@@ -333,20 +333,127 @@ $(document).ready(function(){
 
 
 
-
-// Handles Search functionality
-
-	// $('.search_drop_down').on('click', function(event){
-	// 	event.preventDefault();
-	// 	console.log("Search Button Clicked!");
-
-	// 	$.ajax({
-	// 		url:"/search",
-	// 		type:"post",
-	// 		data
-	// 	})
+///////////PROFILE DETAIL VIEW JS///////////////
+// =============================================
 
 
+//makes the  final project form appear and dissapear 
+	$('#final_project').on('click', function(event){
+		var item = document.getElementById('final_form_div')
+		if (item.className=='hidden'){
+			item.className='unhidden';
+		} else {
+			item.className ='hidden';
+		}
+	});
+//makes the  Student bio form appear and dissapear
+	$('#bio_title').on('click', function(event){
+		var item = document.getElementById('bio_update_div')
+		if (item.className=='hidden'){
+		item.className='unhidden';
+		} else {
+		item.className ='hidden';
+		}
+	});
+
+//ajax for "Submit-BIO-button" form
+	$('#bio-btn').on('click', function(event){
+		event.preventDefault();
+
+		var kwargs = {
+		   'bio' : $('#bio-input').val(),
+		   'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+		   'user': $('h1#id_username').text(),
+		}
+
+		$.ajax({
+			url: "/update_bio",
+			type: "POST",
+			data: kwargs,
+			success: function(response){
+				// $('li.individual-student').css('background-color',"green");
+				console.log(response)
+				$('#bio_title').next().html(response['bio'])
+				
+			},
+			error: function(){
+				console.log("****AJAX Error****");
+			}	
+		}) //end ajax
+	}); //end func
+
+//ajax for "Final-Project-button" form
+	$('#final-btn').on('click', function(event){
+		event.preventDefault();
+		var kwargs = {
+			'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+			'user': $('h1#id_username').text(),
+			'final_project': $('#final_proj_input').val()
+		}
+
+		//ajax call final project
+		$.ajax({
+			url: "/update_final_project",
+			type: "POST",
+			data: kwargs,
+			success: function(response){
+				// $('li.individual-student').css('background-color',"green");
+				$('#final_project').next().html(response['final_project'])
+			},
+			error: function(){
+				console.log("****AJAX Error****");
+			}	
+		}) //end ajax
+	}); //end func
+
+
+	$('.list-item').on("click", function(event){
+	 	event.preventDefault();
+	 	console.log("clicked")
+	 	var item = $(this).next()
+		if (item.hasClass('hidden')){
+		item.removeClass('hidden')
+		item.addClass('unhidden')
+		} else {
+		item.removeClass('unhidden')
+		item.addClass('hidden')
+
+		}
+	});
+
+	$('label.btn-primary').on("dblclick", function(event){
+		event.preventDefault();
+		console.log('button clicked')
+
+	 	var kwargs = {
+	 		'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"').val(),
+	 		'user':$('h1#id_username').text(),
+	 		'date': $(this).parent().parent().prev().attr('data-id'),
+	 		'oldstatus': $(this).parent().parent().prev().children().next().attr('data-id'),
+	 		'status': $(".active input[name='profile-attendance']").val()
+	 	}
+	 	console.log(kwargs)
+
+	 	date = kwargs['date']
+
+	 	// ajax submit 
+	 	$.ajax({
+	 		url:"/update_profile_attendance",
+	 		type: "POST",
+	 		data: kwargs,
+	 		success: function(response){
+	 			console.log(response)
+	
+	 			// console.log($(this).parent().parent().prev().attr('data-id'))
+	 			// $(this).parent().parent().prev().children().next().html(response['status'])
+	 		},
+	 		error: function(response){
+	 			console.log(response['err'])
+	 		}
+	 	});
+
+
+	});
 
 
 
