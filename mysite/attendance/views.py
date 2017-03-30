@@ -197,13 +197,13 @@ def update_final_project(request):
 def update_profile_attendance(request):
 	print("ROUTE HIT")
 	req = request.POST.dict()
-	date = req["date"]
+	date = req["date"].replace('%', '')
 	status= req["status"]
 	un = req["user"]
 	user = User.objects.get(username=un)
 	
 	AttendanceRecord.objects.filter(user=user, date=date).update(status=status)
-	return JsonResponse({"status":status, 'err':error})		
+	return JsonResponse({"status":status})		
 
 @method_decorator(login_required, name='dispatch')
 class Attendance(View):

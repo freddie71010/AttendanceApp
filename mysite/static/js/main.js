@@ -408,7 +408,7 @@ $(document).ready(function(){
 
 
 	$('.list-item').on("click", function(event){
-	 	event.preventDefault()
+	 	event.preventDefault();
 	 	console.log("clicked")
 	 	var item = $(this).next()
 		if (item.hasClass('hidden')){
@@ -429,9 +429,12 @@ $(document).ready(function(){
 	 		'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"').val(),
 	 		'user':$('h1#id_username').text(),
 	 		'date': $(this).parent().parent().prev().attr('data-id'),
+	 		'oldstatus': $(this).parent().parent().prev().children().next().attr('data-id'),
 	 		'status': $(".active input[name='profile-attendance']").val()
 	 	}
 	 	console.log(kwargs)
+
+	 	date = kwargs['date']
 
 	 	// ajax submit 
 	 	$.ajax({
@@ -440,7 +443,9 @@ $(document).ready(function(){
 	 		data: kwargs,
 	 		success: function(response){
 	 			console.log(response)
-				$(this).attr("data-id").html(response['status'])	 			
+	
+	 			// console.log($(this).parent().parent().prev().attr('data-id'))
+	 			// $(this).parent().parent().prev().children().next().html(response['status'])
 	 		},
 	 		error: function(response){
 	 			console.log(response['err'])

@@ -108,7 +108,7 @@
                 <div class="attendace-record">
                     {% for record in attendance %}
                     <div class="list-group">
-                        <div class="list-item" data-id="{{record.date}}">
+                        <div class="list-item" data-id="{{record.date | date:'%Y-%m-%d'}}">
                             <div  class="student-detail-date">{{record.date}}</div>
                             <div data-id="{{record.status}}" class="date-status" >{{record.status}}</div>
                         </div>
@@ -126,9 +126,8 @@
                                         <label class="btn btn-primary">
                                             <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Late
                                         </label>
-                                    </div>
-                                    
-                            </form>
+                                    </div>            
+                        </form>
                     </div>
                     {% endfor %}
                 </div>
