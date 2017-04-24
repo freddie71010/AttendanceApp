@@ -336,7 +336,6 @@ $(document).ready(function(){
 ///////////PROFILE DETAIL VIEW JS///////////////
 // =============================================
 
-
 //makes the  final project form appear and dissapear 
 	$('#final_project').on('click', function(event){
 		var item = document.getElementById('final_form_div')
@@ -407,19 +406,7 @@ $(document).ready(function(){
 	}); //end func
 
 
-	$('.list-item').on("click", function(event){
-	 	event.preventDefault();
-	 	console.log("clicked")
-	 	var item = $(this).next()
-		if (item.hasClass('hidden')){
-		item.removeClass('hidden')
-		item.addClass('unhidden')
-		} else {
-		item.removeClass('unhidden')
-		item.addClass('hidden')
 
-		}
-	});
 
 	$('label.btn-primary').on("dblclick", function(event){
 		event.preventDefault();
