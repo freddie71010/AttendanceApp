@@ -14,36 +14,41 @@
 	 
 	</head>
 
-	<header class="header">
-		<div class="header-logo">
-			<img id="navbar-logo" src="../static/img/byte_academy_logo.png">
-		</div>
-		
-		<nav class="header-menu">
-			<ul class="header-menu-left">
-				<li class="header-cohorts">
-					<a href ="/cohorts">Cohorts</a>
-				</li>
-				<li class="header-students">
-					<a href ="/students">Students</a>
-				</li>
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<img id="navbar-logo" src="../static/img/byte_academy_only_text.png">
+				</div>
 
-				<li class="header-logout">
-					<a href ="/logout">Logout</a>
-				</li>
-			
-			    <li>
-				    <form id="searchform" action="/search" method="post" accept-charset="utf-8">{% csrf_token %}
-				    	<button class="searchbutton" type="submit">
-				        	<i class="fa fa-search"></i>
-				      	</button>
-				      	<input class="searchfield" id="searchbox" type="text" name="search" placeholder="Search">
-				   </form>
-				</li>
-			</ul>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="header-cohorts"><a href ="/cohorts">Cohorts</a></li>
+						<li class="header-students"><a href ="/students">Students</a></li>
+						<li class="header-logout"><a href ="/logout">Logout</a></li>
+					</ul>
+					
+					<ul class="nav navbar-nav navbar-right">
+						<form class="navbar-form" id="searchform" action="/search" method="post" accept-charset="utf-8">{% csrf_token %}
+							<input class="form-group form-control" name="search" type="text" placeholder="Search">
+							<button class="form-group btn btn-default" type="submit">Submit</button>
+						</form>
+						<li class="dropdown">
+							<ul class="dropdown-menu"></ul>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
 		</nav>
 	</header>
-
 
 	{%block subheader %}{% endblock subheader %}
 
@@ -61,7 +66,7 @@
 		  src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
 		  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
 		  crossorigin="anonymous"></script>
-	 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 		{% block javascript %}
