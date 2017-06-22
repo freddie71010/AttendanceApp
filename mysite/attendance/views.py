@@ -108,28 +108,7 @@ class RegisterCohort(View):
 		print("==========New Cohort has been registered")
 		return JsonResponse({"cohort_name": new_cohort.cohort_name}, safe=False)
 
-		# template = "register_cohort.html"
-		# form = CohortRegistrationForm(request.POST)
-		# if form.is_valid():
-		# 	data = form.cleaned_data
-		# 	new_cohort = Cohort.objects.create(
-		# 		cohort_name = data['cohort_name'],
-		# 		teacher = data['teacher'],
-		# 		created_at = timezone.now(),
-		# 		start_date = data['start_date'],
-		# 		created_by = request.user,
-		# 		is_active = True,
-		# 		graduation_date = data['graduation_date'],
-		# 		)
-		# 	new = new_cohort.save()
-		# 	# slug = new.slug
-		# 	# print(slug)
-		# 	return redirect('/cohort/{}'.format(new_cohort["cohort_name"]))
-		# else:
-		# 	print ("shits not working")
-		# 	return render(request, template, {"form":form} )
 	
-
 @method_decorator(login_required, name='dispatch')
 class CohortDetailView(View):
 	
@@ -178,6 +157,8 @@ class ProfileDetailView(View):
 		return render(request, self.template, context)
 
 
+
+
 def update_bio(request):
 	req = request.POST.dict()
 	un = req["user"]
@@ -204,6 +185,8 @@ def update_profile_attendance(request):
 	
 	AttendanceRecord.objects.filter(user=user, date=date).update(status=status)
 	return JsonResponse({"status":status})		
+
+
 
 @method_decorator(login_required, name='dispatch')
 class Attendance(View):
