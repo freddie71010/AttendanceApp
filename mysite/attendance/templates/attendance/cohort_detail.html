@@ -12,8 +12,9 @@
 		<h3>Graduation Date: {{graduation_date}}</h3>
 	</div>
 
-	<button class="btn btn-warning btn-block new-student-button"><span class="glyphicon glyphicon-plus"></span> Register Student</button>
 
+	<button class="new-student-button btn btn-default btn-block"><span class="glyphicon glyphicon-plus"></span> Register Student</button>
+	
 	<div id="student-register-div" class="hidden">
 		<div class="student-form-div">
 			<form method="post" id="add-student-form">{% csrf_token %}

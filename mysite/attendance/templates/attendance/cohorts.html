@@ -8,8 +8,7 @@
 
 {% block subheader %}
 	<subheader class='subheader'>
-
-		<button class="btn btn-warning btn-block new-cohort-button"><span class="glyphicon glyphicon-plus"></span> Register New Cohort</button>
+		<button class="new-cohort-button btn btn-default btn-block"><span class="glyphicon glyphicon-plus"></span> Register New Cohort</button>
 		
 		<div id="cohort-register-div" class="hidden">
 			<div class="cohort-form-div">
@@ -27,9 +26,9 @@
 {% block content %}
 	{% for cohort in cohorts %}
 	<ul>
-		<div id="cohort-list-div">
-			<item id="list-cohort-li"><a href="cohort/{{ cohort.cohort_name }}">{{ cohort.cohort_name }}</a></item>
-		</div>
+		<a href="cohort/{{ cohort.cohort_name }}">
+	    	<button type="button" href="cohort/{{ cohort.cohort_name }}" class="btn btn-primary btn-lg btn-block">{{ cohort.cohort_name }}</button>
+	    </a>
 	</ul>
 	{% endfor %}
 {% endblock content %}

@@ -383,3 +383,15 @@ form.student-radio-tags {
 }
 
 
+/* Large Buttons */
+.new-student-button,
+.new-cohort-button {
+    background-color: #e6e6e6;
+}
+
+.new-student-button:hover,
+.new-student-button:focus,
+.new-cohort-button:hover,
+.new-cohort-button:focus {
+    background-color: #cac7c7;
+}
