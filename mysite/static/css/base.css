@@ -364,22 +364,22 @@ form.student-radio-tags {
 }
 
 .student-detail-date {
-    font-family: 'Maven Pro', sans-serif;
-    font-size: 2em;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
     display: inline;
 }
 
 .date-status {
-    font-family: 'Maven Pro', sans-serif;
-    font-size: 2em;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14;
     display:inline;
     padding-left: 25%;
 
 }
 
 #navbar-logo {
-    height : 100%;
-    width:75%;
+    height: 100%;
+    width: 75%;
 }
 
 
