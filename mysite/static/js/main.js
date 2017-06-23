@@ -336,7 +336,7 @@ $(document).ready(function(){
 ///////////PROFILE DETAIL VIEW JS///////////////
 // =============================================
 
-//makes the  final project form appear and dissapear 
+//makes the final project form appear and disappear 
 	$('#final_project').on('click', function(event){
 		var item = document.getElementById('final_form_div')
 		if (item.className=='hidden'){
@@ -345,7 +345,7 @@ $(document).ready(function(){
 			item.className ='hidden';
 		}
 	});
-//makes the  Student bio form appear and dissapear
+//makes the Student bio form appear and disappear
 	$('#bio_title').on('click', function(event){
 		var item = document.getElementById('bio_update_div')
 		if (item.className=='hidden'){

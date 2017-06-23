@@ -1,17 +1,6 @@
 from django.db import models 
-from django.utils import timezone
 from django.contrib.auth.models import User
 from django.utils.text import slugify
-from django.core import serializers
-
-
-'''
-User Fields
-
-attendancerecord, cohort_set, date_joined, email, first_name, 
-groups, id, is_active, is_staff, is_superuser, last_login, last_name, logentry, password, profile, user_permissions, username
-'''
-
 
 
 class Profile(models.Model):
@@ -52,13 +41,6 @@ class Cohort(models.Model):
 	def as_json( self, *args, **kwargs):
 		return self.__dict__
 
-# class Lesson(models.Model):
-# 	cohort = models.ForeignKey(Cohort)
-# 	lesson_name = models.CharField("Lesson Name", default=None, max_length=100)
-# 	date = models.DateField(default=None)
-	
-# 	class Meta:
-# 		ordering = ('-date',)
 
 ATTENDANCE_TYPES =  (
 	('present', 'Present'),
