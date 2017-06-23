@@ -345,6 +345,7 @@ $(document).ready(function(){
 			item.className ='hidden';
 		}
 	});
+
 //makes the Student bio form appear and disappear
 	$('#bio_title').on('click', function(event){
 		var item = document.getElementById('bio_update_div')
@@ -353,6 +354,11 @@ $(document).ready(function(){
 		} else {
 		item.className ='hidden';
 		}
+	});
+
+//hides/unhides button attendance button submissions
+	$('#show-hide-attendance').on('click', function(event){
+		$('.attendance-records').toggle();
 	});
 
 //ajax for "Submit-BIO-button" form

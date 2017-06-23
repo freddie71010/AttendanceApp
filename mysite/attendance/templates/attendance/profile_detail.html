@@ -79,55 +79,42 @@
                     <h4>
                         <a href="#" style="text-decoration:none;"><b>{{user.first_name}} {{user.last_name}}</b></a> – <small><a href="#" style="text-decoration:none; color:grey;"><i class="fa fa-clock-o" aria-hidden="true"></i>{{user.last_updated}}</i></a></small>
                         <div class="pull-right">
-                            <small><a href="#" style="text-decoration:none;">Update Attendance?</a></small>
+                            <small><a id="show-hide-attendance"href="#" style="text-decoration:none;">Update Attendance?</a></small>
                         </div>
+                        
                     </h4>
                     <hr>
-  <!--                   <div class="attendace-record">
-						{% for record in attendance %}
-							<div class="list-group">
-								<div class="list-item">
-									<div>{{record.date}},{{record.status}}</div>
-                                    <div><button>Update</button></div>
-								</div>
-							</div>
-						<hr>
-							{% endfor %}
-					</div> -->
 
-                <div class="attendace-record">
+                <div class="attendance-record-tbl">
                     {% for record in attendance %}
                     <div class="list-group">
                         <div class="list-item" data-id="{{record.date | date:'Y-m-d'}}">
-                            <div  class="student-detail-date">{{record.date | date:'D, M d,Y'}}</div>
+                            <div class="student-detail-date">{{record.date | date:'D, M d, Y'}}</div>
                             <div data-id="{{record.status}}" class="date-status" >{{record.status | title}}</div>
                         </div>
-                        <form class="profile-radio-tags" id="profile-attendance-form">{% csrf_token %}
-                                    <div class="btn-group btn-group-justified" data-toggle="buttons">
-                                    {% if record.status != "present" %}
-                                        <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
-                                    {% endif %}
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="present">Present
-                                        </label>
-                                    
-                                    {% if record.status != "unexcused" %}
-                                        <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
-                                    {% endif %}                                            
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="unexcused">Unexcused
-                                        </label>
+                        
+                        <form class="attendance-records">{% csrf_token %}
+                            <div class="btn-group btn-group-justified" data-toggle="buttons">
+                            {% if record.status != "present" %}
+                                <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
+                            {% endif %}
+                                    <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="present">Present</label>
+                            
+                            {% if record.status != "unexcused" %}
+                                <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
+                            {% endif %}                                            
+                                    <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="unexcused">Unexcused</label>
 
-                                    {% if record.status != "excused" %}
-                                        <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
-                                    {% endif %}
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="excused">Excused
-                                        </label>
-                                    
-                                    {% if record.status != "late" %}
-                                        <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
-                                    {% endif %}
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Late
-                                        </label>
-                                    </div> 
+                            {% if record.status != "excused" %}
+                                <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
+                            {% endif %}
+                                    <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="excused">Excused</label>
+                            
+                            {% if record.status != "late" %}
+                                <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
+                            {% endif %}
+                                    <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Late</label>
+                            </div> 
                         </form>
                     </div>
                     {% endfor %}
