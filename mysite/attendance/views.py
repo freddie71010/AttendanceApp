@@ -275,8 +275,8 @@ class Search(View):
 	# form data is not sending over properly
 	def post(self, request):
 		data = request.POST['search']
-		print(data)
-		user_obj = User.objects.filter(username__icontains=data)
+		user_obj = User.objects.filter(username__icontains=data).exclude(is_staff=1)
+		print("user_obj:", user_obj)
 		cohort_obj = Cohort.objects.filter(cohort_name__icontains=data)
 		context = {
 			"users": user_obj,
