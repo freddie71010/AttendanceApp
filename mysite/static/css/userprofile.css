@@ -1,0 +1,33 @@
+#bio_update_div {
+    
+}
+
+#bio-input {
+    height:50px;
+    width:100%;
+}
+
+
+#final_form_div {
+
+}
+
+#final_proj_input {
+    width:100%;
+    height:50px;
+
+}
+
+.student-detail-date {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    display: inline;
+}
+
+.date-status {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14;
+    display:inline;
+    padding-left: 25%;
+
+}

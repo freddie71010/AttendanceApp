@@ -1,6 +1,12 @@
 {% extends "base.html" %}
-{% block title %} Profile Detail {% endblock %}
-{% block head %} Profile Detail {% endblock %}
+{% load staticfiles %}
+
+{% block title %} Profile - {{user.first_name}} {{user.last_name}} {% endblock %}
+{% block head %} Profile - {{user.first_name}} {{user.last_name}} {% endblock %}
+
+{% block topscripts %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock topscripts %}
 
 {% block content %}
 
@@ -71,11 +77,10 @@
                         </a>
                     </div>
                     <h4>
-                        <a href="#" style="text-decoration:none;"><strong>{{user.first_name}} {{user.last_name}}</strong></a> – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i>{{user.last_updated}}</i></a></small>
-                            <div class="pull-right">
-                                <a href="#" style="text-decoration:none;">Update Attendance?</a>
-                            </div>
-                        </small>
+                        <a href="#" style="text-decoration:none;"><b>{{user.first_name}} {{user.last_name}}</b></a> – <small><a href="#" style="text-decoration:none; color:grey;"><i class="fa fa-clock-o" aria-hidden="true"></i>{{user.last_updated}}</i></a></small>
+                        <div class="pull-right">
+                            <small><a href="#" style="text-decoration:none;">Update Attendance?</a></small>
+                        </div>
                     </h4>
                     <hr>
   <!--                   <div class="attendace-record">
