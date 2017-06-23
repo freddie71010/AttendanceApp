@@ -359,6 +359,7 @@ $(document).ready(function(){
 //hides/unhides button attendance button submissions
 	$('#show-hide-attendance').on('click', function(event){
 		$('.attendance-records').toggle();
+		$('.submit-attendance-div').toggle();
 	});
 
 //ajax for "Submit-BIO-button" form

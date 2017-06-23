@@ -5,7 +5,7 @@
 {% block head %} Profile - {{user.first_name}} {{user.last_name}} {% endblock %}
 
 {% block topscripts %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
 {% endblock topscripts %}
 
 {% block content %}
@@ -87,13 +87,13 @@
 
                 <div class="attendance-record-tbl">
                     {% for record in attendance %}
-                    <div class="list-group">
+                    <div class="list-group col-lg-4">
                         <div class="list-item" data-id="{{record.date | date:'Y-m-d'}}">
                             <div class="student-detail-date">{{record.date | date:'D, M d, Y'}}</div>
                             <div data-id="{{record.status}}" class="date-status" >{{record.status | title}}</div>
                         </div>
                         
-                        <form class="attendance-records">{% csrf_token %}
+                        <form class="attendance-records" style="display: none;">{% csrf_token %}
                             <div class="btn-group btn-group-justified" data-toggle="buttons">
                             {% if record.status != "present" %}
                                 <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
@@ -118,7 +118,12 @@
                         </form>
                     </div>
                     {% endfor %}
-                </div>
+                        <div class="submit-attendance-div" style="display: none;">
+                            <button class="btn btn-success btn-block take-attendance-button">
+                                <span class="glyphicon glyphicon-plus"></span>Update Attendance
+                            </button>
+                        </div>
+                    </div>
                     
 
 {% endblock %}
