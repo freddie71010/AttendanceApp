@@ -87,7 +87,7 @@
 
                 <div class="attendance-record-tbl">
                     {% for record in attendance %}
-                    <div class="list-group col-lg-4">
+                    <div class="list-group">
                         <div class="list-item" data-id="{{record.date | date:'Y-m-d'}}">
                             <div class="student-detail-date">{{record.date | date:'D, M d, Y'}}</div>
                             <div data-id="{{record.status}}" class="date-status" >{{record.status | title}}</div>
