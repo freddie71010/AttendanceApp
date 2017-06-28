@@ -290,7 +290,7 @@ $(document).ready(function(){
 
 // ===========================================================================================
 
-//ajax for "Take-attendance-button" form
+//ajax for "Take-attendance-button" form on Cohort page
 	$('.take-attendance-button').on('click', function(event){
 		event.preventDefault();
 		console.log("Submit Attendance Button Clicked!");
@@ -332,7 +332,6 @@ $(document).ready(function(){
 	}); //end func
 
 
-
 ///////////PROFILE DETAIL VIEW JS///////////////
 // =============================================
 
@@ -360,6 +359,12 @@ $(document).ready(function(){
 	$('#show-hide-attendance').on('click', function(event){
 		$('.attendance-records').toggle();
 		$('.submit-attendance-div').toggle();
+		if ($('#show-hide-attendance').text() === "Update Attendance?") {
+			$('#show-hide-attendance').text("Hide Attendance Records")
+		} else {
+			$('#show-hide-attendance').text("Update Attendance?")
+		};
+
 	});
 
 //ajax for "Submit-BIO-button" form
