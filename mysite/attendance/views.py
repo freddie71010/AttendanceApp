@@ -108,28 +108,7 @@ class RegisterCohort(View):
 		print("==========New Cohort has been registered")
 		return JsonResponse({"cohort_name": new_cohort.cohort_name}, safe=False)
 
-		# template = "register_cohort.html"
-		# form = CohortRegistrationForm(request.POST)
-		# if form.is_valid():
-		# 	data = form.cleaned_data
-		# 	new_cohort = Cohort.objects.create(
-		# 		cohort_name = data['cohort_name'],
-		# 		teacher = data['teacher'],
-		# 		created_at = timezone.now(),
-		# 		start_date = data['start_date'],
-		# 		created_by = request.user,
-		# 		is_active = True,
-		# 		graduation_date = data['graduation_date'],
-		# 		)
-		# 	new = new_cohort.save()
-		# 	# slug = new.slug
-		# 	# print(slug)
-		# 	return redirect('/cohort/{}'.format(new_cohort["cohort_name"]))
-		# else:
-		# 	print ("shits not working")
-		# 	return render(request, template, {"form":form} )
 	
-
 @method_decorator(login_required, name='dispatch')
 class CohortDetailView(View):
 	
@@ -156,19 +135,6 @@ class CohortDetailView(View):
 		pass
 
 
-# WIP
-@method_decorator(login_required, name="dispatch")
-class ProfileUpdateView(View):
-	template = "attendance/build_profile.html"
-	
-	def get(self, request):
-		# I probably need to use local sotrage to get my user query.
-		return render(request, self.template)
-
-	def post(self, requst):
-		data = dict(request.POST)
-		user = User.objects.get(username=data["username"])
-
 
 
 @method_decorator(login_required, name='dispatch')
@@ -179,16 +145,71 @@ class ProfileDetailView(View):
 	def get(self, request, username):
 		user = User.objects.get(username=username)
 		attendance = AttendanceRecord.objects.filter(user=user)
-		cohort_info = user.cohort_set.values()   
+		cohort_info = user.cohort_set.values() 
+		profile = user.profile 
+		print (profile)
 		context = {
 			"user": user,
 			"attendance": attendance,
 			"cohort":cohort_info[0],
+			"profile": profile,
 		}
 		return render(request, self.template, context)
 
-	def post(self, request):
-		pass
+
+	def post(self, request, username):
+		data = request.POST.dict()
+		user = User.objects.get(username=username)
+		for key in data.keys():
+			date = key
+			status = data[date]
+			# skips over non-date dictionary objects
+			if date[0:9] != 'dates_obj':
+				pass
+			else:
+				print("Found date:\t", date[10:-1], status)
+				date_record = AttendanceRecord.objects.get(
+					user_id = user.id,
+					date = date[10:-1])
+				# Only writes to the DB if the date has changed, skips over any date record that hasn't been changed
+				if date_record.status != status:
+					print("Updated:", date_record.status, end="-->")
+					date_record.status = status
+					print(date_record.status)
+					date_record.save()
+
+		return JsonResponse({}, safe=False)
+		
+
+
+
+def update_bio(request):
+	req = request.POST.dict()
+	un = req["user"]
+	student = User.objects.get(username=un)
+	bio = req["bio"]
+	Profile.objects.filter(user=student).update(bio=bio)
+	return JsonResponse({"bio":bio})
+
+def update_final_project(request):
+	req = request.POST.dict()
+	un = req["user"]
+	final_project = req["final_project"]
+	student = User.objects.get(username=un)
+	Profile.objects.filter(user=student).update(final_project=final_project)
+	return JsonResponse({"final_project": final_project})
+
+def update_profile_attendance(request):
+	print("ROUTE HIT")
+	req = request.POST.dict()
+	date = req["date"].replace('%', '')
+	status= req["status"]
+	un = req["user"]
+	user = User.objects.get(username=un)
+	
+	AttendanceRecord.objects.filter(user=user, date=date).update(status=status)
+	return JsonResponse({"status":status})		
+
 
 
 @method_decorator(login_required, name='dispatch')
@@ -272,13 +293,14 @@ class Attendance(View):
 		return JsonResponse({}, safe=False)
 
 
+@method_decorator(login_required, name='dispatch')
 class Search(View):
 	template = "attendance/search_results.html"
-	# form data is not sending over properly
+	
 	def post(self, request):
 		data = request.POST['search']
-		print(data)
-		user_obj = User.objects.filter(username__icontains=data)
+		user_obj = User.objects.filter(username__icontains=data).exclude(is_staff=1)
+		print("user_obj:", user_obj)
 		cohort_obj = Cohort.objects.filter(cohort_name__icontains=data)
 		context = {
 			"users": user_obj,
@@ -322,6 +344,8 @@ class AllStudents(View):
 		return render(request, self.template, {"students": students})
 
 # logs out user
+
+
 def logout_view(request):
 	logout(request)
 	print("User successfully logged out!")

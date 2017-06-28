@@ -290,8 +290,8 @@ $(document).ready(function(){
 
 // ===========================================================================================
 
-//ajax for "Take-attendance-button" form
-	$('.take-attendance-button').on('click', function(event){
+//ajax for "Take-attendance-button" form on Cohort page
+	$('#take-attendance-cohort-button').on('click', function(event){
 		event.preventDefault();
 		console.log("Submit Attendance Button Clicked!");
 		remove_popover();
@@ -317,7 +317,6 @@ $(document).ready(function(){
 			type: "POST",
 			data: kwargs,
 			success: function(response){
-				// $('li.individual-student').css('background-color',"green");
 				console.log("Error msg:",response.error_msg);
 				if (response.error_msg !== undefined) {
 					alert("You forgot to fill out the following student's attendance:\n"+response.error_msg);
@@ -332,21 +331,164 @@ $(document).ready(function(){
 	}); //end func
 
 
+//ajax for "Take-attendance-button" form on Profile page
+	$('#take-attendance-profile-button').on('click', function(event){
+		event.preventDefault();
+		console.log("Profile page - Submit Attendance Button Clicked!");
+		remove_popover();
+
+		var username = $('.username').attr('id');
+		var dates_obj = {};
+		$(".list-group").each(function() {
+    		date = $(this).children().attr('id')
+		    status = $(this).children('.attendance-records').children('.btn-group').children('.active').children().val();
+		    dates_obj[date] = status;
+		});
+		var kwargs = {
+					"dates_obj": dates_obj,
+					"username": username,
+					"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
+		};
+		console.log("pre-ajax kwargs:", kwargs)
+
+		//ajax call to send user date data to DB
+		$.ajax({
+			url: "/profile/" + username,
+			type: "POST",
+			data: kwargs,
+			success: function(response){
+				console.log("Error msg:",response.error_msg);
+				if (response.error_msg !== undefined) {
+					alert("You forgot to fill out the following student's attendance:\n"+response.error_msg);
+				} else {
+					if (alert('Attendance updated!')){}
+					else {    
+						window.location.reload();
+					}
+				}
+			},
+			error: function(){
+				console.log("****Submit Attendance AJAX Error****");
+			}	
+		}) //end ajax
+	}); //end func
 
 
-// Handles Search functionality
+// PROFILE DETAIL VIEW ===========================================================================================
 
-	// $('.search_drop_down').on('click', function(event){
-	// 	event.preventDefault();
-	// 	console.log("Search Button Clicked!");
+//makes the final project form appear and disappear 
+	$('#final_project').on('click', function(event){
+		var item = document.getElementById('final_form_div')
+		if (item.className=='hidden'){
+			item.className='unhidden';
+		} else {
+			item.className ='hidden';
+		}
+	});
 
-	// 	$.ajax({
-	// 		url:"/search",
-	// 		type:"post",
-	// 		data
-	// 	})
+//makes the Student bio form appear and disappear
+	$('#bio_title').on('click', function(event){
+		var item = document.getElementById('bio_update_div')
+		if (item.className=='hidden'){
+		item.className='unhidden';
+		} else {
+		item.className ='hidden';
+		}
+	});
+
+//hides/unhides button attendance button submissions
+	$('#show-hide-attendance').on('click', function(event){
+		$('.attendance-records').toggle();
+		$('.submit-attendance-div').toggle();
+		if ($('#show-hide-attendance').text() === "Update Attendance?") {
+			$('#show-hide-attendance').text("Hide Attendance Records")
+		} else {
+			$('#show-hide-attendance').text("Update Attendance?")
+		};
+
+	});
+
+//ajax for "Submit-BIO-button" form
+	$('#bio-btn').on('click', function(event){
+		event.preventDefault();
+
+		var kwargs = {
+		   'bio' : $('#bio-input').val(),
+		   'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+		   'user': $('h1#id_username').text(),
+		}
+
+		$.ajax({
+			url: "/update_bio",
+			type: "POST",
+			data: kwargs,
+			success: function(response){
+				console.log(response)
+				$('#bio_title').next().html(response['bio'])
+				
+			},
+			error: function(){
+				console.log("****AJAX Error****");
+			}	
+		}) //end ajax
+	}); //end func
+
+//ajax for "Final-Project-button" form
+	$('#final-btn').on('click', function(event){
+		event.preventDefault();
+		var kwargs = {
+			'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+			'user': $('h1#id_username').text(),
+			'final_project': $('#final_proj_input').val()
+		}
+
+		//ajax call final project
+		$.ajax({
+			url: "/update_final_project",
+			type: "POST",
+			data: kwargs,
+			success: function(response){
+				$('#final_project').next().html(response['final_project'])
+			},
+			error: function(){
+				console.log("****AJAX Error****");
+			}	
+		}) //end ajax
+	}); //end func
 
 
+
+
+	$('label.btn-primary').on("dblclick", function(event){
+		event.preventDefault();
+		console.log('button clicked')
+
+	 	var kwargs = {
+	 		'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"').val(),
+	 		'user':$('h1#id_username').text(),
+	 		'date': $(this).parent().parent().prev().attr('data-id'),
+	 		'oldstatus': $(this).parent().parent().prev().children().next().attr('data-id'),
+	 		'status': $(".active input[name='profile-attendance']").val()
+	 	}
+	 	console.log(kwargs)
+
+	 	date = kwargs['date']
+
+	 	// ajax submit 
+	 	$.ajax({
+	 		url:"/update_profile_attendance",
+	 		type: "POST",
+	 		data: kwargs,
+	 		success: function(response){
+	 			console.log(response)
+	 		},
+	 		error: function(response){
+	 			console.log(response['err'])
+	 		}
+	 	});
+
+
+	});
 
 
 

@@ -1,17 +1,6 @@
 from django.db import models 
-from django.utils import timezone
 from django.contrib.auth.models import User
 from django.utils.text import slugify
-from django.core import serializers
-
-
-'''
-User Fields
-
-attendancerecord, cohort_set, date_joined, email, first_name, 
-groups, id, is_active, is_staff, is_superuser, last_login, last_name, logentry, password, profile, user_permissions, username
-'''
-
 
 
 class Profile(models.Model):
@@ -23,6 +12,7 @@ class Profile(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	updated_by = models.ForeignKey(User, related_name="+", default=0)
 	final_project = models.CharField(default=None, max_length=300)
+	bio = models.TextField(default="Bio Goes Here", max_length=500)
 
 	class Meta:
 		ordering = ('-created_at',)
@@ -51,13 +41,6 @@ class Cohort(models.Model):
 	def as_json( self, *args, **kwargs):
 		return self.__dict__
 
-# class Lesson(models.Model):
-# 	cohort = models.ForeignKey(Cohort)
-# 	lesson_name = models.CharField("Lesson Name", default=None, max_length=100)
-# 	date = models.DateField(default=None)
-	
-# 	class Meta:
-# 		ordering = ('-date',)
 
 ATTENDANCE_TYPES =  (
 	('present', 'Present'),
@@ -70,6 +53,9 @@ class AttendanceRecord(models.Model):
 	user = models.ForeignKey(User)
 	status = models.CharField("", max_length=10, choices=ATTENDANCE_TYPES)
 	date = models.DateField(default=None)
+
+	class Meta:
+		ordering = ('-date',)
 
 	def as_json( self, *args, **kwargs):
 		return self.__dict__
