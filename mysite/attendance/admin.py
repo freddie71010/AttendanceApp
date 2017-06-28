@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Cohort
+from .models import Profile, Cohort, AttendanceRecord
 
 
 class CohortAdmin(admin.ModelAdmin):
@@ -16,3 +16,14 @@ class ProfileAdmin(admin.ModelAdmin):
 		return fullname
 
 admin.site.register(Profile, ProfileAdmin)
+
+
+class AttendanceRecordsAdmin(admin.ModelAdmin):
+	list_display = ('name', 'date', 'status')
+	list_filter = ('user_id', 'date')
+
+	def name(self, obj):
+		fullname = obj.user.first_name + " " + obj.user.last_name
+		return fullname
+	
+admin.site.register(AttendanceRecord, AttendanceRecordsAdmin)
