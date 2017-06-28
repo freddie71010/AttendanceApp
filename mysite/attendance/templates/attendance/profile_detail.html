@@ -1,11 +1,17 @@
 {% extends "base.html" %}
-{% block title %} Profile Detail {% endblock %}
-{% block head %} Profile Detail {% endblock %}
+{% load staticfiles %}
+
+{% block title %} Profile - {{user.first_name}} {{user.last_name}} {% endblock %}
+{% block head %} Profile - {{user.first_name}} {{user.last_name}} {% endblock %}
+
+{% block topscripts %}
+<link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
+{% endblock topscripts %}
 
 {% block content %}
 
 <div style="padding-top:50px;"> </div>
-        <div class="col-lg-5 col-md-4 hidden-sm hidden-xs">
+        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="media">
@@ -47,20 +53,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-7 col-md-8 col-sm-8 col-xs-8">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <span>
-                        <h1 class="panel-title pull-left" style="font-size:30px;" id="id_username">{{user.username}}</h1>
+                        <h1 class="panel-title pull-left" style="font-size:30px;" id="id_username">{{user.first_name}} {{user.last_name}}</h1>
                     </span>
                     <br><br>
-              
-                    <span class="pull-left">
-                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o" aria-hidden="true"></i> Posts</a>
-                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-picture-o" aria-hidden="true"></i> Photos <span class="badge">42</span></a>
-                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Contacts <span class="badge">42</span></a>
-                    </span>
                     <span class="pull-right">
+                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o" aria-hidden="true"></i> Posts</a>
                         <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-lg fa-at" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Mention"></i></a>
                         <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-lg fa-envelope-o" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Message"></i></a>
                         <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-lg fa-ban" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Ignore"></i></a>
@@ -68,7 +69,6 @@
                 </div>
             </div>
             <hr>
-            <!-- Simple post content example. -->
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="pull-left">
@@ -76,61 +76,54 @@
                             <img class="media-object img-circle" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="50px" height="50px" style="margin-right:8px; margin-top:-5px;">
                         </a>
                     </div>
-                    <h4><a href="#" style="text-decoration:none;"><strong>{{user.username}}</strong></a> – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i> {{user.last_updated}}</i></a></small></small></h4>
-                    <span>
-                        <div class="navbar-right">
-                            <div class="dropdown">
-                           
-                                <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
-                                    <li><a href="#"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> Report</a></li>
-                                    <li><a href="#"><i class="fa fa-fw fa-ban" aria-hidden="true"></i> Ignore</a></li>
-                                    <li><a href="#"><i class="fa fa-fw fa-bell" aria-hidden="true"></i> Enable notifications for this post</a></li>
-                                    <li><a href="#"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i> Hide</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete</a></li>
-                                </ul>
-                            </div>
+                    <h4>
+                        <a class="username" id={{user.username}} href="/profile/{{user.username}}" style="text-decoration:none;"><b>{{user.first_name}} {{user.last_name}}</b></a> – <small><a href="#" style="text-decoration:none; color:grey;"><i class="fa fa-clock-o" aria-hidden="true"></i>{{user.last_updated}}</i></a></small>
+                        <div class="pull-right">
+                            <small><a id="show-hide-attendance"href="#" style="text-decoration:none;">Update Attendance?</a></small>
                         </div>
-                    </span>
+                        
+                    </h4>
                     <hr>
-  <!--                   <div class="attendace-record">
-						{% for record in attendance %}
-							<div class="list-group">
-								<div class="list-item">
-									<div>{{record.date}},{{record.status}}</div>
-                                    <div><button>Update</button></div>
-								</div>
-							</div>
-						<hr>
-							{% endfor %}
-					</div> -->
 
-                <div class="attendace-record">
+                <div class="attendance-record-tbl">
                     {% for record in attendance %}
                     <div class="list-group">
-                        <div class="list-item" data-id="{{record.date | date:'%Y-%m-%d'}}">
-                            <div  class="student-detail-date">{{record.date}}</div>
-                            <div data-id="{{record.status}}" class="date-status" >{{record.status}}</div>
+                        <div class="list-item" id="{{record.date | date:'Y-m-d'}}">
+                            <div class="student-detail-date">{{record.date | date:'D, M d, Y'}}</div>
+                            <div class="date-status" id="{{record.status}}">{{record.status | title}}</div>
                         </div>
-                        <form class="profile-radio-tags" id="profile-attendance-form">{% csrf_token %}
-                                    <div class="btn-group btn-group-justified" data-toggle="buttons">
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="present">Present
-                                        </label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="unexcused">Unexcu
-                                        </label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="excused">Excused
-                                        </label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Late
-                                        </label>
-                                    </div>            
+                        
+                        <form class="attendance-records" style="display: none;">{% csrf_token %}
+                            <div class="btn-group btn-group-justified" data-toggle="buttons">
+                            {% if record.status != "present" %}
+                                <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
+                            {% endif %}
+                                    <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="present">Present</label>
+                            
+                            {% if record.status != "unexcused" %}
+                                <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
+                            {% endif %}                                            
+                                    <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="unexcused">Unexcused</label>
+
+                            {% if record.status != "excused" %}
+                                <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
+                            {% endif %}
+                                    <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="excused">Excused</label>
+                            
+                            {% if record.status != "late" %}
+                                <label class="btn btn-primary">{% else %}<label class="btn btn-primary active">
+                            {% endif %}
+                                    <input type="radio" class="radio" name="profile-attendance" autocomplete="off" value="late">Late</label>
+                            </div> 
                         </form>
                     </div>
                     {% endfor %}
-                </div>
+                        <div class="submit-attendance-div" style="display: none;">
+                            <button id="take-attendance-profile-button" class="btn btn-success btn-block take-attendance-button">
+                                <span class="glyphicon glyphicon-plus"></span>Update Attendance
+                            </button>
+                        </div>
+                    </div>
                     
 
 {% endblock %}
