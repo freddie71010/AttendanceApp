@@ -1,4 +1,4 @@
-# AttendanceApp
+# StudentTracks
 
 Attendance tracking application for teachers and administrators to monitor student attendance.  
 * Log-in system ensures only teachers and administrators have access to data
