@@ -291,7 +291,7 @@ $(document).ready(function(){
 // ===========================================================================================
 
 //ajax for "Take-attendance-button" form on Cohort page
-	$('.take-attendance-button').on('click', function(event){
+	$('#take-attendance-cohort-button').on('click', function(event){
 		event.preventDefault();
 		console.log("Submit Attendance Button Clicked!");
 		remove_popover();
@@ -317,7 +317,6 @@ $(document).ready(function(){
 			type: "POST",
 			data: kwargs,
 			success: function(response){
-				// $('li.individual-student').css('background-color',"green");
 				console.log("Error msg:",response.error_msg);
 				if (response.error_msg !== undefined) {
 					alert("You forgot to fill out the following student's attendance:\n"+response.error_msg);
@@ -332,8 +331,50 @@ $(document).ready(function(){
 	}); //end func
 
 
-///////////PROFILE DETAIL VIEW JS///////////////
-// =============================================
+//ajax for "Take-attendance-button" form on Profile page
+	$('#take-attendance-profile-button').on('click', function(event){
+		event.preventDefault();
+		console.log("Profile page - Submit Attendance Button Clicked!");
+		remove_popover();
+
+		var username = $('.username').attr('id');
+		var dates_obj = {};
+		$(".list-group").each(function() {
+    		date = $(this).children().attr('id')
+		    status = $(this).children('.attendance-records').children('.btn-group').children('.active').children().val();
+		    dates_obj[date] = status;
+		});
+		var kwargs = {
+					"dates_obj": dates_obj,
+					"username": username,
+					"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
+		};
+		console.log("pre-ajax kwargs:", kwargs)
+
+		//ajax call to send user date data to DB
+		$.ajax({
+			url: "/profile/" + username,
+			type: "POST",
+			data: kwargs,
+			success: function(response){
+				console.log("Error msg:",response.error_msg);
+				if (response.error_msg !== undefined) {
+					alert("You forgot to fill out the following student's attendance:\n"+response.error_msg);
+				} else {
+					if (alert('Attendance updated!')){}
+					else {    
+						window.location.reload();
+					}
+				}
+			},
+			error: function(){
+				console.log("****Submit Attendance AJAX Error****");
+			}	
+		}) //end ajax
+	}); //end func
+
+
+// PROFILE DETAIL VIEW ===========================================================================================
 
 //makes the final project form appear and disappear 
 	$('#final_project').on('click', function(event){
@@ -382,7 +423,6 @@ $(document).ready(function(){
 			type: "POST",
 			data: kwargs,
 			success: function(response){
-				// $('li.individual-student').css('background-color',"green");
 				console.log(response)
 				$('#bio_title').next().html(response['bio'])
 				
@@ -408,7 +448,6 @@ $(document).ready(function(){
 			type: "POST",
 			data: kwargs,
 			success: function(response){
-				// $('li.individual-student').css('background-color',"green");
 				$('#final_project').next().html(response['final_project'])
 			},
 			error: function(){
@@ -442,9 +481,6 @@ $(document).ready(function(){
 	 		data: kwargs,
 	 		success: function(response){
 	 			console.log(response)
-	
-	 			// console.log($(this).parent().parent().prev().attr('data-id'))
-	 			// $(this).parent().parent().prev().children().next().html(response['status'])
 	 		},
 	 		error: function(response){
 	 			console.log(response['err'])

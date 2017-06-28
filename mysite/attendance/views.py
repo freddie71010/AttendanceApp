@@ -157,6 +157,30 @@ class ProfileDetailView(View):
 		return render(request, self.template, context)
 
 
+	def post(self, request, username):
+		data = request.POST.dict()
+		user = User.objects.get(username=username)
+		for key in data.keys():
+			date = key
+			status = data[date]
+			# skips over non-date dictionary objects
+			if date[0:9] != 'dates_obj':
+				pass
+			else:
+				print("Found date:\t", date[10:-1], status)
+				date_record = AttendanceRecord.objects.get(
+					user_id = user.id,
+					date = date[10:-1])
+				# Only writes to the DB if the date has changed, skips over any date record that hasn't been changed
+				if date_record.status != status:
+					print("Updated:", date_record.status, end="-->")
+					date_record.status = status
+					print(date_record.status)
+					date_record.save()
+
+		return JsonResponse({}, safe=False)
+		
+
 
 
 def update_bio(request):
@@ -272,7 +296,7 @@ class Attendance(View):
 @method_decorator(login_required, name='dispatch')
 class Search(View):
 	template = "attendance/search_results.html"
-	# form data is not sending over properly
+	
 	def post(self, request):
 		data = request.POST['search']
 		user_obj = User.objects.filter(username__icontains=data).exclude(is_staff=1)
