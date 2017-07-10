@@ -19,3 +19,6 @@ Prototype application.
 
 ## Credits
 Freddie von Stange and Andrew Kolansky
+
+## Live Demo
+http://104.131.48.80:4000/
